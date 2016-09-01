@@ -1,0 +1,36 @@
+.container.centerd_page {
+        max-width: 800px;
+        margin: auto;
+        margin-top: 50px;
+        margin-bottom: 50px;
+        padding: 30px;
+        background-color: #fff;
+        border: solid 2px #414042;
+        box-shadow: 0px 0px 4px rgba(0,0,0,0.39);
+        -webkit-box-shadow: 0px 0px 4px rgba(0,0,0,0.39);
+        border-radius: 0;
+}
+button.btn-primary.empty_cart:hover {
+        background-color: #737179;
+        border: solid 1px #737179;
+}
+button.btn-primary.empty_cart {
+        background-color: #525252;
+        border: solid 1px #525252;
+        padding: 8px 15px;
+}
+
+img.zoom {
+        height: 141px;
+        overflow-y: hidden;
+}
+.red{
+        color: #f3153c;
+}
+.deals1{
+        width: 27%;
+}
+.deals2{
+        width: 46%;
+
+}
