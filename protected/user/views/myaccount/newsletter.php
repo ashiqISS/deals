@@ -80,10 +80,10 @@
                                                 </div>
                                                 <div class="col-sm-8 col-xs-8 zeros">
                                                         <label class="radio-inline sec">
-                                                                <input type="radio" name="email" value="1">Yes
+                                                                <?php echo $form->radioButton($model, 'newsletter', array('value' => 1, 'uncheckValue' => null)); ?>Yes
                                                         </label>
                                                         <label class="radio-inline sec">
-                                                                <input type="radio" name="email" value="0">No
+                                                                <?php echo $form->radioButton($model, 'newsletter', array('value' => 0, 'uncheckValue' => null)); ?>No
                                                         </label>
                                                 </div>
                                         </div>
@@ -96,12 +96,15 @@
                                 <?php //echo CHtml::submitButton('Continue', array('class' => 'reward hvr-shutter-in-horizontal3 right-btn')); ?>
                                                                 </div>-->
                                 <div class="btn-place-2">
-                                        <button type="submit" class="reward hvr-shutter-in-horizontal3 right-btn">Continue</button>
+                                        <button type="submit" name="newsletter_submit" class="reward hvr-shutter-in-horizontal3 right-btn">Continue</button>
                                 </div>
 
                                 <?php $this->endWidget(); ?>
 
                         </div><!-- form -->
+                        <div class="col-lg-3 col-md-4 mbb hidden-xs hidden-sm">
+                                <?php echo $this->renderPartial('_rightMenu'); ?>
+                        </div>
                 </div>
         </div>
 </section>

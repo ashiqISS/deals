@@ -219,7 +219,17 @@ class MyaccountController extends Controller {
         }
 
         public function actionNewsletter() {
-                $model = new Newsletter;
+                if (!isset(Yii::app()->session['user']) && !isset(Yii::app()->session['merchant'])) {
+                        $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/login');
+                } else {
+                        if (Yii::app()->session['user']) {
+                                $model = BuyerDetails::model()->findByPk(Yii::app()->session['user']['id']);
+                                if (isset($_POST['newsletter_submit'])) {
+                                        $model->newsletter = $_POST['BuyerDetails']['newsletter'];
+                                        $model->save();
+                                }
+                        }
+                }
                 $this->render('newsletter', array('model' => $model));
         }
 

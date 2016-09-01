@@ -22,6 +22,7 @@ return array(
     'Wholesaledeals' => 'products/wholesale',
     'my-products' => 'Products/MyProducts',
     'Discount-coupon-generation' => 'Myaccount/CouponGeneration',
+    'Newsletter-Subscription' => 'Myaccount/Newsletter',
 //    'ss' => '?name',
     'merchant-registration' => 'registration/merchantDetails/create',
 //    'merchant-activation' => 'registration/merchantDetails/UserActivation',

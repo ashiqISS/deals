@@ -482,12 +482,14 @@
                                         <h2>Subscribe</h2>
                                 </div>
                                 <div class="col-md-8">
-                                        <form class="form-inline" role="form">
-                                                <div class="form-group">
-                                                        <input type="email" class="form-subs" id="email" placeholder="Sign Up For Your Email">
-                                                </div>
-                                                <button type="submit" class="btn btn-default submit-btn">Subscribe</button>
-                                        </form>
+                                        <!--<form action="<?= Yii::app()->baseUrl ?>/index.php/site/PublicNewsletter" method="post">-->
+                                        <div class="form-group">
+                                                <input type="email" name="email" class="form-subs newsletter_email"  id="email" placeholder="Sign Up For Your Email">
+                                        </div>
+
+                                        <button type="submit" name="newsleter_subscribe" id="newsletter_reset" onclick="submit_newsletter();" class="btn btn-default submit-btn">Subscribe</button>
+                                        <div class="newsletter_msg"></div>
+                                        <!--</form>-->
 
                                 </div>
                         </div>
@@ -571,12 +573,12 @@
         <script src="<?= Yii::app()->baseUrl ?>/js/classie.js"></script>
 
         <script>
-                        var selectIds = $('#panel1,#panel2,#panel3,#panel4,#panel5,#panel6,#panel7,#panel8,#panel9,#panel10,#panel11,#panel12,#panel13,#panel14');
-                        $(function ($) {
-                                selectIds.on('show.bs.collapse hidden.bs.collapse', function () {
-                                        $(this).prev().find('.glyphicon').toggleClass('glyphicon-plus glyphicon-minus');
-                                });
-                        });
+                                                var selectIds = $('#panel1,#panel2,#panel3,#panel4,#panel5,#panel6,#panel7,#panel8,#panel9,#panel10,#panel11,#panel12,#panel13,#panel14');
+                                                $(function ($) {
+                                                        selectIds.on('show.bs.collapse hidden.bs.collapse', function () {
+                                                                $(this).prev().find('.glyphicon').toggleClass('glyphicon-plus glyphicon-minus');
+                                                        });
+                                                });
 
 
         </script>
@@ -616,7 +618,22 @@
 
                 });
         </script>
+        <script>
+                function submit_newsletter() {
+                        var email = $(".newsletter_email").val();
+                        $.ajax({
+                                url: baseurl + 'site/PublicNewsletter',
+                                type: "POST",
+                                data: {email: email},
+                                success: function ()
+                                {
+                                        $('.newsletter_msg').html("Email Sent Successfully in our newsletter!!!!");
+                                        $("#newsletter_reset")[0].reset();
+                                }
+                        });
+                }
 
+        </script>
 
 </body>
 </html>

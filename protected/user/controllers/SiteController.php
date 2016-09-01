@@ -368,4 +368,21 @@ class SiteController extends Controller {
 //                                }
 //                        }
 //                }
+
+
+
+        public function actionPublicNewsletter() {
+                $newsletter = new Newsletter;
+                if (isset($_REQUEST['email'])) {
+                        $newsletter->email = $_REQUEST['email'];
+                        $newsletter->status = 1;
+                        $newsletter->date = date('Y-m-d');
+                        if ($newsletter->save()) {
+                                $this->redirect(Yii::app()->request->urlReferrer);
+                        } else {
+
+                        }
+                }
+        }
+
 }
