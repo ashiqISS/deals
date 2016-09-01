@@ -219,7 +219,9 @@
                                                                                 </div>
                                                                         </div>
                                                                 </div>
-                                                                <?php if (isset(Yii::app()->session['user']) && Yii::app()->session['user'] != '') { ?>
+
+                                                                <?php if (Yii::app()->session['user'] != "" || Yii::app()->session['merchant'] != '') {
+                                                                        ?>
                                                                         <div class="sign-2 hidden-xs hidden-sm">
                                                                                 <?php echo CHtml::link('Logout', array('site/logout'), array('class' => 'hd')); ?>
                                                                         </div>
@@ -228,7 +230,7 @@
                                                                                 <?php echo CHtml::link('Sign Up', array('site/UserRegister'), array('class' => 'hd')); ?>
                                                                         </div>
                                                                 <?php } ?>
-                                                                <?php if (isset(Yii::app()->session['user']) && Yii::app()->session['user'] != '') { ?>
+                                                                <?php if (Yii::app()->session['user'] != "" || Yii::app()->session['merchant'] != '') { ?>
                                                                         <div class="sign-3 hidden-xs hidden-sm">
                                                                                 <?php echo CHtml::link('My Account', array('Myaccount/index'), array('class' => 'hd')); ?>
                                                                         </div>

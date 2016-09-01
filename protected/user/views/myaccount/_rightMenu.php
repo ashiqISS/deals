@@ -26,7 +26,7 @@
         <li class="<?= $active3; ?>"><?php echo CHtml::link('Account settings', array('Myaccount/Settings')); ?></li>
         <li><a href="#">Order History</a></li>
         <li class="<?= $active4; ?>"><?php echo CHtml::link('Address Book', array('Myaccount/AddressBook')); ?></li>
-        <?php if (Yii::app()->session['user_type_usrid'] != 1) { ?>
+        <?php if (Yii::app()->session['merchant']) { ?>
                 <li class="<?= $active5; ?>"><?php echo CHtml::link('Add Products', array('Products/AddProducts')); ?></li>
                 <li class="<?= $active6; ?>"><?php echo CHtml::link('My Product', array('Products/MyProducts')); ?></li>
 
