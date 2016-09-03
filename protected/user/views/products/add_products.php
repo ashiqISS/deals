@@ -251,7 +251,45 @@
                                                 </div>
                                                 <div class="settings3">
                                                         <div class="form-group">
-                                                                <?php echo $form->fileField($model, 'main_image', array('size' => 60, 'maxlength' => 100, 'class' => 'form-set', 'placeholder' => 'Main Image')); ?>
+                                                                <?php
+                                                                $this->widget('user.extensions.NavaJcrop.ImageJcrop', array(
+                                                                    'config' => array(
+                                                                        'title' => $model->main_image,
+                                                                        'image' => $model->image_url, //required, all field below are not required.
+                                                                        'id' => 'nava-jcrop',
+                                                                        //'unique'=>true,
+                                                                        'buttons' => array(
+                                                                            'cancel' => array(
+                                                                                'name' => 'Cancel',
+                                                                                'class' => 'button-crop',
+                                                                                'style' => 'margin-left: 5px;',
+                                                                            ),
+                                                                            /* 'edit'=>array(
+                                                                              'name'=>'Edit',
+                                                                              'class'=>'button-crop',
+                                                                              'style'=>'margin-left: 5px;',
+                                                                              ), */
+                                                                            'crop' => array(
+                                                                                'name' => 'Crop',
+                                                                                'class' => 'button-crop',
+                                                                                'style' => 'margin-left: 5px;',
+                                                                            )
+                                                                        ),
+                                                                        'options' => array(
+                                                                            'imageWidth' => 500,
+                                                                            'imageHeight' => 282,
+                                                                            'resultStyle' => 'position: fixed;top: 50px;max-width:350px;max-height:350px;z-index: 9999;',
+                                                                            'resultMaxWidth' => 350,
+                                                                            'resultMinWidth' => 350,
+                                                                        ),
+                                                                        'callBack' => array(
+                                                                            'success' => "function(obj,res){doSomething(obj,res);}",
+                                                                            'error' => "function(){alert('error');}",
+                                                                        )
+                                                                    )
+                                                                ));
+                                                                ?>
+                                                                <?php // echo $form->fileField($model, 'main_image', array('size' => 60, 'maxlength' => 100, 'class' => 'form-set', 'placeholder' => 'Main Image')); ?>
                                                                 <?php
                                                                 if ($model->main_image != '' && $model->id != "") {
                                                                         $folder = Yii::app()->Upload->folderName(0, 1000, $model->id);

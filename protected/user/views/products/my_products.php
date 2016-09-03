@@ -45,15 +45,16 @@
 
 
                         <div class="col-lg-9 col-md-8">
-                                <div class="comm">
-                                        <div class="commission-1">
-                                                <div class="head-1"><h2>Products</h2></div>
-                                                <div class="head-1"><h2>Product Name</h2></div>
-                                                <div class="head-1"><h2>price</h2></div>
-                                                <div class="head-1"><h2>Description</h2></div>
-                                        </div>
-                                        <?php if (!empty($model)) {
-                                                ?>
+                                <?php if (!empty($model)) {
+                                        ?>
+                                        <div class="comm">
+                                                <div class="commission-1">
+                                                        <div class="head-1"><h2>Products</h2></div>
+                                                        <div class="head-1"><h2>Product Name</h2></div>
+                                                        <div class="head-1"><h2>price</h2></div>
+                                                        <div class="head-1"><h2>Description</h2></div>
+                                                </div>
+
                                                 <?php foreach ($model as $product) {
                                                         ?>
                                                         <div class="commission-2">
@@ -67,27 +68,15 @@
                                                                 <div class="head-2"><?php echo CHtml::link('delete', array('Products/DeleteProduct', 'id' => $product->id), array('class' => 'outs-3 hvr-radial-out delete_product')); ?></div>
                                                         </div>
                                                 <?php } ?>
-                                                <?php
-                                        } else {
-                                                echo 'No Products Found!!!!';
-                                        }
-                                        ?>
+                                        </div>
+
                                         <?php
-//                                        if (!empty($dataprovider) || $dataProvider != '') {
-//                                                $this->widget('zii.widgets.CListView', array(
-//                                                    'dataProvider' => $dataProvider,
-//                                                    'itemView' => '_my_products',
-//                                                ));
-//                                        } else {
-//
-//                                        }
-                                        ?>
-
-
-                                </div>
-
-
+                                } else {
+                                        echo 'No Products Found!!!!';
+                                }
+                                ?>
                         </div>
+
 
                         <div class="col-lg-3 col-md-4 mbb hidden-xs hidden-sm">
                                 <?php echo $this->renderPartial('_rightMenu'); ?>

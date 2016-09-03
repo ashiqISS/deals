@@ -62,9 +62,9 @@ class SiteController extends Controller {
                         if (isset($_POST['BuyerDetails'])) {
                                 Yii::app()->session['user_type_usrid'] = 1;
                                 $login = BuyerDetails::model()->findByAttributes(array('email' => $_POST['BuyerDetails']['email'], 'password' => $_POST['BuyerDetails']['password']));
-                                Yii::app()->session['user'] = $login;
 
                                 if (!empty($login)) {
+                                        Yii::app()->session['user'] = $login;
                                         if ($login->user_status == 0) {
                                                 Yii::app()->user->setFlash('login_list', "Access Denied.Contact Dealsonindia");
                                         } else if ($login->email_verification == 0) {
@@ -72,12 +72,13 @@ class SiteController extends Controller {
                                                 Yii::app()->user->setFlash('verify_code', $login->id);
                                                 Yii::app()->session['user_email_verify'] = $login->id;
                                         } else if ($login->email_verification == 1 && $login->status == 1) {
+                                                Cart::model()->updateAll(array("user_id" => $user->id), 'session_id=' . Yii::app()->session['temp_user']);
+                                                CouponHistory::model()->updateAll(array("user_id" => $user->id), 'session_id=' . Yii::app()->session['temp_user']);
+                                                Order::model()->updateAll(array("user_id" => $user->id), 'session_id=' . Yii::app()->session['temp_user']);
                                                 Yii::app()->user->setFlash('emailverify', null);
                                                 $this->redirect(array('Myaccount/index'));
                                         }
                                 } else {
-                                        $login->addError('email', '');
-                                        $login->addError('password', '');
                                         Yii::app()->user->setFlash('login_error', "dealsonindia email or password invalid.Try again");
                                 }
                                 $this->redirect(array('Myaccount/index'));
@@ -85,8 +86,8 @@ class SiteController extends Controller {
                         if (isset($_POST['Merchant'])) {
                                 Yii::app()->session['user_type_usrid'] = 2;
                                 $login = Merchant::model()->findByAttributes(array('email' => $_REQUEST['Merchant']['email'], 'password' => $_REQUEST['Merchant']['password']));
-                                Yii::app()->session['merchant'] = $login;
                                 if (!empty($login)) {
+                                        Yii::app()->session['merchant'] = $login;
                                         if ($login->status == 0) {
                                                 Yii::app()->user->setFlash('login_list', "Access Denied.Contact Dealsonindia");
                                         } else if ($login->email_verification == 0) {
@@ -94,6 +95,9 @@ class SiteController extends Controller {
                                                 Yii::app()->user->setFlash('verify_code', $login->id);
                                                 Yii::app()->session['user_email_verify'] = $login->id;
                                         } else if ($login->email_verification == 1 && $login->status == 1) {
+                                                Cart::model()->updateAll(array("user_id" => $user->id), 'session_id=' . Yii::app()->session['temp_user']);
+                                                CouponHistory::model()->updateAll(array("user_id" => $user->id), 'session_id=' . Yii::app()->session['temp_user']);
+                                                Order::model()->updateAll(array("user_id" => $user->id), 'session_id=' . Yii::app()->session['temp_user']);
                                                 $this->redirect(array('Myaccount/index'));
                                         }
                                 } else {

@@ -235,13 +235,14 @@ class ProductsController extends Controller {
                         $model->special_price_from = $_POST['Products']['special_price_from'];
                         $model->special_price_to = $_POST['Products']['special_price_to'];
                         $model->DOC = date('Y-m-d');
-                        $model->is_admin_approved = $_POST['Products']['DOU'];
 
                         $image = CUploadedFile::getInstance($model, 'main_image');
                         $images = CUploadedFile::getInstancesByName('gallery_images');
-                        $model->main_image = $image->extensionName;
-
-                        $model->merchant_id = Yii::app()->session['user']['id'];
+                        $model->main_image = 'jpg';
+                        $model->image_instence = $_POST['image_instence'];
+                        var_dump($image);
+                        exit;
+                        $model->merchant_id = Yii::app()->session['merchant']['id'];
                         $model->merchant_type = Yii::app()->session['user_type_usrid'];
 
                         if ($model->related_products != "") {
@@ -286,7 +287,7 @@ class ProductsController extends Controller {
                                 $model->canonical_name = $model->canonical_name . '_' . $model->id;
                         }
 
-                        $model->CB = Yii::app()->session['user']['id'];
+                        $model->CB = Yii::app()->session['merchant']['id'];
                         $model->UB = 0;
                         $model->DOC = date('Y-m-d H:i:s');
                         $model->status = 1;
@@ -339,24 +340,11 @@ class ProductsController extends Controller {
         }
 
         public function actionMyProducts() {
-                if (!isset(Yii::app()->session['user'])) {
+                if (Yii::app()->session['user'] == "" && Yii::app()->session['merchant'] == "") {
                         $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/login');
                 } else {
-                        if (Yii::app()->session['user_type_usrid'] != 1) {
-//                                $dataProvider = new CActiveDataProvider('Products', array(
-//                                    'criteria' => array(
-//                                        'condition' => 'user_id=' . Yii::app()->session['user']['id'],
-//                                        'condition' => 'merchant_type=' . Yii::app()->session['user_type_usrid'],
-//                                        'order' => 'DOC  desc',
-//                                    ),
-//                                    'pagination' => array(
-//                                        'pageSize' => 4,
-//                                    ),
-//                                        )
-//                                );
-                                $model = Products::model()->findAllByAttributes(array('merchant_id' => Yii::app()->session['user']['id'], 'merchant_type' => Yii::app()->session['user_type_usrid']), array('order' => 'DOC DESC'));
-                                $this->render('my_products', array('model' => $model));
-                        }
+                        $model = Products::model()->findAllByAttributes(array('merchant_id' => Yii::app()->session['merchant']['id']), array('order' => 'DOC DESC'));
+                        $this->render('my_products', array('model' => $model));
                 }
         }
 

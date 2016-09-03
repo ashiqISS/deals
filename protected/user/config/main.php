@@ -23,6 +23,8 @@ return array(
         'user.views.*',
         'user.extensions.yii-mail.*',
         'user.extensions.yiinfinite-scroll.YiinfiniteScroller',
+        'user.extensions.easyimage.EasyImage',
+        'user.extensions.NavaJcrop.ImageJcrop',
     ),
     'modulePath' => $user . '/modules/',
     'modules' => array(

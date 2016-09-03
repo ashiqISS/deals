@@ -133,215 +133,112 @@
                                         <span class="recentorders">My Recent Orders</span>
 
                                         <div class="panel-group his" id="accordion">
-                                                <div class="panel panel-default">
-                                                        <div class="panel-heading c1">
+                                                <?php if (!empty($order)) { ?>
+                                                        <?php
+                                                        foreach ($order as $myorder) {
+                                                                ?>
+                                                                <div class="panel panel-default">
+                                                                        <div class="panel-heading c1">
 
-                                                                <a class="accordion-toggle min collapsed" data-toggle="collapse" data-parent="#accordion" href="#n1" aria-expanded="false"><h4 class="panel-title">
-                                                                                <i class="fa dow fa-angle-right"></i>
+                                                                                <a class="accordion-toggle min collapsed" data-toggle="collapse" data-parent="#accordion" href="#n1" aria-expanded="false"><h4 class="panel-title">
+                                                                                                <i class="fa dow fa-angle-right"></i>
 
-                                                                                <ul>
-                                                                                        <li>Order ID: 417	</li>
-                                                                                        <li class="hidden-xs">lorem ipsum</li>
-                                                                                        <li>Not Delivered</li>
-                                                                                </ul>
+                                                                                                <ul>
+                                                                                                        <li>Order ID: <?= $myorder->id; ?></li>
+                                                                                                        <?php
+                                                                                                        $order_produtcs = OrderProducts::model()->findByPk($myorder->id);
+                                                                                                        $products = Products::model()->findByPk($order_produtcs->product_id);
+                                                                                                        ?>
+                                                                                                        <li class="hidden-xs"><?= $products->product_name; ?></li>
+                                                                                                        <li><?php
+                                                                                                                if ($myorder->status == 0) {
+                                                                                                                        echo 'Not Placed';
+                                                                                                                } elseif ($myorder->status == 1) {
+                                                                                                                        echo 'Not Delivered';
+                                                                                                                } elseif ($myorder->status == 2) {
+                                                                                                                        echo 'Success';
+                                                                                                                } elseif ($myorder->status == 3) {
+                                                                                                                        echo 'Failed';
+                                                                                                                } else {
+                                                                                                                        echo 'Error';
+                                                                                                                }
+                                                                                                                ?>
+                                                                                                        </li>
+                                                                                                </ul>
 
 
 
-                                                                        </h4>
-                                                                </a>
+                                                                                        </h4>
+                                                                                </a>
 
-                                                        </div>
-                                                        <div id="n1" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-                                                                <div class="panel-body wall">
-
-                                                                        <div class="div-main hidden-xs">
-                                                                                <div class="div-11">
-                                                                                        <h3>Product Name</h3>
-                                                                                </div>
-                                                                                <div class="div-2">
-                                                                                        <h3>Date</h3>
-                                                                                </div>
-                                                                                <div class="div-3">
-                                                                                        <h3>Status</h3>
-                                                                                </div>
                                                                         </div>
+                                                                        <div id="n1" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                                                                <div class="panel-body wall">
 
-
-                                                                        <div class="div-main">
-                                                                                <div class="div-4">
-                                                                                        <div class="part-11">
-                                                                                                <img class="catz" src="images/y1.jpg">
+                                                                                        <div class="div-main hidden-xs">
+                                                                                                <div class="div-11">
+                                                                                                        <h3>Product Name</h3>
+                                                                                                </div>
+                                                                                                <div class="div-2">
+                                                                                                        <h3>Date</h3>
+                                                                                                </div>
+                                                                                                <div class="div-3">
+                                                                                                        <h3>Status</h3>
+                                                                                                </div>
                                                                                         </div>
-                                                                                        <div class="part-22">
-                                                                                                <h1>Lorem Ipsum</h1>
-                                                                                                <form class="form-inline" role="form">
-                                                                                                        <label class="weight">Quantity</label>
-                                                                                                        <div class="form-group">
 
-                                                                                                                <select class="quan" name="carlist" form="carform">
-                                                                                                                        <option value="volvo">Default</option>
-                                                                                                                        <option value="saab">Saab</option>
-                                                                                                                        <option value="opel">Opel</option>
-                                                                                                                        <option value="audi">Audi</option>
-                                                                                                                </select>
+
+                                                                                        <div class="div-main">
+                                                                                                <div class="div-4">
+                                                                                                        <div class="part-11">
+                                                                                                                <?php $folder = Yii::app()->Upload->folderName(0, 1000, $products->id); ?>
+                                                                                                                <img class="catz" src="<?php echo Yii::app()->baseUrl . '/uploads/products/' . $folder . '/' . $products->id . '/main.' . $products->main_image ?>">
                                                                                                         </div>
+                                                                                                        <div class="part-22">
+                                                                                                                <form class="form-inline" role="form">
+                                                                                                                        <label class="weight">Quantity</label>
+                                                                                                                        <div class="form-group">
+
+                                                                                                                                <select class="quan" name="carlist" form="carform">
+                                                                                                                                        <option value="volvo"><?php echo $order_produtcs->quantity; ?></option>
+                                                                                                                                </select>
+                                                                                                                        </div>
 
 
-                                                                                                </form>
-                                                                                                <h6>Unit Price <span class="unit"><i class="fa rup fa-rupee"></i>145.00</span></h6>
-                                                                                        </div>
-                                                                                </div>
-                                                                                <div class="div-5">
-                                                                                        <h3>June 12, 2017 </h3>
-                                                                                </div>
-                                                                                <div class="div-6">
-                                                                                        <h3>Order Placed</h3>
-                                                                                </div>
-                                                                        </div>
+                                                                                                                </form>
+                                                                                                                <h6>Unit Price <span class="unit"><i class="fa rup fa-rupee"></i><?php echo $products->price; ?></span></h6>
 
-
-
-                                                                </div>
-                                                        </div>
-                                                </div>
-                                                <div class="panel panel-default">
-                                                        <div class="panel-heading c1">
-
-                                                                <a class="accordion-toggle min collapsed" data-toggle="collapse" data-parent="#accordion" href="#n2" aria-expanded="false">
-                                                                        <h4 class="panel-title">
-                                                                                <i class="fa dow fa-angle-right"></i>
-                                                                                <ul>
-                                                                                        <li>Order ID: 417	</li>
-                                                                                        <li class="hidden-xs">lorem ipsum</li>
-                                                                                        <li>Not Delivered</li>
-                                                                                </ul>
-                                                                        </h4>
-                                                                </a>
-                                                        </div>
-                                                        <div id="n2" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-                                                                <div class="panel-body wall">
-
-                                                                        <div class="div-main hidden-xs">
-                                                                                <div class="div-11">
-                                                                                        <h3>Product Name</h3>
-                                                                                </div>
-                                                                                <div class="div-2">
-                                                                                        <h3>Date</h3>
-                                                                                </div>
-                                                                                <div class="div-3">
-                                                                                        <h3>Status</h3>
-                                                                                </div>
-                                                                        </div>
-
-
-                                                                        <div class="div-main">
-                                                                                <div class="div-4">
-                                                                                        <div class="part-11">
-                                                                                                <img class="catz" src="images/y1.jpg">
-                                                                                        </div>
-                                                                                        <div class="part-22">
-                                                                                                <h1>Lorem Ipsum</h1>
-                                                                                                <form class="form-inline" role="form">
-                                                                                                        <label class="weight">Quantity</label>
-                                                                                                        <div class="form-group">
-
-                                                                                                                <select class="quan" name="carlist" form="carform">
-                                                                                                                        <option value="volvo">Default</option>
-                                                                                                                        <option value="saab">Saab</option>
-                                                                                                                        <option value="opel">Opel</option>
-                                                                                                                        <option value="audi">Audi</option>
-                                                                                                                </select>
                                                                                                         </div>
-
-
-                                                                                                </form>
-                                                                                                <h6>Unit Price <span class="unit"><i class="fa rup fa-rupee"></i>145.00</span></h6>
+                                                                                                </div>
+                                                                                                <div class="div-5">
+                                                                                                        <h3> <?php echo date(" F j, Y", strtotime(date($myorder->order_date))); ?></h3>
+                                                                                                </div>
+                                                                                                <div class="div-6">
+                                                                                                        <h3><?php
+                                                                                                                if ($myorder->status == 0) {
+                                                                                                                        echo 'Not Placed';
+                                                                                                                } elseif ($myorder->status == 1) {
+                                                                                                                        echo 'Not Delivered';
+                                                                                                                } elseif ($myorder->status == 2) {
+                                                                                                                        echo 'Success';
+                                                                                                                } elseif ($myorder->status == 3) {
+                                                                                                                        echo 'Failed';
+                                                                                                                } else {
+                                                                                                                        echo 'Error';
+                                                                                                                }
+                                                                                                                ?></h3>
+                                                                                                </div>
                                                                                         </div>
-                                                                                </div>
-                                                                                <div class="div-5">
-                                                                                        <h3>June 12, 2017 </h3>
-                                                                                </div>
-                                                                                <div class="div-6">
-                                                                                        <h3>Order Placed</h3>
+
+
+
                                                                                 </div>
                                                                         </div>
-
-
-
                                                                 </div>
-                                                        </div>
-                                                </div>
-
-
-                                                <div class="panel panel-default">
-                                                        <div class="panel-heading c1">
-
-                                                                <a class="accordion-toggle min collapsed" data-toggle="collapse" data-parent="#accordion" href="#n3" aria-expanded="false"> <h4 class="panel-title">
-                                                                                <i class="fa dow fa-angle-right"></i>
-                                                                                <ul>
-                                                                                        <li>Order ID: 417	</li>
-                                                                                        <li class="hidden-xs">lorem ipsum</li>
-                                                                                        <li>Not Delivered</li>
-                                                                                </ul>
-                                                                        </h4>
-                                                                </a>
-                                                        </div>
-                                                        <div id="n3" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-                                                                <div class="panel-body wall">
-
-                                                                        <div class="div-main hidden-xs">
-                                                                                <div class="div-11">
-                                                                                        <h3>Product Name</h3>
-                                                                                </div>
-                                                                                <div class="div-2">
-                                                                                        <h3>Date</h3>
-                                                                                </div>
-                                                                                <div class="div-3">
-                                                                                        <h3>Status</h3>
-                                                                                </div>
-                                                                        </div>
-
-
-                                                                        <div class="div-main">
-                                                                                <div class="div-4">
-                                                                                        <div class="part-11">
-                                                                                                <img class="catz" src="images/y1.jpg">
-                                                                                        </div>
-                                                                                        <div class="part-22">
-                                                                                                <h1>Lorem Ipsum</h1>
-                                                                                                <form class="form-inline" role="form">
-                                                                                                        <label class="weight">Quantity</label>
-                                                                                                        <div class="form-group">
-
-                                                                                                                <select class="quan" name="carlist" form="carform">
-                                                                                                                        <option value="volvo">Default</option>
-                                                                                                                        <option value="saab">Saab</option>
-                                                                                                                        <option value="opel">Opel</option>
-                                                                                                                        <option value="audi">Audi</option>
-                                                                                                                </select>
-                                                                                                        </div>
-
-
-                                                                                                </form>
-                                                                                                <h6>Unit Price <span class="unit"><i class="fa rup fa-rupee"></i>145.00</span></h6>
-                                                                                        </div>
-                                                                                </div>
-                                                                                <div class="div-5">
-                                                                                        <h3>June 12, 2017 </h3>
-                                                                                </div>
-                                                                                <div class="div-6">
-                                                                                        <h3>Order Placed</h3>
-                                                                                </div>
-                                                                        </div>
-
-
-
-                                                                </div>
-                                                        </div>
-                                                </div>
-
-
-
+                                                                <?php
+                                                        }
+                                                        ?>
+                                                <?php } ?>
                                         </div>
                                         <div class="clearfix"></div>
 
