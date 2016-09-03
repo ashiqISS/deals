@@ -116,7 +116,7 @@
                         <?php echo $form->labelEx($model, 'merchant'); ?>
                 </div>
                 <div class="col-sm-10">
-                        <?php echo CHtml::activeDropDownList($model, 'merchant', CHtml::listData(Merchant::model()->findAll(), 'id', 'fullname'), array('empty' => 'Admin', 'class' => 'form-control')); ?>
+                        <?php echo CHtml::activeDropDownList($model, 'merchant', CHtml::listData(Merchant::model()->findAll(), 'id', 'first_name'), array('empty' => 'Admin', 'class' => 'form-control')); ?>
                         <?php echo $form->error($model, 'merchant'); ?>
                 </div>
         </div>
@@ -290,7 +290,7 @@ if (!$model->isNewRecord) {
 
 
         <div class="form-group">
-                <?php echo $form->labelEx($model, 'Gallery Images ( image size : 1508 X 2015 )', array('class' => 'col-sm-2 control-label')); ?>
+                <?php echo $form->labelEx($model, 'Gallery Images ( image size : 635 X 1248 )', array('class' => 'col-sm-2 control-label')); ?>
                 <div class="col-sm-10">
                         <?php
                         $this->widget('CMultiFileUpload', array(

@@ -24,7 +24,7 @@
 
                                         <h1>Account & Billing Details </h1>
                                         <?php if (isset(Yii::app()->session['user'])) { ?>
-                                                <?php if (Yii::app()->session['user']['newsletter'] == 1) { ?>
+                                                <?php if (Yii::app()->session['user']['shipping_same'] == 1) { ?>
                                                         <style>
                                                                 .new_address {
                                                                         display: none;
@@ -184,7 +184,7 @@
                                                 ));
                                                 ?>
                                                 <div class="col-md-6">
-                                                        <div class="ch_box"> <h1>Account Details</h1>
+                                                        <div class="ch_box"> <h2>Account Details</h2>
                                                                 <?php echo $form->errorSummary($billing); ?>
                                                                 <?php echo $form->errorSummary($address); ?>
                                                                 <div class="ui-set">
@@ -214,7 +214,7 @@
                                                                 </div>
 
                                                                 <div class="sp_pdg"> &nbsp;</div>
-                                                                <h1>your password</h1>
+                                                                <h2>your Password</h2>
 
                                                                 <div class="ui-set">
                                                                         <div class="form-group">
@@ -254,7 +254,7 @@
                                                                 <div style="clear:both"></div></div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                        <div class="ch_box"> <h1>your personal details</h1>
+                                                        <div class="ch_box"> <h2>your Personal details</h2>
 
                                                                 <div class="ui-set">
                                                                         <div class="form-group">
@@ -316,7 +316,7 @@
 
 
                                                                         <label class="radio-inline txt">
-                                                                                <?php echo $form->checkBox($billing, 'newsletter'); ?> My Shipping Address are same as Billing Address
+                                                                                <?php echo $form->checkBox($billing, 'shipping_same', array('value' => 1)); ?> My Shipping Address are same as Billing Address
                                                                         </label>
 
                                                                         <label class="radio-inline txt">

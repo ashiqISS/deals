@@ -50,10 +50,16 @@
                                         <div class="col-md-12">
                                                 <div class="ch_box"> <h1>Shipping Address</h1>
                                                         <?php if (isset(Yii::app()->session['user'])) { ?>
-                                                                <?php if (Yii::app()->session['user']['newsletter'] == 1) { ?>
+                                                                <?php if (Yii::app()->session['user']['shipping_same'] == 1) { ?>
                                                                         <style>
                                                                                 .new_address {
                                                                                         display: none;
+                                                                                }
+                                                                        </style>
+                                                                <?php } else { ?>
+                                                                        <style>
+                                                                                .new_address {
+                                                                                        display: block;
                                                                                 }
                                                                         </style>
                                                                 <?php } ?>
@@ -206,6 +212,15 @@
 </section>
 
 <script>
+<?php if (Yii::app()->session['user']['shipping_same'] == 1) { ?>
+                $(".same_add").prop('checked', true);
+                $(".diff_add").prop('checked', false);
+
+
+<?php } else { ?>
+                $(".same_add").prop('checked', false);
+                $(".diff_add").prop('checked', true);
+<?php } ?>
         if ($('.same_add').is(':checked')) {
                 $(".new_address").hide();
                 $(".ext_address").show();

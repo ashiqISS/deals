@@ -28,16 +28,31 @@
                                         <div class="checks-2">
                                                 <h1>Returning Customer</h1>
                                                 <p>I am a returning customer</p>
-                                                <form role="form">
-                                                        <div class="form-group">
-                                                                <input type="email" class="form-controlq" id="email" placeholder="E-Mail">
-                                                        </div>
-                                                        <div class="form-group">
-                                                                <input type="password" class="form-controlq" id="pwd" placeholder="Password">
-                                                        </div>
-                                                        <a class="forget" href="#">Forgotten Password</a>
-                                                        <input type="submit" value="Login">
-                                                </form>
+                                                <?php
+                                                $form = $this->beginWidget('CActiveForm', array(
+                                                    'id' => 'buyer-details-login-form',
+                                                    'enableClientValidation' => true,
+                                                    'clientOptions' => array(
+                                                        'validateOnSubmit' => false,
+                                                    ),
+                                                    // Please note: When you enable ajax validation, make sure the corresponding
+                                                    // controller action is handling ajax validation correctly.
+                                                    // See class documentation of CActiveForm for details on this,
+                                                    // you need to use the performAjaxValidation()-method described there.
+                                                    'enableAjaxValidation' => false,
+                                                ));
+                                                ?>
+                                                <div class="form-group">
+                                                        <?php echo $form->textField($login, 'email', array('class' => 'form-controlq', 'placeholder' => 'Email')); ?>
+                                                        <?php echo $form->error($login, 'email', array('class' => 'red')); ?>
+                                                </div>
+                                                <div class="form-group">
+                                                        <?php echo $form->passwordField($login, 'password', array('class' => 'form-controlq', 'placeholder' => 'Password')); ?>
+                                                        <?php echo $form->error($login, 'password', array('class' => 'red')); ?>
+                                                </div>
+                                                <a class="forget" href="#">Forgotten Password</a>
+                                                <input type="submit" value="Login">
+                                                <?php $this->endWidget(); ?>
                                         </div>
                                 </div>
                         </div>

@@ -25,7 +25,12 @@ class CartController extends Controller {
                 if (Yii::app()->session['user'] != '' && Yii::app()->session['user'] != NULL) {
 
                         $user_id = Yii::app()->session['user']['id'];
-                        $condition = "user_id = " . $user_id;
+                        if (isset(Yii::app()->session['temp_user'])) {
+                                $condition = "user_id = " . $user_id . " AND session_id = " . Yii::app()->session['temp_user'];
+                        } else {
+                                Yii::app()->session['temp_user'] = microtime(true);
+                                $condition = "user_id = " . $user_id . " AND session_id = " . Yii::app()->session['temp_user'];
+                        }
                 } else {
                         $user_id = Yii::app()->session['temp_user'];
                         $condition = "session_id = " . $user_id;
@@ -78,7 +83,12 @@ class CartController extends Controller {
                 }
                 if (isset($user_id)) {
 
-                        $condition = "user_id = $user_id";
+                        if (isset(Yii::app()->session['temp_user'])) {
+                                $condition = "user_id = " . $user_id . " AND session_id = " . Yii::app()->session['temp_user'];
+                        } else {
+                                Yii::app()->session['temp_user'] = microtime(true);
+                                $condition = "user_id = " . $user_id . " AND session_id = " . Yii::app()->session['temp_user'];
+                        }
                 } else if (isset($sessonid)) {
 
                         $condition = "session_id = $sessonid";
@@ -143,7 +153,12 @@ class CartController extends Controller {
                         $sessonid = Yii::app()->session['temp_user'];
                 }
                 if (isset($user_id)) {
-                        $condition = "user_id = $user_id";
+                        if (isset(Yii::app()->session['temp_user'])) {
+                                $condition = "user_id = " . $user_id . " AND session_id = " . Yii::app()->session['temp_user'];
+                        } else {
+                                Yii::app()->session['temp_user'] = microtime(true);
+                                $condition = "user_id = " . $user_id . " AND session_id = " . Yii::app()->session['temp_user'];
+                        }
                 } else if (isset($sessonid)) {
                         $condition = "session_id = $sessonid";
                 }
@@ -264,7 +279,12 @@ class CartController extends Controller {
                 if (isset(Yii::app()->session['user']['id'])) {
                         $cart_items = cart::model()->findAllByAttributes(array('user_id' => Yii::app()->session['user']['id']));
                         $user_id = Yii::app()->session['user']['id'];
-                        $condition = "user_id = " . $user_id . " AND session_id = " . Yii::app()->session['temp_user'];
+                        if (isset(Yii::app()->session['temp_user'])) {
+                                $condition = "user_id = " . $user_id . " AND session_id = " . Yii::app()->session['temp_user'];
+                        } else {
+                                Yii::app()->session['temp_user'] = microtime(true);
+                                $condition = "user_id = " . $user_id . " AND session_id = " . Yii::app()->session['temp_user'];
+                        }
                 } else if (isset(Yii::app()->session['temp_user'])) {
                         $cart_items = cart::model()->findAllByAttributes(array('session_id' => Yii::app()->session['temp_user']));
                         $user_id = Yii::app()->session['temp_user'];
@@ -331,7 +351,12 @@ class CartController extends Controller {
                         $id = $user_details->id;
                         $cart_items = Cart::model()->findAllByAttributes(array('user_id' => Yii::app()->session['user']['id']));
                         $user_id = Yii::app()->session['user']['id'];
-                        $condition = "user_id = " . $user_id . " AND session_id = " . Yii::app()->session['temp_user'];
+                        if (isset(Yii::app()->session['temp_user'])) {
+                                $condition = "user_id = " . $user_id . " AND session_id = " . Yii::app()->session['temp_user'];
+                        } else {
+                                Yii::app()->session['temp_user'] = microtime(true);
+                                $condition = "user_id = " . $user_id . " AND session_id = " . Yii::app()->session['temp_user'];
+                        }
                 } else {
 
                         $temp_id = Yii::app()->session['temp_user'];
@@ -350,10 +375,11 @@ class CartController extends Controller {
                 }
                 $subtotal = $this->subtotal();
                 $granttotal = $this->granttotal();
-
                 if (!empty($cart_items)) {
 // $this->render('new_buynow');
                         $this->render('buynow', array('carts' => $cart_items, 'regform' => $model, 'loginform' => $model1, 'gift_user' => $gift_user, 'gift_options' => $gift_options, 'coupen_details' => $coupen_details, 'subtotal' => $subtotal, 'coupon_amount' => $coupon_amount, 'granttotal' => $granttotal));
+                } else {
+                        $this->render('empty_cart');
                 }
         }
 
@@ -511,6 +537,7 @@ class CartController extends Controller {
                                 $model_prod->quantity = $cart->quantity;
                                 $model_prod->gift_option = $cart->gift_option;
                                 $model_prod->rate = $cart->rate;
+                                $model_prod->merchant_id = $prod_details->merchant_id;
                                 $price = Yii::app()->Discount->DiscountAmount($prod_details) * $cart->quantity;
                                 $model_prod->amount = ($cart->quantity) * ($price);
                                 if ($model_prod->save()) {

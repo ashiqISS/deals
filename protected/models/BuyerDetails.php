@@ -22,6 +22,7 @@
  * @property string $DOU
  * @property integer $status
  * @property integer $terms
+ * @property integer $shipping_same
  *
  * The followings are the available model relations:
  * @property Users $user
@@ -91,6 +92,7 @@ class BuyerDetails extends CActiveRecord {
                     'email_verification' => 'Email Verification',
                     'verification_code' => 'Verification Code',
                     'newsletter' => 'Newsletter',
+                    'shipping_same' => 'Shipping Same as Billing Address',
                     'wallet_amt' => 'Wallet Amt',
                     'user_status' => 'User Status',
                     'CB' => 'Cb',
@@ -132,6 +134,7 @@ class BuyerDetails extends CActiveRecord {
                 $criteria->compare('email_verification', $this->email_verification, true);
                 $criteria->compare('verification_code', $this->verification_code, true);
                 $criteria->compare('newsletter', $this->newsletter);
+                $criteria->compare('shipping_same', $this->shipping_same);
                 $criteria->compare('wallet_amt', $this->wallet_amt, true);
                 $criteria->compare('user_status', $this->user_status);
                 $criteria->compare('CB', $this->CB);

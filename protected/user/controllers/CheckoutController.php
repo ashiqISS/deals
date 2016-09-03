@@ -25,7 +25,22 @@ class CheckoutController extends Controller {
                 if (Yii::app()->session['user'] != '' && Yii::app()->session['user'] != NULL) {
                         $this->redirect(array('Checkout/Billing'));
                 } else {
+                        $login = new BuyerDetails;
                         $checkout_exist = Checkout::model()->findByAttributes(array('session_id' => Yii::app()->session['temp_user']));
+
+                        if (isset($_POST['BuyerDetails'])) {
+                                $login_check = BuyerDetails::model()->findByAttributes(array('email' => $_POST['BuyerDetails']['email'], 'password' => $_POST['BuyerDetails']['password']));
+                                if (!empty($login_check)) {
+                                        Yii::app()->session['user'] = $login_check;
+                                        Cart::model()->updateAll(array("user_id" => $login_check->id), 'session_id=' . Yii::app()->session['temp_user']);
+                                        CouponHistory::model()->updateAll(array("user_id" => $login_check->id), 'session_id=' . Yii::app()->session['temp_user']);
+                                        $default_billing = AddressBook::model()->findByAttributes(array('user_id' => $login_check->id, 'default_billing_address' => 1));
+                                        if (!empty($default_billing)) {
+                                                Order::model()->updateAll(array("user_id" => $login_check->id, "bill_address_id" => $default_billing->id), 'session_id=' . Yii::app()->session['temp_user']);
+                                        }
+                                }
+                                $this->redirect(array('Checkout/Billing'));
+                        }
                         if (!empty($checkout_exist)) {
                                 $checkout_id = $checkout_exist->id;
                         } else {
@@ -36,7 +51,7 @@ class CheckoutController extends Controller {
                                 }
                         }
                 }
-                $this->render('checkout', array('checkout_id' => $checkout_id));
+                $this->render('checkout', array('checkout_id' => $checkout_id, 'login' => $login));
         }
 
         public function actionBilling() {
@@ -71,7 +86,6 @@ class CheckoutController extends Controller {
                                 $address = new AddressBook;
                                 $this->performAjaxValidation($billing);
                                 $this->performAjaxValidation($address);
-
                                 if (isset(Yii::app()->session['user'])) {
 
                                         $user_details = BuyerDetails::model()->findByPk(Yii::app()->session['user']['id']);
@@ -91,6 +105,7 @@ class CheckoutController extends Controller {
                                                         }
                                                         $address->user_type = 1;
                                                         $address->user_id = $user_details->id;
+
                                                         if ($address->validate()) {
                                                                 if ($address->save(false)) {
                                                                         Order::model()->updateAll(array("bill_address_id" => $address->id), 'session_id=' . Yii::app()->session['temp_user']);
@@ -105,6 +120,7 @@ class CheckoutController extends Controller {
                                         $billing->user_status = 1;
                                         $ver_id = mt_rand(10000, 99999) . time();
                                         $billing->activation_link = $ver_id;
+                                        $billing->shipping_same = $_POST['BuyerDetails']['shipping_same'];
                                         if ($billing->save(false)) {
 
                                                 $address->attributes = $_POST['AddressBook'];
@@ -116,9 +132,7 @@ class CheckoutController extends Controller {
                                                         Yii::app()->session['user'] = $billing;
                                                         Cart::model()->updateAll(array("user_id" => $billing->id), 'session_id=' . Yii::app()->session['temp_user']);
                                                         CouponHistory::model()->updateAll(array("user_id" => $billing->id), 'session_id=' . Yii::app()->session['temp_user']);
-                                                        CouponHistory::model()->updateAll(array("user_id" => $billing->id), 'session_id=' . Yii::app()->session['temp_user']);
                                                         Order::model()->updateAll(array("user_id" => $billing->id, "bill_address_id" => $address->id), 'session_id=' . Yii::app()->session['temp_user']);
-
                                                         $this->SuccessMail($billing);
                                                         Yii::app()->user->setFlash('email_sent_message', " Please varify your email to continue checkout . Check Your spam folder also .");
                                                         $this->redirect(array('Checkout/Shipping'));
@@ -197,8 +211,6 @@ class CheckoutController extends Controller {
                                                 }
                                         }
                                 }
-
-
                                 $this->render('shipping', array('address' => $address, 'checkout_id' => $checkout_id, 'email_vari' => $varification));
                         } else {
                                 $this->redirect(array('Cart/Mycart'));
