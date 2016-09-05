@@ -140,8 +140,9 @@ class ProductsController extends Controller {
         }
 
         public function actionDetail($name) {
-
-                $prduct = Products::model()->findByAttributes(array('canonical_name' => $name, 'status' => 1, 'is_admin_approved' => 1));
+                $date = date('Y-m-d');
+//                $prduct = Products::model()->findByAttributes(array('canonical_name' => $name, 'status' => 1, 'is_admin_approved' => 1), array('condition' => $date . ' >= sale_from AND ' . $date . ' <= sale_to)'));
+                $prduct = Products::model()->findByAttributes(array('canonical_name' => $name, 'status' => 1, 'is_admin_approved' => 1), array('condition' => "'$date'  >= sale_from AND '$date' <= sale_to"));
                 $value = trim($prduct->category_id, ",");
                 $category = explode(",", $value);
                 foreach ($category as $cats) {
@@ -162,7 +163,7 @@ class ProductsController extends Controller {
                 if (!empty($prduct)) {
                         $this->render('detailed', array('time' => $time, 'products' => $prduct, 'you_may_also_like' => $you_may_also_like, 'product_features' => $product_features, 'product_reviews' => $product_reviews, 'total_rating' => $total_rating));
                 } else {
-                        $this->redirect(array('Site/Error'));
+                        $this->redirect(array('Products/Error'));
                 }
         }
 
@@ -519,6 +520,38 @@ class ProductsController extends Controller {
                 if ($model === null)
                         throw new CHttpException(404, 'The requested page does not exist.');
                 return $model;
+        }
+
+        public function actionAddToBidd() {
+                if (Yii::app()->request->isAjaxRequest) {
+                        $id = $_REQUEST['id'];
+                        $amount = $_REQUEST['bid_amount'];
+                        $products = Products::model()->findByPk($id);
+                        $product_price = Yii::app()->Discount->DiscountAmount($products);
+                        if ($id != '' && $amount != '') {
+                                if ($amount < $product_price) {
+                                        echo 4;
+                                } else {
+                                        $model = new BargainDetails;
+                                        $model->user_id = Yii::app()->session['user']['id'];
+                                        $model->status = 1;
+                                        $model->bidd_amount = $amount;
+                                        $model->product_id = $id;
+                                        $model->doc = date('Y-m-d H:i:s');
+                                        if ($model->save(false)) {
+                                                echo 1;
+                                        } else {
+                                                echo 2;
+                                        }
+                                }
+                        } else {
+                                echo 3;
+                        }
+                }
+        }
+
+        public function actionError() {
+                $this->render('error');
         }
 
         public function actionList() {

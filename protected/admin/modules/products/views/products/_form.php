@@ -10,6 +10,9 @@
         .bot{
                 margin-bottom: 25px;
         }
+        .bargain{
+                display: none;
+        }
 </style>
 <div class="form">
 
@@ -78,7 +81,7 @@
                         <?php echo $form->labelEx($model, 'canonical_name'); ?>
                 </div>
                 <div class="col-sm-10">
-                        <?php echo $form->textField($model, 'canonical_name', array('size' => 60, 'maxlength' => 200, 'class' => 'form-control')); ?>
+                        <?php echo $form->textField($model, 'canonical_name', array('size' => 60, 'maxlength' => 200, 'class' => 'form-control', 'readonly' => true)); ?>
                         <?php echo $form->error($model, 'canonical_name'); ?>
                 </div>
         </div>
@@ -99,8 +102,28 @@
                         <?php echo $form->labelEx($model, 'product_type'); ?>
                 </div>
                 <div class="col-sm-10">
-                        <?php echo $form->dropDownList($model, 'product_type', array('' => "---Select Type---", '1' => "Deal Product", '2' => "Normal Product", '3' => "Coupon"), array('class' => 'form-control type_change')); ?>
+                        <?php echo $form->dropDownList($model, 'product_type', array('' => "---Select Type---", '1' => "Deal Product", '2' => "Normal Product", '3' => "Coupon", '4' => "Bargain Product"), array('class' => 'form-control type_change')); ?>
                         <?php echo $form->error($model, 'product_type'); ?>
+                </div>
+        </div>
+        <div class="bargain">
+                <div class="form-group">
+                        <div class="col-sm-2 control-label">
+                                <?php echo $form->labelEx($model, 'admin_price'); ?>
+                        </div>
+                        <div class="col-sm-10">
+                                <?php echo $form->textField($model, 'admin_price', array('class' => 'form-control')); ?>
+                                <?php echo $form->error($model, 'admin_price'); ?>
+                        </div>
+                </div>
+                <div class="form-group">
+                        <div class="col-sm-2 control-label">
+                                <?php echo $form->labelEx($model, 'bargain_price'); ?>
+                        </div>
+                        <div class="col-sm-10">
+                                <?php echo $form->textField($model, 'bargain_price', array('class' => 'form-control')); ?>
+                                <?php echo $form->error($model, 'bargain_price'); ?>
+                        </div>
                 </div>
         </div>
         <div class="form-group deal_link" >
@@ -427,6 +450,8 @@ if (!$model->isNewRecord) {
                         <?php echo $form->error($model, 'price'); ?>
                 </div>
         </div>
+
+
 
         <div class="form-group">
                 <div class="col-sm-2 control-label">
@@ -894,12 +919,24 @@ if (!$model->isNewRecord) {
                         $(".deal_link").hide();
 
                 }
+                if (name == 4) {
+                        $(".bargain").show();
+                } else {
+                        $(".bargain").hide();
+
+                }
                 $(".type_change").change(function () {
                         var name = $(this).val();
                         if (name == 1 || name == 3) {
                                 $(".deal_link").show();
                         } else {
                                 $(".deal_link").hide();
+
+                        }
+                        if (name == 4) {
+                                $(".bargain").show();
+                        } else {
+                                $(".bargain").hide();
 
                         }
 

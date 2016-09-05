@@ -69,7 +69,7 @@
                                                     } else {
                                                             $marchent_type = "Default";
                                                     }
-                                                    return $marchent_name->fullname . '(' . $marchent_type . ')';
+                                                    return $marchent_name->first_name . '(' . $marchent_type . ')';
                                             }
                                     },
                                     'type' => 'raw'

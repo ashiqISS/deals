@@ -25,11 +25,11 @@
         <!--<div class="form-inline">-->
         <div class="form-group">
                 <div class="col-sm-2 control-label">
-                        <?php echo $form->labelEx($model, 'fullname'); ?>
+                        <?php echo $form->labelEx($model, 'first_name'); ?>
                 </div>
                 <div class="col-sm-10">
-                        <?php echo $form->textField($model, 'fullname', array('size' => 60, 'maxlength' => 100, 'class' => 'form-control')); ?>
-                        <?php echo $form->error($model, 'fullname'); ?>
+                        <?php echo $form->textField($model, 'first_name', array('size' => 60, 'maxlength' => 100, 'class' => 'form-control')); ?>
+                        <?php echo $form->error($model, 'first_name'); ?>
                 </div>
         </div>
 

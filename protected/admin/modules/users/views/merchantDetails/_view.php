@@ -10,8 +10,8 @@
         <br />
 
 
-        <b><?php echo CHtml::encode($data->getAttributeLabel('fullname')); ?>:</b>
-        <?php echo CHtml::encode($data->fullname); ?>
+        <b><?php echo CHtml::encode($data->getAttributeLabel('first_name')); ?>:</b>
+        <?php echo CHtml::encode($data->first_name); ?>
         <br />
 
         <b><?php echo CHtml::encode($data->getAttributeLabel('merchant_rating')); ?>:</b>

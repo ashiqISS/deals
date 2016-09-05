@@ -40,8 +40,25 @@ class DiscountPrice extends CApplicationComponent {
         }
 
         public function DiscountType($data) {
+                $date = date('Y-m-d');
                 if ($data->discount_type == 1) {
-                        $discountRate = $data->price - $data->discount;
+                        if ($data->product_type == 4) {  // the value 4 is baragain products
+                                if (($date > $data->special_price_to)) {
+                                        $criteria = new CDbCriteria;
+                                        $criteria->select = '*,MAX(bidd_amount) ';
+                                        $bargained_rate = BargainDetails::model()->find($criteria);
+                                        if (!empty($bargained_rate)) {
+                                                Products::model()->updateAll(array("bidded_amount" => $bargained_rate->bidd_amount), 'id = ' . $data->id);
+                                                $discountRate = $bargained_rate->bidd_amount;
+                                        } else {
+                                                $discountRate = $data->bargain_price;
+                                        }
+                                } else {
+                                        $discountRate = $data->bargain_price;
+                                }
+                        } else {
+                                $discountRate = $data->price - $data->discount;
+                        }
                 } else {
                         $discountRate = $data->price - ( $data->price * ($data->discount / 100));
                 }

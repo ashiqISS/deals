@@ -7,7 +7,7 @@
                 <div class="col-xs-6 row-borderd text-right empty_image"><img src="<?php echo Yii::app()->baseUrl ?>/images/logo.png" alt=""/></div>
                 <div class="col-xs-6 empty_message">
                         <h2 class="fournotfour">404!</h2>
-                        <h3>Looks like the page you we're looking for doesn't exist. Sorry about that.</h3>
+                        <h3>Looks like the Product doesn't exist. Sorry about that.</h3>
                 </div>
         </div>
 

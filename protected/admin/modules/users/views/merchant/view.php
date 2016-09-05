@@ -23,7 +23,7 @@ $this->widget('zii.widgets.CDetailView', array(
     'data' => $model,
     'attributes' => array(
         'id',
-        'fullname',
+        'first_name',
         'email',
         'phone_number',
         'password',
@@ -32,14 +32,14 @@ $this->widget('zii.widgets.CDetailView', array(
         array(
             'name' => 'product_categories',
             'value' => function($data) {
-                $cats = explode(',', $data->product_categories);
-                $catt = '';
-                foreach ($cats as $cat) {
-                    unset($_SESSION['category']);
-                    $category = ProductCategory::model()->findByPk($cat);
-                    $catt .= Yii::app()->category->selectCategories($category) . ', ';
-                }
-                return $catt;
+                    $cats = explode(',', $data->product_categories);
+                    $catt = '';
+                    foreach ($cats as $cat) {
+                            unset($_SESSION['category']);
+                            $category = ProductCategory::model()->findByPk($cat);
+                            $catt .= Yii::app()->category->selectCategories($category) . ', ';
+                    }
+                    return $catt;
             },
         ),
         'merchant_type',
@@ -48,22 +48,22 @@ $this->widget('zii.widgets.CDetailView', array(
         array(
             'name' => 'shop_logo',
             'value' => function($data) {
-                if ($data->shop_logo == "") {
-                    return;
-                } else {
-                    return '<img width="125" style="border: 2px solid #d2d2d2;" src="' . Yii::app()->request->baseUrl . "/uploads/users/merchants/shop_logo/" . $data->id . "." . $data->shop_logo . '" />';
-                }
+                    if ($data->shop_logo == "") {
+                            return;
+                    } else {
+                            return '<img width="125" style="border: 2px solid #d2d2d2;" src="' . Yii::app()->request->baseUrl . "/uploads/users/merchants/shop_logo/" . $data->id . "." . $data->shop_logo . '" />';
+                    }
             },
             'type' => 'raw'
         ),
         array(
             'name' => 'shop_banner',
             'value' => function($data) {
-                if ($data->shop_banner == "") {
-                    return;
-                } else {
-                    return '<img width="125" style="border: 2px solid #d2d2d2;" src="' . Yii::app()->request->baseUrl . "/uploads/users/merchants/shop_banner/" . $data->id . "." . $data->shop_banner . '" />';
-                }
+                    if ($data->shop_banner == "") {
+                            return;
+                    } else {
+                            return '<img width="125" style="border: 2px solid #d2d2d2;" src="' . Yii::app()->request->baseUrl . "/uploads/users/merchants/shop_banner/" . $data->id . "." . $data->shop_banner . '" />';
+                    }
             },
             'type' => 'raw'
         ),

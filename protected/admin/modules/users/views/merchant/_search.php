@@ -19,8 +19,8 @@
         </div>
 
         <div class="row">
-                <?php echo $form->label($model, 'fullname'); ?>
-                <?php echo $form->textField($model, 'fullname', array('size' => 60, 'maxlength' => 100, 'class' => 'form-control')); ?>
+                <?php echo $form->label($model, 'first_name'); ?>
+                <?php echo $form->textField($model, 'first_name', array('size' => 60, 'maxlength' => 100, 'class' => 'form-control')); ?>
         </div>
 
         <div class="row">
@@ -58,7 +58,7 @@
         <div class="row">
                 <?php echo $form->label($model, 'merchant_rating'); ?>
                 <?php echo $form->textField($model, 'merchant_rating', array('class' => 'form-control')); ?>
-        </div> 
+        </div>
         <div class="row">
                 <?php echo $form->label($model, 'merchant_type'); ?>
                 <?php echo $form->textField($model, 'merchant_type', array('class' => 'form-control')); ?>

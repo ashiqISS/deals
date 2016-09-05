@@ -317,6 +317,7 @@
                                                                         <?php
                                                                 }
                                                                 ?>
+
                                                                 <!--
                                                                                                                                 <li class="dropdown-submenu">
                                                                                                                                         <a tabindex="-1" href="#">Baby Products</a>
@@ -419,10 +420,11 @@
                                                                 <ul class="nav navbar-nav">
                                                                         <li><?php echo CHtml::link('COUPONS', array('products/coupons')); ?></li>
                                                                         <li><?php echo CHtml::link('DAILY DEALS', array('products/Daily')); ?></li>
-                                                                        <li><?php echo CHtml::link('FLASH DEALS', array('products/Daily')); ?></li>
+                                                                        <li><?php //echo CHtml::link('FLASH DEALS', array('products/Daily'));  ?></li>
                                                                         <li><?php echo CHtml::link('HOT DEALS', array('products/hot')); ?></li>
                                                                         <li><?php echo CHtml::link('SUBMIT A DEAL', array('myaccount/SubmitDeal')); ?></li>
                                                                         <li><?php echo CHtml::link('WHOLESALE DEALS', array('products/wholesale')); ?></li>
+                                                                        <li><?php echo CHtml::link('BARGAIN ZONE', array('products/bargain')); ?></li>
 
                                                                 </ul>
 

@@ -127,20 +127,6 @@ class CartController extends Controller {
                 $master_option_id = $_REQUEST['master_option'];
                 $id = Products::model()->findByAttributes(array('canonical_name' => $canonical_name))->id;
 
-//                $check_option = MasterOptions::model()->findByAttributes(['product_id' => $id]);
-//                if (!empty($check_option)) {
-//                        $product_option_id = OptionDetails::model()->findByAttributes(['master_option_id' => $master_option_id, 'size_id' => $option_size, 'color_id' => $option_color, 'product_id' => $id]);
-//                        if (!empty($product_option_id)) {
-//                                $product_option = $product_option_id->id;
-//                        } else {
-//                                echo '9';
-//                                exit;
-//                        }
-//                } else {
-//                        $product_option = 0;
-//                }
-
-
                 if (Yii::app()->session['user'] != '' && Yii::app()->session['user'] != NULL) {
 
                         $user_id = Yii::app()->session['user']['id'];
@@ -162,18 +148,12 @@ class CartController extends Controller {
                 } else if (isset($sessonid)) {
                         $condition = "session_id = $sessonid";
                 }
-
-//                if ($product_option_id->id != 0) {
-//                        $cart = Cart::model()->findByAttributes(array(), array('condition' => ($condition . ' and options =' . $product_option_id->id . ' and product_id=' . $id)));
-//                } else {
-//                        $cart = Cart::model()->findByAttributes(array(), array('condition' => ($condition . ' and product_id=' . $id)));
-//                }
-                $cart = Cart::model()->findByAttributes(array(), array('condition' => ($condition . ' and product_id=' . $id)));
+                $cart = Cart::model()->find(array('condition' => ($condition . ' and product_id=' . $id)));
 
                 if (!empty($cart)) {
                         $cart->quantity = $cart->quantity + $qty;
                         $cart->save();
-                        $cart_contents = Cart::model()->findAllByAttributes(array(), array('condition' => ($condition)));
+                        $cart_contents = Cart::model()->findAll(array('condition' => ($condition)));
 
                         if (!empty($cart_contents)) {
                                 echo ' <div class="drop_cart">';
@@ -227,6 +207,63 @@ class CartController extends Controller {
                                 } else {
                                         echo 'Cart box is Empty';
                                 }
+                        }
+                }
+        }
+
+        public function actionBuyBargain() {
+                $canonical_name = $_REQUEST['cano_name'];
+                $qty = $_REQUEST['qty'];
+                $option_size = $_REQUEST['option_size'];
+                $option_color = $_REQUEST['option_color'];
+                $master_option_id = $_REQUEST['master_option'];
+                $date = date('Y-m-d');
+                $id = Products::model()->findByAttributes(array('canonical_name' => $canonical_name))->id;
+                if (Yii::app()->session['user'] != '' && Yii::app()->session['user'] != NULL) {
+                        $user_id = Yii::app()->session['user']['id'];
+                        Cart::model()->deleteAllByAttributes(array(), array('condition' => 'date < subdate(now(), 1) and user_id != ' . Yii::app()->session['user']['id']));
+                } else {
+                        if (!isset(Yii::app()->session['temp_user'])) {
+                                Yii::app()->session['temp_user'] = microtime(true);
+                        }
+                        Cart::model()->deleteAllByAttributes(array(), array('condition' => 'date < subdate(now(), 1)'));
+                        $sessonid = Yii::app()->session['temp_user'];
+                }
+                if (isset($user_id)) {
+                        if (isset(Yii::app()->session['temp_user'])) {
+                                $condition = "user_id = " . $user_id . " AND session_id = " . Yii::app()->session['temp_user'];
+                        } else {
+                                Yii::app()->session['temp_user'] = microtime(true);
+                                $condition = "user_id = " . $user_id . " AND session_id = " . Yii::app()->session['temp_user'];
+                        }
+                } else if (isset($sessonid)) {
+                        $condition = "session_id = $sessonid";
+                }
+                $cart = Cart::model()->find(array('condition' => ($condition . ' and product_id=' . $id)));
+                if (!empty($cart)) {
+                        echo 8;  // Already Add this product to cart
+                } else {
+                        $check_bargain = BargainDetails::model()->findByAttributes(array('user_id' => Yii::app()->session['user']['id'], 'product_id' => $id, 'status' => 2));
+                        if (!empty($check_bargain)) {
+                                $products = Products::model()->findByAttributes(array('id' => $check_bargain->product_id), array('condition' => "'$date'  >= sale_from AND '$date' <= sale_to"));
+                                if (!empty($products)) {
+                                        $model = new cart;
+                                        $model->user_id = $user_id;
+                                        $model->session_id = Yii::app()->session['temp_user'];
+                                        $model->product_id = $id;
+                                        $model->quantity = $qty;
+                                        date_default_timezone_set('Asia/Kolkata');
+                                        $model->date = date('Y-m-d H:i:s');
+                                        if ($model->save()) {
+                                                echo 1;  // Successfully added to cart
+                                        } else {
+                                                echo 2;  // somthing problem to add to cart
+                                        }
+                                } else {
+                                        echo 10;        // the product not available for checkout
+                                }
+                        } else {
+                                echo 11;                // You don't have to permission to checkout this product
                         }
                 }
         }

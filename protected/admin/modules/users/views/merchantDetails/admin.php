@@ -27,7 +27,7 @@
                             'columns' => array(
                                 'id',
                                 'user_id',
-                                'fullname',
+                                'first_name',
                                 'merchant_rating',
                                 'merchant_type',
                                 'product_count',

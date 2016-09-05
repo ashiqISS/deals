@@ -61,6 +61,7 @@
  * @property integer $is_admin_approved
  * @property integer $CB
  * @property integer $UB
+ * @property integer bidded_amount
  * @property string $DOC
  * @property string $DOU
  * @property string $image_url
@@ -88,7 +89,7 @@ class Products extends CActiveRecord {
                 return array(
                     array('category_id, product_name, product_code, product_type, description, canonical_name,   price, is_discount_available, quantity, stock_availability, status,  is_cod_available, is_featured, is_admin_approved', 'required'),
                     array('brand_id, merchant, merchant_type, vendor, header_visibility, sort_order,  brand, size, is_discount_available, quantity, requires_shipping, enquiry_sale, gift_option, stock_availability, weight_class, exchange, is_cod_available, is_available, is_featured, is_admin_approved, CB, UB', 'numerical', 'integerOnly' => true),
-                    array('price, wholesale_price, discount, discount_rate, deal_price, shipping_rate, tax, weight', 'numerical'),
+                    array('price, wholesale_price,bargain_price,bidded_amount, admin_price,  discount, discount_rate, deal_price, shipping_rate, tax, weight', 'numerical'),
                     array('category_id, main_image, gallery_images, canonical_name', 'length', 'max' => 200),
                     array('product_name, product_code, meta_title, meta_keywords, discount_type, video_link, status, search_tag, related_products', 'length', 'max' => 225),
                     array('product_type', 'length', 'max' => 50),
@@ -126,6 +127,7 @@ class Products extends CActiveRecord {
                     'image_url' => 'Image URL',
                     'image_instence' => 'Image Instance',
                     'brand_id' => 'Brand',
+                    'bargain_price' => 'Bargain Price',
                     'merchant' => 'Merchant',
                     'deal_link' => 'Deal Link',
                     'merchant_type' => 'Merchant Type',
@@ -230,6 +232,8 @@ class Products extends CActiveRecord {
                 $criteria->compare('wholesale_price', $this->wholesale_price);
                 $criteria->compare('is_discount_available', $this->is_discount_available);
                 $criteria->compare('discount', $this->discount);
+                $criteria->compare('bidded_amount', $this->bidded_amount);
+                $criteria->compare('bargain_price', $this->bargain_price);
                 $criteria->compare('discount_type', $this->discount_type, true);
                 $criteria->compare('discount_rate', $this->discount_rate);
                 $criteria->compare('deal_price', $this->deal_price);

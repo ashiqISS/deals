@@ -48,7 +48,7 @@
                         <?php echo $form->labelEx($model, 'vendor_name'); ?>
                 </div>
                 <div class="col-sm-10">
-                        <?php echo CHtml::activeDropDownList($model, 'vendor_name', CHtml::listData(Merchant::model()->findAll(), 'id', 'fullname'), array('empty' => '--Select--', 'class' => 'form-control')); ?>
+                        <?php echo CHtml::activeDropDownList($model, 'vendor_name', CHtml::listData(Merchant::model()->findAll(), 'id', 'first_name'), array('empty' => '--Select--', 'class' => 'form-control')); ?>
                         <?php echo $form->error($model, 'vendor_name'); ?>
                 </div>
         </div>

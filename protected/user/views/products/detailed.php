@@ -89,6 +89,7 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
                         <div class="col-xs-12">
                                 <h2><?php echo $products->product_name; ?></h2>
 
+
                         </div>
                         <div class="col-xs-12">
                                 <?php if (Yii::app()->user->hasFlash('success')): ?>
@@ -248,19 +249,62 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
                                                 <div class="detail-2">
                                                         <span class="sans">:</span>
                                                 </div>
+
                                                 <div class="detail-3">
                                                         <span class="sans3"><?php echo Yii::app()->Discount->Discount($products); ?></span>
                                                 </div>
 
+
                                         </div>
 
                                         <div class="clearfix"></div>
+                                        <h4 class="option_errors"></h4>
                                         <div class="wishlist">
                                                 <ul>
-                                                        <?php if ($products->product_type == 2) { ?>
+                                                        <?php $cart_exist = Cart::model()->findByAttributes(array('user_id' => Yii::app()->session['user']['id'], 'product_id' => $products->id)); ?>
+                                                        <?php if ($products->product_type == 2) {
+                                                                ?>
                                                                 <input type = "hidden" value = "<?= $products->canonical_name; ?>" id="cano_name_<?= $products->id; ?>" name="cano_name">
                                                                 <li><a class="cart1 add_to_cart"  id="<?= $products->id; ?>">Add to cart</a></li>
                                                                 <li><a class="cart2 add_to_wishlist" href="<?php echo Yii::app()->request->baseUrl; ?>/index.php/products/Wishlist/id/<?= $products->id; ?>">Add to wish list</a></li>
+                                                        <?php } else if ($products->product_type == 4) { ?>
+
+                                                                <?php if (isset(Yii::app()->session['user'])) { ?>
+
+                                                                        <?php $bidd_exist = BargainDetails::model()->findByAttributes(array('product_id' => $products->id, 'user_id' => Yii::app()->session['user']['id'])); ?>
+                                                                        <?php if (!empty($bidd_exist)) { ?>
+                                                                                <?php if ($bidd_exist->status == 1) {
+                                                                                        ?>
+
+                                                                                        <li class = "already_bid"><a class = "cart1 " id = "">You Already Seal the Product</a></li>
+                                                                                <?php } else if ($bidd_exist->status == 2) { ?>
+
+                                                                                        <?php if (empty($cart_exist)) { ?>
+                                                                                                <input type = "hidden" value = "<?= $products->canonical_name; ?>" id="cano_name_<?= $products->id; ?>" name="cano_name">
+                                                                                                <li class = "already_bid "><a class = "cart1 proceed_to_checkout " id = "<?= $products->id; ?>">Proceed to checkout</a></li>
+                                                                                        <?php } else { ?>
+                                                                                                <input type = "hidden" value = "<?= $products->canonical_name; ?>" id="cano_name_<?= $products->id; ?>" name="cano_name">
+                                                                                                <li class = "already_bid "><a class = "cart1 " href="<?php echo Yii::app()->request->baseUrl; ?>/index.php/Cart/Mycart" id = "<?= $products->id; ?>">Proceed to checkout</a></li>
+                                                                                        <?php } ?>
+
+                                                                                <?php } else if ($bidd_exist->status == 3) { ?>
+                                                                                        <li class = "already_bid"><a class = "cart1 " id = "">Your Bidd Failed</a></li>
+
+                                                                                <?php } else if ($bidd_exist->status == 4) { ?>
+                                                                                        <li class = "already_bid"><a class = "cart1 " id = "">Currently no Checkout Option</a></li>
+                                                                                <?php } ?>
+                                                                        <?php } else { ?>
+                                                                                <li class = "bidd_submit"><input type = "text" value = "" id = "bid_value" name = "bid_name" placeholder = "Type Your Bidd Amount"></li>
+                                                                                <li class = "bidd_submit"><a class = "cart1 add_to_bid" id = "<?= $products->id; ?>">Seal Your Price</a></li>
+                                                                                <li class = "already_bid"></li>
+                                                                        <?php }
+                                                                        ?>
+                                                                        <?php
+                                                                } else {
+                                                                        ?>
+                                                                        <li><a class="cart1 " href="<?php echo Yii::app()->request->baseUrl; ?>/index.php/site/login"  id="<?= $products->id; ?>">Login to Bidding</a></li>
+                                                                <?php } ?>
+
                                                         <?php } else { ?>
                                                                 <input type = "hidden" value = "<?= $products->canonical_name; ?>" id="cano_name_<?= $products->id; ?>" name="cano_name">
                                                                 <li><a class="cart2" target="_blank" href="<?php echo $products->deal_link; ?>">Buy Now</a></li>
@@ -275,10 +319,14 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
                                                         $j = $total_rating;
                                                         $k = 5 - $j;
                                                         ?>
-                                                        <?php for ($i = 1; $i <= $j; $i++) { ?>
+                                                        <?php
+                                                        for ($i = 1; $i <= $j; $i++) {
+                                                                ?>
                                                                 <li><i class="fa stars fa-star"></i></li>
                                                         <?php } ?>
-                                                        <?php for ($i = 1; $i <= $k; $i++) { ?>
+                                                        <?php
+                                                        for ($i = 1; $i <= $k; $i++) {
+                                                                ?>
                                                                 <li><i class="fa stars fa-star-o"></i></li>
                                                         <?php } ?>
                                                 </ul>
@@ -360,10 +408,14 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
                                                         $j = $product_review->rating;
                                                         $k = 5 - $j;
                                                         ?>
-                                                        <?php for ($i = 1; $i <= $j; $i++) { ?>
+                                                        <?php
+                                                        for ($i = 1; $i <= $j; $i++) {
+                                                                ?>
                                                                 <li><i class="fa stars fa-star"></i></li>
                                                         <?php } ?>
-                                                        <?php for ($i = 1; $i <= $k; $i++) { ?>
+                                                        <?php
+                                                        for ($i = 1; $i <= $k; $i++) {
+                                                                ?>
                                                                 <li><i class="fa stars fa-star-o"></i></li>
                                                         <?php } ?>
                                                 </ul>
@@ -610,6 +662,44 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
 
 <script>
 
+        $(".add_to_bid").click(function () {
+
+                var id = $(this).attr('id');
+                var bid_amount = $("#bid_value").val();
+                var product_price = <?php echo Yii::app()->Discount->DiscountAmount($products); ?>;
+                if (bid_amount < product_price) {
+                        alert('Bidd Amount Shoud be grater than Product Price');
+                        return false;
+                }
+                $.ajax({
+                        type: "POST",
+                        url: baseurl + 'Products/AddToBidd',
+                        data: {id: id, bid_amount: bid_amount}
+                }).done(function (data) {
+                        if (data == 3) {
+
+                                alert('Somthing Error on your submission.Please Try Again');
+                                return false;
+                        } else if (data == 1) {
+                                $(".bidd_submit").hide();
+                                $(".already_bid").html("<a class='cart1'>Successfully Seal your Bidd</a>");
+                        } else if (data == 2 || data == 4) {
+                                alert('Somthing Error on your submission. Please Try Again');
+                                return false;
+                        }
+                        hideLoader();
+                });
+        });
+        $(".proceed_to_checkout").click(function () {
+
+                var id = $(this).attr('id');
+                var canname = $("#cano_name_" + id).val();
+                var qty = 1;
+                var option_color = 0;
+                var option_size = 0;
+                var master_option = 0;
+                proceedcheckout(canname, qty, option_color = null, option_size = null, master_option = null);
+        });
         $(".add_to_cart").click(function () {
 
                 var id = $(this).attr('id');
@@ -640,17 +730,40 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
 
                                 $('.option_errors').html('<p>Invalid Product.Please try again</p>').show();
                         } else {
-
                                 $('.option_errors').html("").hide();
-//                                getcartcount();
-//                                getcarttotal();
-                                // $(".cart_box").show();
                                 $(".cart_box").html(data);
                                 $('#successcart').modal('show');
-                                // $("html, body").animate({scrollTop: 0}, "slow");
-//                                setInterval(function () {
-//                                        $(".cart_box").hide("slow");
-//                                }, 1000);
+                        }
+                        hideLoader();
+                });
+        }
+        function proceedcheckout(canname, qty, option_color, option_size, master_option) {
+
+                if (option_color === undefined) {
+                        option_color = null;
+                }
+                if (option_size === undefined) {
+                        option_size = null;
+                }
+                if (master_option === undefined) {
+                        master_option = null;
+                }
+                $.ajax({
+                        type: "POST",
+                        url: baseurl + 'cart/BuyBargain',
+                        data: {cano_name: canname, qty: qty, option_color: option_color, option_size: option_size, master_option: master_option}
+                }).done(function (data) {
+
+                        if (data == 10) {
+                                $('.option_errors').html('This Product Not Available');
+                        } else if (data == 1) {
+                                window.location.href = baseurl + "Cart/Mycart";
+                        } else if (data == 2) {
+                                $('.option_errors').html('Somthing Wrong Occured. Plrease Try Again');
+                        } else if (data == 8) {
+                                $('.option_errors').html('This Product you Already added to cart.Please Proceed to Checkout');
+                        } else if (data == 11) {
+                                $('.option_errors').html('You Dont have permission to checkout this product');
                         }
                         hideLoader();
                 });

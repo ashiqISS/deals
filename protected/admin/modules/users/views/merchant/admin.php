@@ -25,34 +25,34 @@
                             'filter' => $model,
                             'columns' => array(
                                 //  'id',
-                                'fullname',
+                                'first_name',
                                 'email',
                                 'phone_number',
                                 array(
                                     'name' => 'merchant_type',
                                     'value' => function($data) {
-                                    if ($data->merchant_type == 1) {
-                                            return "Wholesale";
-                                    } elseif ($data->merchant_type == 0) {
-                                            return "Retail";
-                                    } else {
-                                            return "Invalid";
-                                    }
-                            },
+                                            if ($data->merchant_type == 1) {
+                                                    return "Wholesale";
+                                            } elseif ($data->merchant_type == 0) {
+                                                    return "Retail";
+                                            } else {
+                                                    return "Invalid";
+                                            }
+                                    },
                                     'filter' => array('1' => "Wholesale", '0' => "Retail")
                                 ),
                                 array(
                                     'name' => 'product_categories',
                                     'value' => function($data) {
-                                    $cats = explode(',', $data->product_categories);
-                                    $catt = '';
-                                    foreach ($cats as $cat) {
-                                            unset($_SESSION['category']);
-                                            $category = ProductCategory::model()->findByPk($cat);
-                                            $catt .= Yii::app()->category->selectCategories($category) . ', ';
-                                    }
-                                    return $catt;
-                            },
+                                            $cats = explode(',', $data->product_categories);
+                                            $catt = '';
+                                            foreach ($cats as $cat) {
+                                                    unset($_SESSION['category']);
+                                                    $category = ProductCategory::model()->findByPk($cat);
+                                                    $catt .= Yii::app()->category->selectCategories($category) . ', ';
+                                            }
+                                            return $catt;
+                                    },
                                 ),
                                 'state',
                                 'last_login',

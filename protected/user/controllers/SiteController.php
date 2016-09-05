@@ -38,7 +38,7 @@ class SiteController extends Controller {
                 $pages->pageSize = 8;
                 $pages->applyLimit($criteria);
                 $date = date('Y-m-d');
-                $criteria->addCondition("status = 1 AND is_admin_approved = 1 AND '" . $date . "' >= new_from AND  '" . $date . "' <= new_to ");
+                $criteria->addCondition("status = 1 AND is_admin_approved = 1 AND '" . $date . "' >= new_from AND  '" . $date . "' <= new_to AND ( '" . $date . "' >= sale_from AND  '" . $date . "' <= sale_to) ");
                 $products = Products::model()->findAll($criteria);
 
                 $this->render('index', array(
