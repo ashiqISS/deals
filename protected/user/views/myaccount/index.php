@@ -112,16 +112,19 @@
                                                                 <span class="industry">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                                                                         Lorem Ipsum has been the industry's standard .</span>
                                                         </div>
-                                                        <div class="been">
-                                                                <a href="#"> <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/g1.png"></a>
-                                                                <a href="#"> <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/g2.png"></a>
-                                                                <a href="#"> <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/g3.png"></a>
-                                                        </div>
-                                                        <div class="clearfix"></div>
-                                                        <div class="type">
-                                                                <a href="#" class="up2 hvr-radial-out">Upgrade</a>
-                                                                <a href="#" class="up1 hvr-radial-out">Message</a>
-                                                        </div>
+                                                        <?php if (Yii::app()->session['merchant']) { ?>
+                                                                <div class="been">
+                                                                        <a href="#"> <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/g1.png"></a>
+                                                                        <a href="#"> <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/g2.png"></a>
+                                                                        <a href="#"> <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/g3.png"></a>
+                                                                </div>
+
+                                                                <div class="clearfix"></div>
+                                                                <div class="type">
+                                                                        <a href="#" class="up2 hvr-radial-out">Upgrade</a>
+                                                                        <a href="#" class="up1 hvr-radial-out">Message</a>
+                                                                </div>
+                                                        <?php } ?>
                                                 </div>
                                         </div>
 
@@ -130,7 +133,7 @@
 
                                         <div class="clearfix"></div>
                                         <?php if (Yii::app()->session['user']) { ?>
-                                                <span class="recentorders">My Recent Orders</span>
+                                                <span class="recentorders"> Recent Orders</span>
 
                                                 <div class="panel-group his" id="accordion">
                                                         <?php if (!empty($order)) { ?>

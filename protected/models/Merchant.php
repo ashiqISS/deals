@@ -64,6 +64,8 @@ class Merchant extends CActiveRecord {
                     array('email, phone_number', 'unique', 'on' => 'create'),
                     // check for email format
                     array('email', 'email', 'on' => 'create'),
+                    array('email', 'email', 'on' => 'settings'),
+                    array('first_name, last_name,email,phone_number', 'required', 'on' => 'settings'),
                     // password validation
                     array('password, confirm', 'length', 'min' => 6, 'max' => 40),
                     array('password, confirm', 'compare', 'compareAttribute' => 'confirm', 'message' => 'Password and Confirm Password should match.'),

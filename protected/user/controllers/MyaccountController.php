@@ -147,7 +147,7 @@ class MyaccountController extends Controller {
                 }
         }
 
-        public function actionSettings() {
+        public function actionUserSettings() {
                 if (!isset(Yii::app()->session['user']) && !isset(Yii::app()->session['merchant'])) {
                         $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/login');
                 } else {
@@ -172,14 +172,36 @@ class MyaccountController extends Controller {
                                                 $this->redirect(Yii::app()->request->urlReferrer);
                                         }
                                 }
-                        } if (Yii::app()->session['merchant']) {
-                                $user_id = Yii::app()->session['merchant']['id'];
-                                $model = $this->loadModelMerchant($user_id);
-                                $model->setScenario('settings');
-                                $model = Merchant::model()->findByPk(Yii::app()->session['merchant']['id']);
                         }
                         $this->render('account_settings', array('model' => $model));
                 }
+        }
+
+        public function actionVendorSettings() {
+                if (!isset(Yii::app()->session['user']) && !isset(Yii::app()->session['merchant'])) {
+                        $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/login');
+                } else {
+                        if (Yii::app()->session['merchant']) {
+                                $user_id = Yii::app()->session['merchant']['id'];
+                                $vendor = $this->loadModelMerchant($user_id);
+                                $vendor->setScenario('settings');
+                                if (isset($_POST['btn_submit'])) {
+                                        $vendor->attributes = $_POST['Merchant'];
+                                        $vendor->pincode = $_POST['Merchant']['pincode'];
+                                        $vendor->country = $_POST['Merchant']['country'];
+                                        $vendor->state = $_POST['Merchant']['state'];
+                                        $vendor->city = $_POST['Merchant']['city'];
+                                        if ($vendor->save(false)) {
+                                                Yii::app()->user->setFlash('success', "your account  has been  successfully updated");
+                                                $this->redirect(Yii::app()->request->urlReferrer);
+                                        } else {
+                                                Yii::app()->user->setFlash('error', "Error Occured");
+                                                $this->redirect(Yii::app()->request->urlReferrer);
+                                        }
+                                }
+                        }
+                }
+                $this->render('vendor_account_settings', array('vendor' => $vendor));
         }
 
         public function loadModelUser($id) {
