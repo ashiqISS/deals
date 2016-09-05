@@ -15,10 +15,11 @@ class MyaccountController extends Controller {
                                 $deal = DealSubmission::model()->findAllByAttributes(array('user_id' => Yii::app()->session['user']['id']), array('order' => 'doc DESC'));
                                 $order = Order::model()->findAllByAttributes(array('user_id' => Yii::app()->session['user']['id']), array('order' => 'DOC DESC'));
                         } if (Yii::app()->session['merchant']) {
+                                $sale = OrderProducts::model()->findAllByAttributes(array('merchant_id' => Yii::app()->session['merchant']['id']), array('order' => 'DOC DESC'));
                                 $model = Merchant::model()->findByPk(Yii::app()->session['merchant']['id']);
                                 $deal = DealSubmission::model()->findAllByAttributes(array('user_id' => Yii::app()->session['merchant']['id']), array('order' => 'doc DESC'));
                         }
-                        $this->render('index', array('model' => $model, 'deal' => $deal, 'order' => $order));
+                        $this->render('index', array('model' => $model, 'deal' => $deal, 'order' => $order, 'sale' => $sale));
                 }
         }
 

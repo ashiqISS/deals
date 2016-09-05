@@ -129,169 +129,164 @@
 
 
                                         <div class="clearfix"></div>
+                                        <?php if (Yii::app()->session['user']) { ?>
+                                                <span class="recentorders">My Recent Orders</span>
 
-                                        <span class="recentorders">My Recent Orders</span>
+                                                <div class="panel-group his" id="accordion">
+                                                        <?php if (!empty($order)) { ?>
+                                                                <?php
+                                                                foreach ($order as $myorder) {
+                                                                        ?>
+                                                                        <div class="panel panel-default">
+                                                                                <div class="panel-heading c1">
 
-                                        <div class="panel-group his" id="accordion">
-                                                <?php if (!empty($order)) { ?>
-                                                        <?php
-                                                        foreach ($order as $myorder) {
-                                                                ?>
-                                                                <div class="panel panel-default">
-                                                                        <div class="panel-heading c1">
+                                                                                        <a class="accordion-toggle min collapsed" data-toggle="collapse" data-parent="#accordion" href="#n1" aria-expanded="false"><h4 class="panel-title">
+                                                                                                        <i class="fa dow fa-angle-right"></i>
 
-                                                                                <a class="accordion-toggle min collapsed" data-toggle="collapse" data-parent="#accordion" href="#n1" aria-expanded="false"><h4 class="panel-title">
-                                                                                                <i class="fa dow fa-angle-right"></i>
-
-                                                                                                <ul>
-                                                                                                        <li>Order ID: <?= $myorder->id; ?></li>
-                                                                                                        <?php
-                                                                                                        $order_produtcs = OrderProducts::model()->findByPk($myorder->id);
-                                                                                                        $products = Products::model()->findByPk($order_produtcs->product_id);
-                                                                                                        ?>
-                                                                                                        <li class="hidden-xs"><?= $products->product_name; ?></li>
-                                                                                                        <li><?php
-                                                                                                                if ($myorder->status == 0) {
-                                                                                                                        echo 'Not Placed';
-                                                                                                                } elseif ($myorder->status == 1) {
-                                                                                                                        echo 'Not Delivered';
-                                                                                                                } elseif ($myorder->status == 2) {
-                                                                                                                        echo 'Success';
-                                                                                                                } elseif ($myorder->status == 3) {
-                                                                                                                        echo 'Failed';
-                                                                                                                } else {
-                                                                                                                        echo 'Error';
-                                                                                                                }
+                                                                                                        <ul>
+                                                                                                                <li>Order ID: <?= $myorder->id; ?></li>
+                                                                                                                <?php
+                                                                                                                $order_produtcs = OrderProducts::model()->findByPk($myorder->id);
+                                                                                                                $products = Products::model()->findByPk($order_produtcs->product_id);
                                                                                                                 ?>
-                                                                                                        </li>
-                                                                                                </ul>
+                                                                                                                <li class="hidden-xs"><?= $products->product_name; ?></li>
+                                                                                                                <li><?php
+                                                                                                                        if ($myorder->status == 0) {
+                                                                                                                                echo 'Not Placed';
+                                                                                                                        } elseif ($myorder->status == 1) {
+                                                                                                                                echo 'Not Delivered';
+                                                                                                                        } elseif ($myorder->status == 2) {
+                                                                                                                                echo 'Success';
+                                                                                                                        } elseif ($myorder->status == 3) {
+                                                                                                                                echo 'Failed';
+                                                                                                                        } else {
+                                                                                                                                echo 'Error';
+                                                                                                                        }
+                                                                                                                        ?>
+                                                                                                                </li>
+                                                                                                        </ul>
 
 
 
-                                                                                        </h4>
-                                                                                </a>
-
-                                                                        </div>
-                                                                        <div id="n1" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-                                                                                <div class="panel-body wall">
-
-                                                                                        <div class="div-main hidden-xs">
-                                                                                                <div class="div-11">
-                                                                                                        <h3>Product Name</h3>
-                                                                                                </div>
-                                                                                                <div class="div-2">
-                                                                                                        <h3>Date</h3>
-                                                                                                </div>
-                                                                                                <div class="div-3">
-                                                                                                        <h3>Status</h3>
-                                                                                                </div>
-                                                                                        </div>
-
-
-                                                                                        <div class="div-main">
-                                                                                                <div class="div-4">
-                                                                                                        <div class="part-11">
-                                                                                                                <?php $folder = Yii::app()->Upload->folderName(0, 1000, $products->id); ?>
-                                                                                                                <img class="catz" src="<?php echo Yii::app()->baseUrl . '/uploads/products/' . $folder . '/' . $products->id . '/main.' . $products->main_image ?>">
-                                                                                                        </div>
-                                                                                                        <div class="part-22">
-                                                                                                                <form class="form-inline" role="form">
-                                                                                                                        <label class="weight">Quantity</label>
-                                                                                                                        <div class="form-group">
-
-                                                                                                                                <select class="quan" name="carlist" form="carform">
-                                                                                                                                        <option value="volvo"><?php echo $order_produtcs->quantity; ?></option>
-                                                                                                                                </select>
-                                                                                                                        </div>
-
-
-                                                                                                                </form>
-                                                                                                                <h6>Unit Price <span class="unit"><i class="fa rup fa-rupee"></i><?php echo $products->price; ?></span></h6>
-
-                                                                                                        </div>
-                                                                                                </div>
-                                                                                                <div class="div-5">
-                                                                                                        <h3> <?php echo date(" F j, Y", strtotime(date($myorder->order_date))); ?></h3>
-                                                                                                </div>
-                                                                                                <div class="div-6">
-                                                                                                        <h3><?php
-                                                                                                                if ($myorder->status == 0) {
-                                                                                                                        echo 'Not Placed';
-                                                                                                                } elseif ($myorder->status == 1) {
-                                                                                                                        echo 'Not Delivered';
-                                                                                                                } elseif ($myorder->status == 2) {
-                                                                                                                        echo 'Success';
-                                                                                                                } elseif ($myorder->status == 3) {
-                                                                                                                        echo 'Failed';
-                                                                                                                } else {
-                                                                                                                        echo 'Error';
-                                                                                                                }
-                                                                                                                ?></h3>
-                                                                                                </div>
-                                                                                        </div>
-
-
+                                                                                                </h4>
+                                                                                        </a>
 
                                                                                 </div>
+                                                                                <div id="n1" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                                                                        <div class="panel-body wall">
+
+                                                                                                <div class="div-main hidden-xs">
+                                                                                                        <div class="div-11">
+                                                                                                                <h3>Product Name</h3>
+                                                                                                        </div>
+                                                                                                        <div class="div-2">
+                                                                                                                <h3>Date</h3>
+                                                                                                        </div>
+                                                                                                        <div class="div-3">
+                                                                                                                <h3>Status</h3>
+                                                                                                        </div>
+                                                                                                </div>
+
+
+                                                                                                <div class="div-main">
+                                                                                                        <div class="div-4">
+                                                                                                                <div class="part-11">
+                                                                                                                        <h2><?= $products->product_name; ?></h2>
+                                                                                                                        <?php $folder = Yii::app()->Upload->folderName(0, 1000, $products->id); ?>
+                                                                                                                        <img class="catz" src="<?php echo Yii::app()->baseUrl . '/uploads/products/' . $folder . '/' . $products->id . '/main.' . $products->main_image ?>">
+                                                                                                                </div>
+                                                                                                                <div class="part-22">
+                                                                                                                        <form class="form-inline" role="form">
+                                                                                                                                <label class="weight">Quantity</label>
+                                                                                                                                <div class="form-group">
+                                                                                                                                        <select class="quan" name="carlist" form="carform">
+                                                                                                                                                <option value="volvo"><?php echo $order_produtcs->quantity; ?></option>
+                                                                                                                                        </select>
+                                                                                                                                </div>
+
+
+                                                                                                                        </form>
+                                                                                                                        <h6>Unit Price <span class="unit"><i class="fa rup fa-rupee"></i><?php echo $products->price; ?></span></h6>
+
+                                                                                                                </div>
+                                                                                                        </div>
+                                                                                                        <div class="div-5">
+                                                                                                                <h3> <?php echo date(" F j, Y", strtotime(date($myorder->order_date))); ?></h3>
+                                                                                                        </div>
+                                                                                                        <div class="div-6">
+                                                                                                                <h3><?php
+                                                                                                                        if ($myorder->status == 0) {
+                                                                                                                                echo 'Not Placed';
+                                                                                                                        } elseif ($myorder->status == 1) {
+                                                                                                                                echo 'Not Delivered';
+                                                                                                                        } elseif ($myorder->status == 2) {
+                                                                                                                                echo 'Success';
+                                                                                                                        } elseif ($myorder->status == 3) {
+                                                                                                                                echo 'Failed';
+                                                                                                                        } else {
+                                                                                                                                echo 'Error';
+                                                                                                                        }
+                                                                                                                        ?></h3>
+                                                                                                        </div>
+                                                                                                </div>
+
+
+
+                                                                                        </div>
+                                                                                </div>
                                                                         </div>
+                                                                        <?php
+                                                                }
+                                                                ?>
+                                                        <?php } ?>
+                                                </div>
+                                        <?php } ?>
+                                        <div class="clearfix"></div>
+                                        <?php if (Yii::app()->session['merchant']) { ?>
+                                                <?php if (!empty($sale)) { ?>
+
+                                                        <span class="recentorders">Recent sale report</span>
+                                                        <div class="comm">
+
+                                                                <div class="commission-1">
+                                                                        <div class="head-1"><h2>Product Name</h2></div>
+                                                                        <div class="head-1"><h2> Order Date</h2></div>
+                                                                        <div class="head-1"><h2>Price</h2></div>
+                                                                        <div class="head-1"><h2>Quantity</h2></div>
+                                                                        <div class="head-1"><h2>Status</h2></div>
+
                                                                 </div>
                                                                 <?php
-                                                        }
+                                                                foreach ($sale as $sales) {
+                                                                        $order_id = Order::model()->findByAttributes(array('id' => $sales->order_id));
+                                                                        $products_name = Products::model()->findByAttributes(array('id' => $sales->product_id));
+                                                                        ?>
+                                                                        <div class="commission-2">
+                                                                                <div class="head-1"><h2><?= $products_name->product_name; ?></h2></div>
+                                                                                <div class="head-1"><h2><?= date('d - m - Y', strtotime($order_id->order_date)); ?></h2></div>
+                                                                                <div class="head-1"><h2><?= $products_name->price; ?></h2></div>
+                                                                                <div class="head-1"><h2><?= $sales->quantity; ?></h2></div>
+                                                                                <div class="head-1"><h2><?php
+                                                                                                if ($order_id->status == 0) {
+                                                                                                        echo 'Not Placed';
+                                                                                                } elseif ($order_id->status == 1) {
+                                                                                                        echo 'Not Delivered';
+                                                                                                } elseif ($order_id->status == 2) {
+                                                                                                        echo 'Success';
+                                                                                                } elseif ($order_id->status == 3) {
+                                                                                                        echo 'Failed';
+                                                                                                } else {
+                                                                                                        echo 'Error';
+                                                                                                }
+                                                                                                ?></h2></div>
+                                                                        </div>
+                                                                <?php }
+                                                                ?>
+                                                        <?php }
                                                         ?>
-                                                <?php } ?>
-                                        </div>
-                                        <div class="clearfix"></div>
-
-                                        <span class="recentorders">Recent sale report</span>
-
-                                        <div class="comm">
-
-                                                <div class="commission-1">
-                                                        <div class="head-1"><h2>Amount</h2></div>
-                                                        <div class="head-1"><h2>Date</h2></div>
-                                                        <div class="head-1"><h2>Purpose</h2></div>
-                                                        <div class="head-1"><h2>Debit or credit</h2></div>
-                                                        <div class="head-1"><h2>Status</h2></div>
-
                                                 </div>
 
-                                                <div class="commission-2">
-                                                        <div class="head-1"><h2>DLS 44</h2></div>
-                                                        <div class="head-1"><h2>Lorem Ipsum</h2></div>
-                                                        <div class="head-1"><h2>$560.00</h2></div>
-                                                        <div class="head-1"><h2>26-07-2016</h2></div>
-                                                        <div class="head-1"><h2>28-07-2016</h2></div>
-
-                                                </div>
-
-                                                <div class="commission-2">
-                                                        <div class="head-1"><h2>DLS 44</h2></div>
-                                                        <div class="head-1"><h2>Lorem Ipsum</h2></div>
-                                                        <div class="head-1"><h2>$560.00</h2></div>
-                                                        <div class="head-1"><h2>26-07-2016</h2></div>
-                                                        <div class="head-1"><h2>28-07-2016</h2></div>
-
-                                                </div>
-
-                                                <div class="commission-2">
-                                                        <div class="head-1"><h2>DLS 44</h2></div>
-                                                        <div class="head-1"><h2>Lorem Ipsum</h2></div>
-                                                        <div class="head-1"><h2>$560.00</h2></div>
-                                                        <div class="head-1"><h2>26-07-2016</h2></div>
-                                                        <div class="head-1"><h2>28-07-2016</h2></div>
-
-                                                </div>
-
-                                                <div class="commission-2">
-                                                        <div class="head-1"><h2>DLS 44</h2></div>
-                                                        <div class="head-1"><h2>Lorem Ipsum</h2></div>
-                                                        <div class="head-1"><h2>$560.00</h2></div>
-                                                        <div class="head-1"><h2>26-07-2016</h2></div>
-                                                        <div class="head-1"><h2>28-07-2016</h2></div>
-
-                                                </div>
-
-                                        </div>
+                                        <?php } ?>
                                         <div class="clearfix"></div>
                                         <?php if (!empty($deal)) { ?>
                                                 <span class="recentorders">My Deal Products</span>

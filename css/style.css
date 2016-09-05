@@ -170,7 +170,7 @@ a.min {
         border-right: 1px solid #ccc;
         padding-left: 20px;
         padding-top: 6px;
-        padding-bottom: 6px;
+        padding-bottom: 14px;
 }
 .div-5 {
         float: left;
@@ -2193,6 +2193,8 @@ a.forget {
         padding-top: 0px;
         padding-bottom: 0px;
         margin-top: 0;
+        padding-left: 12px;
+
 }
 .order-history h1 {
         font-weight: 500;
