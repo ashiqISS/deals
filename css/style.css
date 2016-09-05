@@ -37,7 +37,19 @@ img {
         max-width: 100%;
         height: auto;
 }
-
+input#bid_value {
+        height: 50px;
+        font-size: 17px;
+        padding: 2px 8px;
+}
+h4.option_errors {
+        color: #e01313;
+        font-size: 16px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        /* padding: 11px; */
+        /* background: #08671e; */
+}
 .btn.btn-info.btn-lg.success-msg {
         background-color: #000;
         border: 0;
