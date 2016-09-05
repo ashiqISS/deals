@@ -18,6 +18,8 @@
                 $active7 = 'active';
         } else if ($active_menu == 'myaccount/Newsletter') {
                 $active8 = 'active';
+        } else if ($active_menu == 'myaccount/UserOrderHistory' || 'myaccount/VendorOrderHistory') {
+                $active9 = 'active';
         }
         ?>
         <li class="<?= $active1; ?>"><?php echo CHtml::link('My Profile', array('Myaccount/index')); ?></li>
@@ -29,7 +31,12 @@
         <?php if (Yii::app()->session['merchant']) { ?>
                 <li class="<?= $active3; ?>"><?php echo CHtml::link('Account settings', array('Myaccount/VendorSettings')); ?></li>
         <?php } ?>
-        <li><a href="#">Order History</a></li>
+        <?php if (Yii::app()->session['user']) { ?>
+                <li class="<?= $active9; ?>"><?php echo CHtml::link('Order History', array('Myaccount/UserOrderHistory')); ?></li>
+        <?php } ?>
+        <?php if (Yii::app()->session['merchant']) { ?>
+                <li class="<?= $active9; ?>"><?php echo CHtml::link('Order History', array('Myaccount/VendorOrderHistory')); ?></li>
+        <?php } ?>
         <li class="<?= $active4; ?>"><?php echo CHtml::link('Address Book', array('Myaccount/AddressBook')); ?></li>
         <?php if (Yii::app()->session['merchant']) { ?>
                 <li class="<?= $active5; ?>"><?php echo CHtml::link('Add Products', array('Products/AddProducts')); ?></li>

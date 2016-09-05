@@ -2,12 +2,11 @@
 
         <?php
         $active_menu = Yii::app()->controller->id . '/' . Yii::app()->controller->action->id;
-        echo $active_menu;
         if ($active_menu == 'myaccount/index') {
                 $active1 = 'active';
         } else if ($active_menu == 'myaccount/ResetPassword') {
                 $active2 = 'active';
-        } else if ($active_menu == 'myaccount/Settings || myaccount/VendorSettings') {
+        } else if ($active_menu == 'myaccount/UserSettings' || $active_menu == 'myaccount/VendorSettings') {
                 $active3 = 'active';
         } else if ($active_menu == 'myaccount/AddressBook') {
                 $active4 = 'active';
@@ -19,6 +18,8 @@
                 $active7 = 'active';
         } else if ($active_menu == 'myaccount/Newsletter') {
                 $active8 = 'active';
+        } else if ($active_menu == 'myaccount/UserOrderHistory' || 'myaccount/VendorOrderHistory') {
+                $active9 = 'active';
         }
         ?>
         <li class="<?= $active1; ?>"><?php echo CHtml::link('My Profile', array('Myaccount/index')); ?></li>
@@ -30,7 +31,12 @@
         <?php if (Yii::app()->session['merchant']) { ?>
                 <li class="<?= $active3; ?>"><?php echo CHtml::link('Account settings', array('Myaccount/VendorSettings')); ?></li>
         <?php } ?>
-        <li><a href="#">Order History</a></li>
+        <?php if (Yii::app()->session['user']) { ?>
+                <li class="<?= $active9; ?>"><?php echo CHtml::link('Order History', array('Myaccount/UserOrderHistory')); ?></li>
+        <?php } ?>
+        <?php if (Yii::app()->session['merchant']) { ?>
+                <li class="<?= $active9; ?>"><?php echo CHtml::link('Order History', array('Myaccount/VendorOrderHistory')); ?></li>
+        <?php } ?>
         <li class="<?= $active4; ?>"><?php echo CHtml::link('Address Book', array('Myaccount/AddressBook')); ?></li>
         <?php if (Yii::app()->session['merchant']) { ?>
                 <li class="<?= $active5; ?>"><?php echo CHtml::link('Add Products', array('Products/AddProducts')); ?></li>
@@ -47,7 +53,6 @@
         <li><a href="#"> Plan details</a></li>
         <!--<li><a href="#"> Affiliate commission</a></li>-->
         <!--<li><a href="#"> Reward points</a></li>-->
-
         <li><a href="#">Used and refurbished (Return products)</a></li>
         <li><a href="#"> Paid Ad</a></li>
         <li><a href="#"> Bargain zone</a></li>
