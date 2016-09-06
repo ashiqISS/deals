@@ -272,8 +272,6 @@ class MyaccountController extends Controller {
                 } else {
                         if (Yii::app()->session['user']) {
                                 $model = Order::model()->findAllByAttributes(array('user_id' => Yii::app()->session['user']['id']));
-//                                var_dump($model);
-//                                exit;
                         }
                 }
                 $this->render('user_order_history', array('model' => $model));
@@ -288,6 +286,17 @@ class MyaccountController extends Controller {
                         }
                 }
                 $this->render('vendor_order_history', array('model' => $model));
+        }
+
+        public function actionMySalesReport() {
+                if (!isset(Yii::app()->session['user']) && !isset(Yii::app()->session['merchant'])) {
+                        $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/login');
+                } else {
+                        if (Yii::app()->session['merchant']) {
+                                $model = OrderProducts::model()->findAllByAttributes(array('merchant_id' => Yii::app()->session['merchant']['id']));
+                        }
+                }
+                $this->render('sales_report', array('model' => $model));
         }
 
 }

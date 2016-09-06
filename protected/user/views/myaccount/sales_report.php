@@ -1,6 +1,7 @@
 
 
 
+
 <link href="<?= Yii::app()->baseUrl ?>/css/hover.css" rel="stylesheet" media="all">
 <section class="title">
         <div class="container">
@@ -59,11 +60,10 @@
 
                                                 <div class="commission-1">
                                                         <div class="head-1"><h2>Order ID</h2></div>
+                                                        <div class="head-1"><h2>Customer Name</h2></div>
                                                         <div class="head-1"><h2>Product Name</h2></div>
                                                         <div class="head-1"><h2>Amount</h2></div>
                                                         <div class="head-1"><h2>Date of order placed</h2></div>
-                                                        <div class="head-1"><h2>Customer Name</h2></div>
-                                                        <!--<div class="head-1"><h2>Payment</h2></div>-->
                                                         <div class="head-1"><h2>Quantity</h2></div>
                                                 </div>
                                                 <?php
@@ -74,25 +74,14 @@
                                                         ?>
                                                         <div class="commission-2">
                                                                 <div class="head-1"><h2>ID-<?= $order_produ->id; ?></h2></div>
-                                                                <div class="head-1"><h2><?= $order_products->product_name; ?></h2></div>
-                                                                <div class="head-1"><h2><?= $order_produ->total_amount; ?></h2></div>
-                                                                <div class="head-1"><h2><?= date('d-m-Y', strtotime($order_produ->order_date)); ?></h2></div>
                                                                 <?php if ($order_produ->user_id == '' || $order_produ->user_id == 0) { ?>
                                                                         <div class="head-1"><h2>Unknown</h2></div>
                                                                 <?php } else { ?>
                                                                         <div class="head-1"><h2><?= $user->first_name; ?> <?= $user->last_name; ?></h2></div>
                                                                 <?php } ?>
-                                                                <div class="head-1"><h2><?php
-//                                                                                if ($order_produ->status == 0) {
-//                                                                                        echo 'Not Payed';
-//                                                                                } elseif ($order_produ->status == 1) {
-//                                                                                        echo 'Payment Success';
-//                                                                                } elseif ($order_produ->status == 2) {
-//                                                                                        echo 'Payment Failed';
-//                                                                                } else {
-//                                                                                        echo 'Error';
-//                                                                                }
-                                                                                ?></h2></div>
+                                                                <div class="head-1"><h2><?= $order_products->product_name; ?></h2></div>
+                                                                <div class="head-1"><h2><?= $order_produ->total_amount; ?></h2></div>
+                                                                <div class="head-1"><h2><?= date('d-m-Y', strtotime($order_produ->order_date)); ?></h2></div>
                                                                 <div class="head-1"><h2><?= $order->quantity; ?></h2></div>
                                                         </div>
                                                 <?php } ?>

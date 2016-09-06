@@ -20,6 +20,8 @@
                 $active8 = 'active';
         } else if ($active_menu == 'myaccount/UserOrderHistory' || 'myaccount/VendorOrderHistory') {
                 $active9 = 'active';
+        } else if ($active_menu == 'myaccount/MySalesReport') {
+                $active10 = 'active';
         }
         ?>
         <li class="<?= $active1; ?>"><?php echo CHtml::link('My Profile', array('Myaccount/index')); ?></li>
@@ -47,7 +49,9 @@
 
         <li><a href="#">Set interest deals/ wish listed deals</a></li>
         <li class="<?= $active7; ?>"><?php echo CHtml::link('Submit a deal/ product', array('Myaccount/SubmitDeal')); ?></li>
-        <li><a href="#">My sales Report </a></li>
+        <?php if (Yii::app()->session['merchant']) { ?>
+                <li class="<?= $active10; ?>"><?php echo CHtml::link('My sales Report/ product', array('Myaccount/MySalesReport')); ?></li>
+        <?php } ?>
         <li><a href="#"> Transaction</a></li>
         <li><a href="#"> Payment/Payout</a></li>
         <li><a href="#"> Plan details</a></li>

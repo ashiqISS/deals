@@ -63,21 +63,33 @@
                                                         <div class="head-1"><h2>Amount</h2></div>
                                                         <div class="head-1"><h2>Date of order placed</h2></div>
                                                         <div class="head-1"><h2>Customer Name</h2></div>
+                                                        <div class="head-1"><h2>Payment Status</h2></div>
                                                         <div class="head-1"><h2>Quantity</h2></div>
                                                 </div>
                                                 <?php
                                                 foreach ($model as $order) {
                                                         $user = BuyerDetails::model()->findByPk($order->user_id);
-//                                                        $order_produ = Order::model()->findByPk($order->order_id);
-//                                                        $order_products = Products::model()->findByPk($order->product_id);
+                                                        $order_produ = OrderProducts::model()->findByAttributes(array('order_id' => $order->id));
+                                                        $order_products = Products::model()->findByPk($order_produ->product_id);
                                                         ?>
                                                         <div class="commission-2">
-                                                                <div class="head-1"><h2>ID-<?= $order_produ->id; ?></h2></div>
+                                                                <div class="head-1"><h2>ID-<?= $order->id; ?></h2></div>
                                                                 <div class="head-1"><h2><?= $order_products->product_name; ?></h2></div>
-                                                                <div class="head-1"><h2><?= $order_produ->total_amount; ?></h2></div>
-                                                                <div class="head-1"><h2><?= date('d-m-Y', strtotime($order_produ->order_date)); ?></h2></div>
-                                                                <div class="head-1"><h2><?= $order->quantity; ?></h2></div>
-                                                                <div class="head-1"><h2><?= $order->quantity; ?></h2></div>
+                                                                <div class="head-1"><h2><?= $order->total_amount; ?></h2></div>
+                                                                <div class="head-1"><h2><?= date('d-m-Y', strtotime($order->order_date)); ?></h2></div>
+                                                                <div class="head-1"><h2><?= $user->first_name; ?>  <?= $user->last_name; ?></h2></div>
+                                                                <div class="head-1"><h2><?php
+                                                                                if ($order->status == 0) {
+                                                                                        echo 'Not Payed';
+                                                                                } elseif ($order->status == 1) {
+                                                                                        echo 'Payment Success';
+                                                                                } elseif ($order->status == 2) {
+                                                                                        echo 'Payment Failed';
+                                                                                } else {
+                                                                                        echo 'Error';
+                                                                                }
+                                                                                ?></h2></div>
+                                                                <div class="head-1"><h2><?= $order_produ->quantity; ?></h2></div>
                                                         </div>
                                                 <?php } ?>
                                         </div>
