@@ -230,7 +230,17 @@
                                                                                 <?php echo CHtml::link('Sign Up', array('site/UserRegister'), array('class' => 'hd')); ?>
                                                                         </div>
                                                                 <?php } ?>
-                                                                <?php if (Yii::app()->session['user'] != "" || Yii::app()->session['merchant'] != '') { ?>
+                                                                <?php if (Yii::app()->session['user'] != "") { ?>
+                                                                        <?php if (BuyerDetails::model()->findByPk(Yii::app()->session['user'])->email_verification == 1) { ?>
+                                                                                <div class="sign-3 hidden-xs hidden-sm">
+                                                                                        <?php echo CHtml::link('My Account', array('Myaccount/index'), array('class' => 'hd')); ?>
+                                                                                </div>
+                                                                        <?php } else { ?>
+                                                                                <div class="sign-3 hidden-xs hidden-sm">
+                                                                                        <?php echo CHtml::link('My Account', array('Site/index'), array('class' => 'hd')); ?>
+                                                                                </div>
+                                                                        <?php } ?>
+                                                                <?php } else if (Yii::app()->session['merchant'] != '') { ?>
                                                                         <div class="sign-3 hidden-xs hidden-sm">
                                                                                 <?php echo CHtml::link('My Account', array('Myaccount/index'), array('class' => 'hd')); ?>
                                                                         </div>
@@ -420,7 +430,7 @@
                                                                 <ul class="nav navbar-nav">
                                                                         <li><?php echo CHtml::link('COUPONS', array('products/coupons')); ?></li>
                                                                         <li><?php echo CHtml::link('DAILY DEALS', array('products/Daily')); ?></li>
-                                                                        <li><?php //echo CHtml::link('FLASH DEALS', array('products/Daily'));         ?></li>
+                                                                        <li><?php //echo CHtml::link('FLASH DEALS', array('products/Daily'));               ?></li>
                                                                         <li><?php echo CHtml::link('HOT DEALS', array('products/hot')); ?></li>
                                                                         <li><?php echo CHtml::link('SUBMIT A DEAL', array('myaccount/SubmitDeal')); ?></li>
                                                                         <li><?php echo CHtml::link('WHOLESALE DEALS', array('products/wholesale')); ?></li>

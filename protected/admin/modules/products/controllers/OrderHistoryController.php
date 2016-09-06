@@ -66,13 +66,14 @@ class OrderHistoryController extends Controller {
          */
         public function actionCreate($id) {
                 $model = new OrderHistory;
-
+                $order_product = OrderProducts::model()->findByPk($id);
 // Uncomment the following line if AJAX validation is needed
 // $this->performAjaxValidation($model);
 
                 if (isset($_POST['OrderHistory'])) {
                         $model->attributes = $_POST['OrderHistory'];
-                        $model->order_id = $id;
+                        $model->product_id = $order_product->product_id;
+                        $model->order_id = $order_product->order_id;
                         $model->date = $_POST['OrderHistory']['date'];
                         if ($model->save())
                                 $this->createUrl('');

@@ -33,7 +33,7 @@
                                             $result .= $shipp_add->first_name . ' ' . $shipp_add->last_name . '<br />';
                                             $result .= $shipp_add->address_1 . ' ' . $shipp_add->address_2 . '<br />';
                                             $result .= $shipp_add->city . ' ' . $shipp_add->postcode . '<br />';
-                                            $result .= Countries::model()->findByPk($shipp_add->country)->country_name . ' ' . States::model()->findByPk($shipp_add->state)->state_name . '<br />';
+                                            $result .= MasterCountry::model()->findByPk($shipp_add->country)->country_name . ' ' . MasterState::model()->findByPk($shipp_add->state)->state_name . '<br />';
                                             return $result;
                                     },
                                 ),
@@ -45,7 +45,7 @@
                                             $result1 .= $bill_add->first_name . ' ' . $bill_add->last_name . '<br />';
                                             $result1 .= $bill_add->address_1 . ' ' . $bill_add->address_2 . '<br />';
                                             $result1 .= $bill_add->city . ' ' . $bill_add->postcode . '<br />';
-                                            $result1 .= Countries::model()->findByPk($bill_add->country)->country_name . ' ' . States::model()->findByPk($bill_add->state)->state_name . '<br />';
+                                            $result1 .= MasterCountry::model()->findByPk($bill_add->country)->country_name . ' ' . MasterState::model()->findByPk($bill_add->state)->state_name . '<br />';
                                             return $result1;
                                     },
                                 ),
