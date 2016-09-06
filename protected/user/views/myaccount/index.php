@@ -113,11 +113,30 @@
                                                                         Lorem Ipsum has been the industry's standard .</span>
                                                         </div>
                                                         <?php if (Yii::app()->session['merchant']) { ?>
+
                                                                 <div class="been">
-                                                                        <a href="#"> <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/g1.png"></a>
-                                                                        <a href="#"> <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/g2.png"></a>
-                                                                        <a href="#"> <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/g3.png"></a>
+                                                                        <?php foreach ($plans as $plan) { ?>
+                                                                                <img data-toggle="modal" data-target="#subscribeModal" src="<?php echo Yii::app()->baseUrl; ?>/uploads/plan/<?php echo $plan->id; ?>/plan.<?php echo $plan->image; ?>">
+                                                                                <?php // echo CHtml::link('<img src="' . Yii::app()->baseUrl . '/uploads/plan/' . $plan->id . '/plan.' . $plan->image . '">', array('Myaccount/SelectPlan', 'plan' => CHtml::encode($plan->id))); ?>
+
+
+                                                                                <div class="modal fade" id="subscribeModal" tabindex="-2" role="dialog">
+                                                                                        <div class="modal-dialog">
+                                                                                                <div class="modal-content">
+                                                                                                        <div class="modal-header text-left">
+                                                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                                                                <h2 class="modal-title"></h2>
+                                                                                                                <h4>Do You Want To Upgrade Your Plan?</h4>
+                                                                                                        </div>
+                                                                                                        <div class="modal-body">
+                                                                                                                <a href="#" class="up2 hvr-radial-out">Upgrade</a>
+                                                                                                                <a href="#" class="up1 hvr-radial-out">Cancel</a>
+                                                                                                        </div><!-- /.modal-content -->
+                                                                                                </div><!-- /.modal-dialog -->
+                                                                                        </div>
+                                                                                </div> <?php } ?>
                                                                 </div>
+
 
                                                                 <div class="clearfix"></div>
                                                                 <div class="type">

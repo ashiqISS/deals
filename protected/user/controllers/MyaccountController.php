@@ -17,9 +17,10 @@ class MyaccountController extends Controller {
                         } if (Yii::app()->session['merchant']) {
                                 $sale = OrderProducts::model()->findAllByAttributes(array('merchant_id' => Yii::app()->session['merchant']['id']), array('order' => 'DOC DESC'));
                                 $model = Merchant::model()->findByPk(Yii::app()->session['merchant']['id']);
+                                $plans = PlanDetails::model()->findAll();
                                 $deal = DealSubmission::model()->findAllByAttributes(array('user_id' => Yii::app()->session['merchant']['id']), array('order' => 'doc DESC'));
                         }
-                        $this->render('index', array('model' => $model, 'deal' => $deal, 'order' => $order, 'sale' => $sale));
+                        $this->render('index', array('model' => $model, 'deal' => $deal, 'order' => $order, 'sale' => $sale, 'plans' => $plans));
                 }
         }
 
@@ -297,6 +298,38 @@ class MyaccountController extends Controller {
                         }
                 }
                 $this->render('sales_report', array('model' => $model));
+        }
+
+        public function actionSelectPlan($plan) {
+                $model = new MerchantPlans;
+                if (Yii::app()->session['merchant']) {
+                        if ($plan != '' && $plan != 0) {
+                                $merchant_plan = PlanDetails::model()->findByPk($plan);
+                                var_dump($merchant_plan);
+                                exit;
+                                $model->plan_id = $plan;
+                                $model->user_id = Yii::app()->session['merchant']['id'];
+                                $model->plan_name = $merchant_plan->plan_name;
+                                $model->amount = $merchant_plan->amount;
+                                $model->no_of_product = $merchant_plan->no_of_products;
+                                $model->no_of_product_left = $merchant_plan->no_of_products;
+                                $model->no_of_ads = $merchant_plan->no_of_ads;
+                                $model->no_of_ads_left = $merchant_plan->no_of_ads;
+                                $model->no_of_days = $merchant_plan->no_of_days;
+                                $model->no_of_days_left = $merchant_plan->no_of_days;
+                                $model->date_of_creation = date('Y-m-d H:i:s');
+                                $model->status = 1;
+                                $model->cb = Yii::app()->session['merchant']['id'];
+                                $model->doc = date('Y-m-d H:i:s');
+                                if ($model->save()) {
+                                        Yii::app()->user->setFlash('plan_success', "Your Plan Successfully Created");
+                                        $this->redirect(array('myaccount/index'));
+                                } else {
+                                        Yii::app()->user->setFlash('plan_error', "Error Occured");
+                                        $this->redirect(array('myaccount/index'));
+                                }
+                        }
+                }
         }
 
 }
