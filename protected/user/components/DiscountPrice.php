@@ -40,8 +40,9 @@ class DiscountPrice extends CApplicationComponent {
         }
 
         public function DiscountType($data) {
+                date_default_timezone_set('Asia/Kolkata');
                 $date = date('Y-m-d');
-                if ($data->discount_type == 1) {
+                if ($data->discount_type == 1) {     // type of discount wether its flat on percetange
                         if ($data->product_type == 4) {  // the value 4 is baragain products
                                 if (($date > $data->special_price_to)) {
                                         $criteria = new CDbCriteria;

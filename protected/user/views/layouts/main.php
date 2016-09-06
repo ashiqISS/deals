@@ -187,18 +187,18 @@
 
                                                 <div class="col-md-6 col-sm-8 col-xs-10 hidden-sm hidden-xs">
                                                         <div class="fix">
-                                                                <form class="form-inline" role="form">
+                                                                <form class="form-inline" role="form" action="<?php echo Yii::app()->request->baseUrl; ?>/index.php/searching/SearchList" method="post">
                                                                         <div class="form-group">
 
-                                                                                <input type="email" class="form-controls" id="email" placeholder="What are you looking for">
+                                                                                <input type="text" class="form-controls" name="Keyword" id="search" placeholder="What are you looking for">
                                                                         </div>
                                                                         <div class="form-group">
 
-                                                                                <input type="password" class="form-location" id="pwd" placeholder="Enter Your Location">
+                                                                                <input type="text" class="form-location" name="location" id="location" placeholder="Enter Your Location">
 
                                                                         </div>
                                                                         <div class="form-group">
-                                                                                <button type="button" class="btn btn-primary search-button"><i class="fa fa-search"></i></button>
+                                                                                <button type="submit" class="btn btn-primary search-button"><i class="fa fa-search"></i></button>
                                                                         </div>
                                                                 </form>
                                                         </div>
@@ -420,7 +420,7 @@
                                                                 <ul class="nav navbar-nav">
                                                                         <li><?php echo CHtml::link('COUPONS', array('products/coupons')); ?></li>
                                                                         <li><?php echo CHtml::link('DAILY DEALS', array('products/Daily')); ?></li>
-                                                                        <li><?php //echo CHtml::link('FLASH DEALS', array('products/Daily'));  ?></li>
+                                                                        <li><?php //echo CHtml::link('FLASH DEALS', array('products/Daily'));         ?></li>
                                                                         <li><?php echo CHtml::link('HOT DEALS', array('products/hot')); ?></li>
                                                                         <li><?php echo CHtml::link('SUBMIT A DEAL', array('myaccount/SubmitDeal')); ?></li>
                                                                         <li><?php echo CHtml::link('WHOLESALE DEALS', array('products/wholesale')); ?></li>

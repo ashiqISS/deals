@@ -26,6 +26,7 @@ return array(
     'view-products' => 'Products/MyProducts',
     'order-history' => 'Myaccount/UserOrderHistory',
     'order-history' => 'Myaccount/VendorOrderHistory',
+    'Bargain-zone' => 'products/bargain',
 //    'ss' => '?name',
     'merchant-registration' => 'registration/merchantDetails/create',
 //    'merchant-activation' => 'registration/merchantDetails/UserActivation',

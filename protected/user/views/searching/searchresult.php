@@ -1,85 +1,114 @@
-<script>
-        $(document).ready(function (e) {
-            $('.search-panel .dropdown-menu').find('a').click(function (e) {
-                e.preventDefault();
-                var param = $(this).attr("href").replace("#", "");
-                var concept = $(this).text();
-                $('.search-panel span#search_concept').text(concept);
-                $('.input-group #search_param').val(param);
-            });
-        });</script>
-<section class="searching">
-    <div class="container main_container product_archive">
 
-
-        <div class="row">
-
-            <!-- / Sidebar-->
-            <!--/* some session checking data deleted */-->
-
-
-
-
-            <div class="col-sm-9">
-
-                <div class = "about_us searching_cnt resultss">
-                    <h2>Search Result</h2>
-
+<section class="banner">
+        <div class="container">
+                <div class="row">
+                        <div class="col-xs-12">
+                                <img src="<?php echo Yii::app()->request->baseUrl; ?>/images/c1.jpg">
+                        </div>
                 </div>
-
-                <div class="product_list">
-                    <div class="row">
-
-                        <?php
-                        if (!empty($dataprovider) || $dataProvider != '') {
-                                $this->widget('zii.widgets.CListView', array(
-                                    'dataProvider' => $dataProvider,
-                                    'itemView' => '_view',
-                                    'template' => "{pager}\n{items}\n{pager}",
-                                ));
-                        } else {
-                                
-                        }
-                        ?>
-
-                    </div>
-                </div>
-
-
-
-
-
-            </div>
         </div>
-    </div>
+</section>
+
+
+
+<section class="deals-products">
+        <div class="container">
+                <div class="row">
+
+                        <div class="rows">
+                                <div class="col-md-12">
+                                        <h6><?php echo $heading; ?></h6>
+                                        <div class="listed">
+                                                <!--                        <form>
+                                                                            <div class="form-group">
+                                                                                <label for="email">Sort By</label>
+                                                                                <select class="chris-select" name="carlist" form="carform">
+                                                                                    <option value="volvo">Default</option>
+                                                                                    <option value="saab">Saab</option>
+                                                                                    <option value="opel">Opel</option>
+                                                                                    <option value="audi">Audi</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </form>-->
+
+                                                <form class="form-inline" role="form">
+                                                        <label class="sortby">Sort By</label>
+                                                        <div class="form-group">
+
+                                                                <select class="chris-select animated fadeInUp" name="carlist" form="carform">
+                                                                        <option value="volvo">Default</option>
+                                                                        <option value="saab">Saab</option>
+                                                                        <option value="opel">Opel</option>
+                                                                        <option value="audi">Audi</option>
+                                                                </select>
+                                                        </div>
+
+
+                                                </form>
+
+
+
+
+
+                                        </div>
+                                </div>
+                                <?php if (count($products) > 0) { ?>
+
+
+                                <?php } else { ?>
+                                        <h3 style="text-align: left; padding-left: 15px;">No Results Found in Your Search Criteria "<?php echo $keyword; ?> <?php if ($location != '') {
+                                        echo ' in ' . $location;
+                                } ?> "</h3>
+
+                                <?php } ?>
+                                <?php
+                                echo $this->renderPartial('//site/_latest_deal', array('products' => $products));
+                                ?>
+                                <?php
+                                $this->widget('application.user.extensions.yiinfinite-scroll.YiinfiniteScroller', array(
+                                    'contentSelector' => '#products',
+                                    'itemSelector' => 'div.product',
+                                    'loadingText' => 'Loading...',
+                                    'donetext' => '<div class="clearfix"></div><button class="ripple">Loading Complete</button>',
+                                    'pages' => $pages,
+                                ));
+                                ?>
+
+
+                        </div>
+                </div>
+
 
 </section>
 
-<style>
-    .highlight{
-        color: red;
-        background-color: yellow;
-    }
-</style>
-
-
 <script>
-        jQuery.fn.highlight = function (str, className) {
-            var regex = new RegExp(str, "gi");
-            return this.each(function () {
-                $(this).contents().filter(function () {
-                    return this.nodeType == 3 && regex.test(this.nodeValue);
-                }).replaceWith(function () {
-                    return (this.nodeValue || "").replace(regex, function (match) {
-                        return "<span class=\"" + className + "\">" + match + "</span>";
-                    });
+        (function (window, $) {
+                $(function () {
+                        $('.ripple').on('click', function (event) {
+                                event.preventDefault();
+                                var $div = $('<div/>'),
+                                        btnOffset = $(this).offset(),
+                                        xPos = event.pageX - btnOffset.left,
+                                        yPos = event.pageY - btnOffset.top;
+                                $div.addClass('ripple-effect');
+                                var $ripple = $(".ripple-effect");
+
+                                $ripple.css("height", $(this).height());
+                                $ripple.css("width", $(this).height());
+                                $div
+                                        .css({
+                                                top: yPos - ($ripple.height() / 2),
+                                                left: xPos - ($ripple.width() / 2),
+                                                background: $(this).data("ripple-color")
+                                        })
+                                        .appendTo($(this));
+
+                                window.setTimeout(function () {
+                                        $div.remove();
+                                }, 2000);
+                        });
+
                 });
-            });
-        };
-        $(".resultss *").highlight("<?php echo $parameter ?>", "highlight");
+
+        })(window, jQuery);
 </script>
-
-
-
-
-

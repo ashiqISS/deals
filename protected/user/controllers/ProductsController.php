@@ -27,6 +27,27 @@ class ProductsController extends Controller {
                 ));
         }
 
+        public function actionBargain() {
+                $criteria = new CDbCriteria;
+                $total = Products::model()->count();
+
+                $pages = new CPagination($total);
+                $pages->pageSize = 8;
+                $pages->applyLimit($criteria);
+                $heading = "Bargain Zone";
+                date_default_timezone_set('Asia/Kolkata');
+                $date = date('Y-m-d');
+                $criteria->addCondition("status = 1 AND is_admin_approved = 1 AND  product_type = 4 AND'" . $date . "' >= special_price_from AND  '" . $date . "' <= special_price_to  AND ( '" . $date . "' >= sale_from AND  '" . $date . "' <= sale_to)");
+                $products = Products::model()->findAll($criteria);
+
+                $this->render('deals', array(
+                    'products' => $products,
+                    'pages' => $pages,
+                    'total' => $total,
+                    'heading' => $heading,
+                ));
+        }
+
         public function actionCoupons() {
                 $criteria = new CDbCriteria;
                 $total = Products::model()->count();

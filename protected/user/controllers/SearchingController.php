@@ -30,24 +30,50 @@ class SearchingController extends Controller {
         public function actionSearchList() {
                 if (isset($_REQUEST['Keyword'])) {
                         $searchterm = $_REQUEST['Keyword'];
-                        $dataProvider = new CActiveDataProvider('Products', array(
-                            'criteria' => array(
-                                'condition' => "status =1  AND (product_name LIKE '%" . $searchterm . "%'"
-                                . " OR search_tag LIKE '%" . $searchterm . "%' )"),
-                                )
-                        );
+                        $location = $_REQUEST['location'];
+//                        if ($location != '') {
+//                                $newcondition = 'deal_location LIKE ' % " . $location . " % '';
+//                        } else {
+//                                $newcondition = "1 == 1";
+//                        }
+                        $criteria = new CDbCriteria;
+                        $total = Products::model()->count();
 
-                        $this->render('searchresult', array('dataProvider' => $dataProvider, 'file_name' => '_searchresult', 'parameter' => $_REQUEST['saerchterm'], 'search_parm' => $category, 'searchterm' => $searchterm));
+                        $pages = new CPagination($total);
+                        $pages->pageSize = 16;
+                        $pages->applyLimit($criteria);
+                        $heading = "Search Result";
+                        date_default_timezone_set('Asia/Kolkata');
+                        // $date = date('Y-m-d');
+                        $criteria->addCondition("status =1  AND (product_name LIKE '%" . $searchterm . "%'"
+                                . " OR search_tag LIKE '%" . $searchterm . "%' OR product_code LIKE '%" . $searchterm . "%' ) AND (deal_location LIKE '%" . $location . "%')");
+                        $products = Products::model()->findAll($criteria);
+                        $this->render('searchresult', array(
+                            'products' => $products,
+                            'keyword' => $searchterm,
+                            'location' => $location,
+                            'pages' => $pages,
+                            'total' => $total,
+                            'heading' => $heading,
+                        ));
                         exit;
                 }
-                $dataProvider1 = new CActiveDataProvider('ProductCategory', array(
-                    'criteria' => array(
-                        'condition' => 'status = 1', 'order' => 'id desc', 'limit' => 5),
-                        )
-                );
-                //$latest = Books::model()->findAll(['condition' => 'status = 2', 'order' => 'id desc', 'limit' => 5]);
-                $this->render('searchresult', array('dataProvider' => $dataProvider1, 'file_name' => '_searchresult', 'parameter' => $_REQUEST['saerchterm'], 'search_parm' => $category, 'searchterm' => $searchterm));
-                //$this->render('search');
+                $criteria = new CDbCriteria;
+                $total = Products::model()->count();
+
+                $pages = new CPagination($total);
+                $pages->pageSize = 16;
+                $pages->applyLimit($criteria);
+                $heading = "Search Result";
+                $criteria->addCondition("status = 1 order by id desc");
+                $products = Products::model()->findAll($criteria);
+
+                $this->render('searchresult', array(
+                    'products' => $products,
+                    'pages' => $pages,
+                    'total' => $total,
+                    'heading' => $heading,
+                ));
         }
 
 }
