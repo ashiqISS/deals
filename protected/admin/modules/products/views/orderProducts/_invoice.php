@@ -122,7 +122,7 @@
                                                         <tr>
                                                                 <td style="border: 1px solid #ddd;
                                                                     text-align: left;padding: 13px 0px 10px 20px" class="addr">
-                                                                        <b> PAYMENT ADDRES.</b><br>
+                                                                        <b> SHIPPING ADDRESS.</b><br>
                                                                         <?php echo $user_address->name; ?>   <br>
                                                                         <?php echo $user_address->address_line_1; ?></br>
                                                                         <?php echo $user_address->address_line_2; ?></br>
@@ -132,7 +132,7 @@
                                                                 </td>
                                                                 <td style="  border: 1px solid #ddd;
                                                                     text-align: left;padding: 13px 0px 10px 20px">
-                                                                        <b> BILLING ADDRES.</b><br>
+                                                                        <b> BILLING ADDRESS.</b><br>
                                                                         <?php echo $bill_address->name; ?> <br>
                                                                         <?php echo $bill_address->address_line_1; ?><br>
                                                                         <?php echo $bill_address->address_line_2; ?><br>

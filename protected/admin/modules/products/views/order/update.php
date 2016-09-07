@@ -86,7 +86,7 @@
                             'template' => '{status}',
                             'buttons' => array(
                                 'status' => array(
-                                    'url' => 'Yii::app()->request->baseUrl."/admin.php/products/orderProducts/update/id/$data->id"',
+                                    'url' => 'Yii::app()->request->baseUrl."/admin.php/products/orderProducts/view/id/$data->id"',
                                     'label' => '<i class="fa fa-eye" style="font-size:20px;padding:2px;"></i>',
                                     'options' => array(
                                         'data-toggle' => 'tooltip',
@@ -102,7 +102,7 @@
                             'template' => '{status}',
                             'buttons' => array(
                                 'status' => array(
-                                    'url' => 'Yii::app()->request->baseUrl."/admin.php/products/orderProducts/view/id/$data->id"',
+                                    'url' => 'Yii::app()->request->baseUrl."/admin.php/products/orderProducts/update/id/$data->id"',
                                     'label' => '<i class="fa fa-pencil" style="font-size:20px;padding:2px;"></i>',
                                     'options' => array(
                                         'data-toggle' => 'tooltip',

@@ -95,6 +95,12 @@
                                   'DOC',
                                  */
                                 array(
+                                    'header' => '<font color="#61625D">View</font>',
+                                    'htmlOptions' => array('nowrap' => 'nowrap'),
+                                    'class' => 'booster.widgets.TbButtonColumn',
+                                    'template' => '{view}',
+                                ),
+                                array(
                                     'header' => '<font color="#61625D">Edit</font>',
                                     'htmlOptions' => array('nowrap' => 'nowrap'),
                                     'class' => 'booster.widgets.TbButtonColumn',
@@ -106,29 +112,23 @@
                                     'class' => 'booster.widgets.TbButtonColumn',
                                     'template' => '{delete}',
                                 ),
-                                array(
-                                    'header' => '<font color="#61625D">View</font>',
-                                    'htmlOptions' => array('nowrap' => 'nowrap'),
-                                    'class' => 'booster.widgets.TbButtonColumn',
-                                    'template' => '{view}',
-                                ),
-                                array(
-                                    'header' => '<font color="#61625D">Add New History</font>',
-                                    'htmlOptions' => array('nowrap' => 'nowrap'),
-                                    'class' => 'booster.widgets.TbButtonColumn',
-                                    'template' => '{status}',
-                                    'buttons' => array(
-                                        'status' => array(
-                                            'url' => 'Yii::app()->request->baseUrl."/admin.php/products/orderHistory/create/id/$data->id"',
-                                            'label' => '<i class="fa fa-truck" style="font-size:20px;padding:2px;"></i>',
-                                            'options' => array(
-                                                'data-toggle' => 'tooltip',
-                                                'title' => 'History',
-                                                'target' => '_blank',
-                                            ),
-                                        ),
-                                    ),
-                                ),
+//                                array(
+//                                    'header' => '<font color="#61625D">Add New History</font>',
+//                                    'htmlOptions' => array('nowrap' => 'nowrap'),
+//                                    'class' => 'booster.widgets.TbButtonColumn',
+//                                    'template' => '{status}',
+//                                    'buttons' => array(
+//                                        'status' => array(
+//                                            'url' => 'Yii::app()->request->baseUrl."/admin.php/products/orderHistory/create/id/$data->id"',
+//                                            'label' => '<i class="fa fa-truck" style="font-size:20px;padding:2px;"></i>',
+//                                            'options' => array(
+//                                                'data-toggle' => 'tooltip',
+//                                                'title' => 'History',
+//                                                'target' => '_blank',
+//                                            ),
+//                                        ),
+//                                    ),
+//                                ),
                                 array(
                                     'header' => '<font color="#61625D">Print</font>',
                                     'htmlOptions' => array('nowrap' => 'nowrap'),
