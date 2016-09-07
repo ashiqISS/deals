@@ -47,6 +47,43 @@ class UploadFile extends CApplicationComponent {
                 }
         }
 
+        public function uploadAdImage1($uploadfile, $id, $foldername = false, $dimensions = array()) {
+
+                if ($foldername) {
+                        $folder = $this->folderName(0, 1000, $id) . '/';
+                } else {
+                        $folder = "";
+                }
+
+                if (isset($uploadfile)) {
+
+                        if (Yii::app()->basePath . '/../uploads/ads') {
+                                chmod(Yii::app()->basePath . '/../uploads/ads', 0777);
+                                if ($foldername) {
+                                        if (!is_dir(Yii::app()->basePath . '/../uploads/ads/' . $folder))
+                                                mkdir(Yii::app()->basePath . '/../uploads/ads/' . $folder);
+                                        chmod(Yii::app()->basePath . '/../uploads/ads/' . $folder . '/', 0777);
+
+                                        if (!is_dir(Yii::app()->basePath . '/../uploads/ads/' . $folder . '/' . $id))
+                                                mkdir(Yii::app()->basePath . '/../uploads/ads/' . $folder . '/' . $id);
+                                        chmod(Yii::app()->basePath . '/../uploads/ads/' . $folder . '/' . $id . '/', 0777);
+                                }
+                                if ($uploadfile->saveAs(Yii::app()->basePath . '/../uploads/ads/' . $folder . '/' . $id . '/' . $id . '.' . $uploadfile->extensionName)) {
+                                        chmod(Yii::app()->basePath . '/../uploads/ads/' . $folder . '/' . $id . '/' . $id . '.' . $uploadfile->extensionName, 0777);
+                                        //$this->WaterMark(Yii::app()->basePath . '/../uploads/products/' . $folder . '/' . $id . '/' . $id . '.' . $uploadfile->extensionName, '/../images/watermark.png');
+
+                                        $file = Yii::app()->basePath . '/../uploads/ads/' . $folder . '/' . $id . '/' . $id . '.' . $uploadfile->extensionName;
+                                        $path = Yii::app()->basePath . '/../uploads/ads/' . $folder . '/' . $id;
+                                        if (!empty($dimensions)) {
+                                                foreach ($dimensions as $dimension) {
+                                                        $this->Resize($file, $dimension['width'], $dimension['height'], $dimension['name'], $path, $uploadfile->extensionName);
+                                                }
+                                        }
+                                }
+                        }
+                }
+        }
+
         public function uploadMultipleImage($uploadfile, $id, $foldername = false) {
                 if ($foldername) {
                         $folder = $this->folderName(0, 1000, $id) . '/';
@@ -80,6 +117,14 @@ class UploadFile extends CApplicationComponent {
                                 }
                         }
                 }
+        }
+
+        public function Resize($file, $width, $height, $name, $path, $extension) {
+//                var_dump($file);
+////                exit;
+                $resize = new EasyImage($file);
+                $resize->resize($width, $height, EasyImage::RESIZE_NONE);
+                $resize->save($path . '/' . $name . '.' . $extension);
         }
 
 }

@@ -273,6 +273,54 @@ class MyaccountController extends Controller {
                 }
         }
 
+        public function actionPaidAd() {
+                if (isset(Yii::app()->session['merchant'])) {
+                        $model = new AdPayment('create');
+
+// Uncomment the following line if AJAX validation is needed
+// $this->performAjaxValidation($model);
+
+                        if (isset($_POST['AdPayment'])) {
+                                $model->attributes = $_POST['AdPayment'];
+                                $image = CUploadedFile::getInstance($model, 'image');
+                                if ($_POST['AdPayment']['display_from'] != "")
+                                        $model->display_from = date("Y-m-d", strtotime($_POST['AdPayment']['display_from']));
+                                else
+                                        $model->display_from = 0;
+
+                                if ($_POST['AdPayment']['display_to'] != "")
+                                        $model->display_to = date("Y-m-d", strtotime($_POST['AdPayment']['display_to']));
+                                else
+                                        $model->display_to = 0;
+
+                                $model->vendor_name = Yii::app()->session['merchant']['id'];
+                                $model->image = $image->extensionName;
+                                $model->cb = Yii::app()->session['merchant']['id'];
+                                $model->doc = date('Y-m-d H:i:s');
+                                $model->link = $_POST['AdPayment']['link'];
+                                if ($model->validate()) {
+                                        if ($model->save()) {
+                                                if ($model->image != "") {
+                                                        $dimension_size = MasterAdLocation::model()->findByAttributes(array('id' => $model->position));
+                                                        $size = explode('X', $dimension_size->size);
+                                                        $size1 = $size[0];
+                                                        $size2 = $size[1];
+                                                        $dimension[0] = array('width' => '116', 'height' => '155', 'name' => 'small');
+                                                        $dimension[1] = array('width' => $size1, 'height' => $size2, 'name' => 'big');
+                                                        Yii::app()->Upload->uploadAdImage1($image, $model->id, true, $dimension);
+//
+                                                }
+                                                Yii::app()->user->setFlash('paid', 'Success Waiting For Admin Approve.');
+                                                $this->redirect(array('PaidAd'));
+                                        }
+                                }
+                        }
+                        $this->render('paid_ad', array(
+                            'model' => $model,
+                        ));
+                }
+        }
+
         public function actionUserOrderHistory() {
                 if (!isset(Yii::app()->session['user']) && !isset(Yii::app()->session['merchant'])) {
                         $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/login');

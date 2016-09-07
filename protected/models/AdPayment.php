@@ -35,12 +35,15 @@ class AdPayment extends CActiveRecord {
                 // NOTE: you should only define rules for those attributes that
                 // will receive user inputs.
                 return array(
-                    array('position, vendor_name, sort_order, display_from, display_to, payment_status', 'required'),
-                    array('position, vendor_name, sort_order, payment_status, cb', 'numerical', 'integerOnly' => true),
+                    array('position, vendor_name, display_from, display_to', 'required'),
+                    array('image', 'file', 'allowEmpty' => FALSE, 'types' => 'jpg,jpeg,gif,png', 'on' => 'create'),
+//                    array('position, vendor_name, display_from, display_to, payment_status', 'required'),
+                    array('position, vendor_name, sort_order, payment_status, cb, admin_approve, status', 'numerical', 'integerOnly' => true),
+                    array('title', 'length', 'max' => 200),
                     array('image', 'length', 'max' => 100),
                     // The following rule is used by search().
                     // @todo Please remove those attributes that should not be searched.
-                    array('id, position, image, vendor_name, sort_order, display_from, display_to, payment_status, cb, doc', 'safe', 'on' => 'search'),
+                    array('id, title, position, image, vendor_name, sort_order, display_from, display_to, payment_status, cb, ub, dou, doc, link, admin_approve, status', 'safe', 'on' => 'search'),
                 );
         }
 
@@ -62,6 +65,7 @@ class AdPayment extends CActiveRecord {
         public function attributeLabels() {
                 return array(
                     'id' => 'ID',
+                    'title' => 'Title',
                     'position' => 'Position',
                     'image' => 'Image',
                     'vendor_name' => 'Vendor Name',
@@ -71,6 +75,9 @@ class AdPayment extends CActiveRecord {
                     'payment_status' => 'Payment Status',
                     'cb' => 'Cb',
                     'doc' => 'Doc',
+                    'link' => 'Link',
+                    'admin_approve' => 'Admin Approve',
+                    'status' => 'Status',
                 );
         }
 
@@ -92,6 +99,7 @@ class AdPayment extends CActiveRecord {
                 $criteria = new CDbCriteria;
 
                 $criteria->compare('id', $this->id);
+                $criteria->compare('title', $this->title, true);
                 $criteria->compare('position', $this->position);
                 $criteria->compare('image', $this->image, true);
                 $criteria->compare('vendor_name', $this->vendor_name);
@@ -101,9 +109,43 @@ class AdPayment extends CActiveRecord {
                 $criteria->compare('payment_status', $this->payment_status);
                 $criteria->compare('cb', $this->cb);
                 $criteria->compare('doc', $this->doc, true);
+                $criteria->compare('link', $this->link, true);
+                $criteria->compare('admin_approve', $this->admin_approve);
+                $criteria->compare('status', $this->status);
 
                 return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,
+                ));
+        }
+
+        public function search_2() {
+                // @todo Please modify the following code to remove attributes that should not be searched.
+
+                $criteria = new CDbCriteria;
+
+                $criteria->compare('id', $this->id);
+                $criteria->compare('title', $this->title, true);
+                $criteria->compare('position', $this->position);
+                $criteria->compare('image', $this->image, true);
+                $criteria->compare('vendor_name', $this->vendor_name);
+                $criteria->compare('sort_order', $this->sort_order);
+                $criteria->compare('display_from', $this->display_from, true);
+                $criteria->compare('display_to', $this->display_to, true);
+                $criteria->compare('payment_status', $this->payment_status);
+                $criteria->compare('cb', $this->cb);
+                $criteria->compare('doc', $this->doc, true);
+                $criteria->compare('link', $this->link, true);
+                $criteria->compare('admin_approve', $this->admin_approve);
+                $criteria->compare('status', $this->status);
+                $criteria->addCondition('display_from <= "' . date('Y-m-d') . '" ');
+                $criteria->addCondition('display_to >= "' . date('Y-m-d') . '" ');
+
+
+                return new CActiveDataProvider($this, array(
+                    'criteria' => $criteria,
+                    'sort' => array(
+                        'defaultOrder' => 'id DESC',
+                    ),
                 ));
         }
 
