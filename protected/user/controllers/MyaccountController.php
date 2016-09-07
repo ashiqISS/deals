@@ -254,7 +254,13 @@ class MyaccountController extends Controller {
                                 $model = BuyerDetails::model()->findByPk(Yii::app()->session['user']['id']);
                                 if (isset($_POST['newsletter_submit'])) {
                                         $model->newsletter = $_POST['BuyerDetails']['newsletter'];
-                                        $model->save();
+                                        if ($model->save()) {
+                                                Yii::app()->user->setFlash('success', "Newsletter confirmation changed successfully!!!");
+                                                $this->redirect(array('myaccount/Newsletter'));
+                                        } else {
+                                                Yii::app()->user->setFlash('error', "Error Occured!!!");
+                                                $this->redirect(array('myaccount/Newsletter'));
+                                        }
                                 }
                         }
                 }

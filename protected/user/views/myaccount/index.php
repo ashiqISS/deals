@@ -115,26 +115,31 @@
                                                         <?php if (Yii::app()->session['merchant']) { ?>
 
                                                                 <div class="been">
-                                                                        <?php foreach ($plans as $plan) { ?>
+                                                                        <?php
+                                                                        foreach ($plans as $plan) {
+//                                                                                $plan_id .= $plan->id;
+                                                                                ?>
                                                                                 <img data-toggle="modal" data-target="#subscribeModal" src="<?php echo Yii::app()->baseUrl; ?>/uploads/plan/<?php echo $plan->id; ?>/plan.<?php echo $plan->image; ?>">
                                                                                 <?php // echo CHtml::link('<img src="' . Yii::app()->baseUrl . '/uploads/plan/' . $plan->id . '/plan.' . $plan->image . '">', array('Myaccount/SelectPlan', 'plan' => CHtml::encode($plan->id))); ?>
+                                                                        <?php } ?>
 
-
-                                                                                <div class="modal fade" id="subscribeModal" tabindex="-2" role="dialog">
-                                                                                        <div class="modal-dialog">
-                                                                                                <div class="modal-content">
-                                                                                                        <div class="modal-header text-left">
-                                                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                                                                                <h2 class="modal-title"></h2>
-                                                                                                                <h4>Do You Want To Upgrade Your Plan?</h4>
-                                                                                                        </div>
-                                                                                                        <div class="modal-body">
-                                                                                                                <a href="#" class="up2 hvr-radial-out">Upgrade</a>
+                                                                        <div class="modal fade" id="subscribeModal" tabindex="-2" role="dialog">
+                                                                                <div class="modal-dialog">
+                                                                                        <div class="modal-content">
+                                                                                                <div class="modal-header text-left">
+                                                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                                                        <h2 class="modal-title"></h2>
+                                                                                                        <h4>Do You Want To Create  Your Plan?</h4>
+                                                                                                </div>
+                                                                                                <div class="modal-body">
+                                                                                                        <div class="middle_modal">
+                                                                                                                <a href="<?= Yii::app()->baseUrl; ?>/index.php/Myaccount/SelectPlan/plan?=<?php echo $plan->id; ?>"  class="up2 hvr-radial-out">Submit</a>
                                                                                                                 <a href="#" class="up1 hvr-radial-out">Cancel</a>
-                                                                                                        </div><!-- /.modal-content -->
-                                                                                                </div><!-- /.modal-dialog -->
-                                                                                        </div>
-                                                                                </div> <?php } ?>
+                                                                                                        </div>
+                                                                                                </div><!-- /.modal-content -->
+                                                                                        </div><!-- /.modal-dialog -->
+                                                                                </div>
+                                                                        </div>
                                                                 </div>
 
 

@@ -29,6 +29,8 @@ return array(
     'Bargain-zone' => 'products/bargain',
     'plan-creation' => 'Myaccount/SelectPlan',
     'plan-upgration' => 'Myaccount/UpgradePlan',
+    'email-verification' => 'site/UserActivation',
+    'email-verification' => 'site/VendorActivation',
 //    'ss' => '?name',
     'merchant-registration' => 'registration/merchantDetails/create',
 //    'merchant-activation' => 'registration/merchantDetails/UserActivation',

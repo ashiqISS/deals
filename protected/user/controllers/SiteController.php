@@ -148,10 +148,12 @@ class SiteController extends Controller {
                                 if ($vendor->save(false)) {
                                         $this->SuccessMailVendor($vendor);
                                         Yii::app()->user->setFlash('success', " You are registered successfully!!! Check your mail and verify your account");
-                                        $this->redirect('UserRegister');
+//                                        $this->redirect('UserRegister');
+                                        $this->redirect(Yii::app()->user->returnUrl);
                                 } else {
                                         Yii::app()->user->setFlash('error', "Error Occured");
-                                        $this->redirect('UserRegister');
+//                                        $this->redirect('UserRegister');
+                                        $this->redirect(Yii::app()->user->returnUrl);
                                 }
                         }
                 }

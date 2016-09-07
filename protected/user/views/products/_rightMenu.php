@@ -37,7 +37,9 @@
         <?php if (Yii::app()->session['merchant']) { ?>
                 <li class="<?= $active9; ?>"><?php echo CHtml::link('Order History', array('Myaccount/VendorOrderHistory')); ?></li>
         <?php } ?>
-        <li class="<?= $active4; ?>"><?php echo CHtml::link('Address Book', array('Myaccount/AddressBook')); ?></li>
+        <?php if (Yii::app()->session['user']) { ?>
+                <li class="<?= $active4; ?>"><?php echo CHtml::link('Address Book', array('Myaccount/AddressBook')); ?></li>
+        <?php } ?>
         <?php if (Yii::app()->session['merchant']) { ?>
                 <li class="<?= $active5; ?>"><?php echo CHtml::link('Add Products', array('Products/AddProducts')); ?></li>
                 <li class="<?= $active6; ?>"><?php echo CHtml::link('My Product', array('Products/MyProducts')); ?></li>
