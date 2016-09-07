@@ -1587,7 +1587,7 @@ img.exp {
         line-height: 24px;
         color: #333;
 }
-input.reviews[type="submit"] {
+input.reviews{
         padding: 11px 32px;
         font-size: 13px;
         color: #fff;

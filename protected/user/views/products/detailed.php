@@ -423,77 +423,81 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
                                                 <p><?php echo $product_review->review; ?></p>
                                         </div>
                                 <?php } ?>
+                                <input type="hidden" id="review_product_id" name="" value="<?php echo $products->id; ?>" />
+
                                 <?php if (Yii::app()->session['user'] != '' && Yii::app()->session['user'] != NULL) {
                                         ?>
 
-                                        <form class="form-inline" role="form">
+                                        <form id="reviewform" class="form-inline" role="form">
                                                 <div class="form-group">
-                                                        <input type="email" class="form-review" id="email" placeholder="Name">
+                                                        <input type="text" class="form-review" id="name" value="<?php echo Yii::app()->session['user']['name']; ?>" placeholder="Name">
                                                 </div>
                                                 <div class="form-group">
-                                                        <input type="email" class="form-review" id="pwd" placeholder="Email address">
+                                                        <input type="email" class="form-review" id="email" value="<?php echo Yii::app()->session['user']['email']; ?>" placeholder="Email address">
                                                 </div>
                                                 <div class="form-group">
-                                                        <textarea class="form-comment" rows="5" id="comment" placeholder="Comment"></textarea>
+                                                        <textarea class="form-comment" rows="5" id="comment" name="review_comment" placeholder="Comment"></textarea>
                                                 </div>
                                                 <div class="form-group">
                                                         <div class="stars">
-
-                                                                <input class="star star-5" id="star-5-2" type="radio" name="star"/>
-                                                                <label class="star star-5" for="star-5-2"></label>
-                                                                <input class="star star-4" id="star-4-2" type="radio" name="star"/>
+                                                                <input type="hidden" id="review_star" name="review_star" />
+                                                                <input class="star str star-5" id="star-5-2" type="radio" value="5" name="star"/>
+                                                                <label class="star  star-5" for="star-5-2"></label>
+                                                                <input class="star str star-4" id="star-4-2" type="radio" value="4" name="star"/>
                                                                 <label class="star star-4" for="star-4-2"></label>
-                                                                <input class="star star-3" id="star-3-2" type="radio" name="star"/>
+                                                                <input class="star str star-3" id="star-3-2" type="radio" value="3" name="star"/>
                                                                 <label class="star star-3" for="star-3-2"></label>
-                                                                <input class="star star-2" id="star-2-2" type="radio" name="star"/>
+                                                                <input class="star str star-2" id="star-2-2" type="radio" value="2" name="star"/>
                                                                 <label class="star star-2" for="star-2-2"></label>
-                                                                <input class="star star-1" id="star-1-2" type="radio" name="star"/>
+                                                                <input class="star str star-1" id="star-1-2" type="radio" value="1" name="star"/>
                                                                 <label class="star star-1" for="star-1-2"></label>
 
                                                         </div>
                                                 </div>
                                                 <div class="form-group">
-                                                        <input class="reviews" type="submit" value="Submit">
+                                                        <input class="reviews review_submit" type="button" value="Submit">
 
                                                 </div>
 
                                         </form>
+                                        <div class="review_message"></div>
                                 <?php } else { ?>
-                                        <form class="form-inline" role="form">
+                                        <form id="reviewform" class="form-inline" >
                                                 <div class="form-group">
-                                                        <input type="email" class="form-review" id="email" placeholder="Name">
+                                                        <input type="text" required="" class="form-review" id="review_name" value="" placeholder="Name">
                                                 </div>
                                                 <div class="form-group">
-                                                        <input type="email" class="form-review" id="pwd" placeholder="Email address">
+                                                        <input type="email" required="" class="form-review" id="review_email" value="" placeholder="Email address">
                                                 </div>
                                                 <div class="form-group">
-                                                        <textarea class="form-comment" rows="5" id="comment" placeholder="Comment"></textarea>
+                                                        <textarea class="form-comment" rows="5" id="review_comment" placeholder="Comment"></textarea>
                                                 </div>
                                                 <div class="form-group">
                                                         <div class="stars">
-
-                                                                <input class="star star-5" id="star-5-2" type="radio" name="star"/>
-                                                                <label class="star star-5" for="star-5-2"></label>
-                                                                <input class="star star-4" id="star-4-2" type="radio" name="star"/>
+                                                                <input type="hidden" id="review_star" name="review_star" />
+                                                                <input class="star str star-5" id="star-5-2" type="radio" value="5" name="star"/>
+                                                                <label class="star  star-5" for="star-5-2"></label>
+                                                                <input class="star str star-4" id="star-4-2" type="radio" value="4" name="star"/>
                                                                 <label class="star star-4" for="star-4-2"></label>
-                                                                <input class="star star-3" id="star-3-2" type="radio" name="star"/>
+                                                                <input class="star str star-3" id="star-3-2" type="radio" value="3" name="star"/>
                                                                 <label class="star star-3" for="star-3-2"></label>
-                                                                <input class="star star-2" id="star-2-2" type="radio" name="star"/>
+                                                                <input class="star str star-2" id="star-2-2" type="radio" value="2" name="star"/>
                                                                 <label class="star star-2" for="star-2-2"></label>
-                                                                <input class="star star-1" id="star-1-2" type="radio" name="star"/>
+                                                                <input class="star str star-1" id="star-1-2" type="radio" value="1" name="star"/>
                                                                 <label class="star star-1" for="star-1-2"></label>
 
                                                         </div>
                                                 </div>
                                                 <div class="form-group">
-                                                        <input class="reviews" type="submit" value="Submit">
+                                                        <input class="reviews review_submit" type="button" value="Submit">
 
                                                 </div>
 
                                         </form>
-                                        <div class="form-group">
-                                                <a href="" class="reviews" type="submit" value="Submit">Write A Review</a>
-                                        </div>
+                                        <div class="review_message"></div>
+                                        <!--                                        <div class="form-group">
+                                                                                        <a href="" class="reviews" type="submit" value="Submit">Write A Review</a>
+                                                                                </div>-->
 
                                         <br />
                                         <br />
@@ -505,7 +509,52 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
 
 
 
+<script>
+        $(document).ready(function () {
+                $("#review_star").val(0);
+                $(".str").click(function () {
+                        var values = $(this).val();
+                        $("#review_star").val(values);
+                });
+        });
+        $(document).ready(function () {
+                $(".review_submit").click(function () {
+                        var name = $("#review_name").val();
+                        if (name == "") {
+                                alert('Name Must be filled out');
+                                return false;
+                        }
+                        var email = $("#review_email").val();
+                        if (email == "") {
+                                alert('Email Must be filled out');
+                                return false;
+                        }
+                        var comment = $("#review_comment").val();
+                        var star = $("#review_star").val();
+                        if (star == 0) {
+                                alert('Star Must be Choosen');
+                                return false;
+                        }
+                        var review_product_id = $("#review_product_id").val();
+                        $.ajax({
+                                type: "POST",
+                                cache: 'false',
+                                async: false,
+                                url: baseurl + 'Products/Addreview',
+                                data: {name: name, email: email, comment: comment, star: star, review_product_id: review_product_id}
+                        }).done(function (data) {
+                                $("#reviewform")[0].reset();
+                                if (data == 2) {
+                                        $(".review_message").html("<h5 style='color:green;'>Your Review Successfully Sent</h4>");
+                                } else if (data == 1) {
+                                        $(".review_message").html("<h5 style='color:red;'>You Already reviewed this Product</h4>");
+                                }
+                                //alert(data);
 
+                        });
+                });
+        });
+</script>
 
 
 

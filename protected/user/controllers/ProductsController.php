@@ -173,7 +173,7 @@ class ProductsController extends Controller {
                 $time = $this->time_elapsed_string($prduct->DOC, false);
                 $you_may_also_like = Products::model()->findAll(array('condition' => 'status = 1 AND is_admin_approved = 1 AND (' . $condition . ')'));
                 $product_features = ProductFeatures::model()->findAllByAttributes(array('product_id' => $prduct->id));
-                $product_reviews = UserReviews::model()->findAllByAttributes(array('product_id' => $prduct->id, 'approvel' => 1));
+                $product_reviews = UserReviews::model()->findAllByAttributes(array('product_id' => $prduct->id, 'approvel' => 1), array('order' => 'id desc'));
                 if (!empty($product_reviews)) {
                         foreach ($product_reviews as $product_review) {
                                 $rating += $product_review->rating;
@@ -567,6 +567,36 @@ class ProductsController extends Controller {
                                 }
                         } else {
                                 echo 3;
+                        }
+                }
+        }
+
+        public function actionAddreview() {
+                if (Yii::app()->request->isAjaxRequest) {
+                        $name = $_REQUEST['name'];
+                        $email = $_REQUEST['email'];
+                        $comment = $_REQUEST['comment'];
+                        $star = $_REQUEST['star'];
+                        $review_product_id = $_REQUEST['review_product_id'];
+                        $review_exist = UserReviews::model()->findByAttributes(array('author' => $name, 'email' => $email));
+                        if (!empty($review_exist)) {
+                                echo 1;
+                        } else {
+                                $reviews = new UserReviews;
+                                if (isset(Yii::app()->session['user'])) {
+                                        $reviews->user_id = Yii::app()->session['user']['id'];
+                                }
+                                $reviews->author = $name;
+                                $reviews->email = $email;
+                                $reviews->review = $comment;
+                                $reviews->rating = $star;
+                                $reviews->product_id = $review_product_id;
+
+                                if ($reviews->save(false)) {
+                                        echo 2;
+                                } else {
+                                        echo 3;
+                                }
                         }
                 }
         }

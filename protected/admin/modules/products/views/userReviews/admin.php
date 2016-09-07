@@ -44,6 +44,16 @@
                                     },
                                 ),
                                 'review',
+                                array('name' => 'approvel',
+                                    'value' => function($data) {
+                                            if ($data->approvel == 0) {
+                                                    return '<span style="color:red">Approvel Pending</span>';
+                                            } else {
+                                                    return '<span style="color:green">Approved</span>';
+                                            }
+                                    },
+                                    'type' => 'raw',
+                                ),
                                 /*
                                   'approvel',
                                   'date',
