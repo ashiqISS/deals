@@ -8,7 +8,7 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'List AdPayment', 'url' => array('index')),
+//    array('label' => 'List AdPayment', 'url' => array('index')),
     array('label' => 'Create AdPayment', 'url' => array('create')),
     array('label' => 'Update AdPayment', 'url' => array('update', 'id' => $model->id)),
     array('label' => 'Delete AdPayment', 'url' => '#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->id), 'confirm' => 'Are you sure you want to delete this item?')),
@@ -29,7 +29,8 @@ $this->widget('zii.widgets.CDetailView', array(
             },),
         array('name' => 'image',
             'value' => function ($data) {
-                    return '<img style="width:100px;height:100px;" src="' . yii::app()->baseUrl . '/uploads/ads/1000/' . $data->id . '/small.' . $data->image . '">';
+                    $folder = Yii::app()->Upload->folderName(0, 1000, $data->id);
+                    return '<img style="width:100px;height:100px;" src="' . yii::app()->baseUrl . '/uploads/ads/' . $folder . '/' . $data->id . '/small.' . $data->image . '">';
             },
             'type' => 'raw'),
         array('name' => 'vendor_name',

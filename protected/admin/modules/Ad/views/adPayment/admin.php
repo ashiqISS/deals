@@ -17,7 +17,6 @@
     <a href="<?php echo Yii::app()->request->baseurl . '/admin.php/Ad/adPayment/create'; ?>" class='btn  btn-laksyah'>Add New AdPayment</a>
     <div class="col-xs-12 form-page" style="margin-top: .5em;">
         <div class="box">
-
             <?php
             $this->widget('booster.widgets.TbGridView', array(
                 'type' => ' bordered condensed hover',
@@ -34,7 +33,8 @@
                     ),
                     array('name' => 'image',
                         'value' => function ($data) {
-                                return '<img style="width:100px;height:100px;" src="' . yii::app()->baseUrl . '/uploads/ads/1000/' . $data->id . '/small.' . $data->image . '">';
+                                $folder = Yii::app()->Upload->folderName(0, 1000, $data->id);
+                                return '<img style="width:100px;height:100px;" src="' . yii::app()->baseUrl . '/uploads/ads/' . $folder . '/' . $data->id . '/small.' . $data->image . '">';
                         },
                         'type' => 'raw'),
                     array('name' => 'vendor_name',
