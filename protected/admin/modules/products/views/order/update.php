@@ -59,7 +59,7 @@
 //                        'filter' => CHtml::listData(Products::model()->findAll(), 'id', 'product_name'),
                     'value' => function($model1) {
                             $product_details = Products::model()->findByPk($model1->product_id);
-                            return '<a href="' . Yii::app()->baseUrl . '/admin.php/products/products/view/id/' . $product_details->id . '" target="_blank">' . $product_details->product_code . '</a>';
+                            return '<a href="' . Yii::app()->baseUrl . '/admin.php/products/products/view/id/' . $product_details->id . '" target="_blank">' . $product_details->product_name . '-' . $product_details->product_code . '</a>';
                     },
                     'type' => 'raw',
                 ),
@@ -80,19 +80,56 @@
                         'DOC',
 //		'status',
                         array(
+                            'header' => '<font color="#61625D">View </font>',
+                            'htmlOptions' => array('nowrap' => 'nowrap', 'style' => 'text-align:center'),
+                            'class' => 'booster.widgets.TbButtonColumn',
+                            'template' => '{status}',
+                            'buttons' => array(
+                                'status' => array(
+                                    'url' => 'Yii::app()->request->baseUrl."/admin.php/products/orderProducts/update/id/$data->id"',
+                                    'label' => '<i class="fa fa-eye" style="font-size:20px;padding:2px;"></i>',
+                                    'options' => array(
+                                        'data-toggle' => 'tooltip',
+                                        'title' => 'View In Detail',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        array(
                             'header' => '<font color="#61625D">Edit</font>',
-                            'htmlOptions' => array('nowrap' => 'nowrap'),
+                            'htmlOptions' => array('nowrap' => 'nowrap', 'style' => 'text-align:center'),
                             'class' => 'booster.widgets.TbButtonColumn',
-                            'template' => '{update}',
+                            'template' => '{status}',
+                            'buttons' => array(
+                                'status' => array(
+                                    'url' => 'Yii::app()->request->baseUrl."/admin.php/products/orderProducts/view/id/$data->id"',
+                                    'label' => '<i class="fa fa-pencil" style="font-size:20px;padding:2px;"></i>',
+                                    'options' => array(
+                                        'data-toggle' => 'tooltip',
+                                        'title' => 'update',
+                                    ),
+                                ),
+                            ),
                         ),
                         array(
-                            'htmlOptions' => array('nowrap' => 'nowrap'),
+                            'header' => '<font color="#61625D">Delete</font>',
+                            'htmlOptions' => array('nowrap' => 'nowrap', 'style' => 'text-align:center'),
                             'class' => 'booster.widgets.TbButtonColumn',
-                            'template' => '{delete}',
+                            'template' => '{status}',
+                            'buttons' => array(
+                                'status' => array(
+                                    'url' => 'Yii::app()->request->baseUrl."/admin.php/products/orderProducts/delete/id/$data->id"',
+                                    'label' => '<i class="fa fa-trash" style="font-size:20px;padding:2px;"></i>',
+                                    'options' => array(
+                                        'data-toggle' => 'tooltip',
+                                        'title' => 'delete',
+                                    ),
+                                ),
+                            ),
                         ),
                         array(
-                            'header' => '<font color="#61625D">Status</font>',
-                            'htmlOptions' => array('nowrap' => 'nowrap'),
+                            'header' => '<font color="#61625D">Add New History</font>',
+                            'htmlOptions' => array('nowrap' => 'nowrap', 'style' => 'text-align:center'),
                             'class' => 'booster.widgets.TbButtonColumn',
                             'template' => '{status}',
                             'buttons' => array(
@@ -102,6 +139,23 @@
                                     'options' => array(
                                         'data-toggle' => 'tooltip',
                                         'title' => 'History',
+                                        'target' => '_blank',
+                                    ),
+                                ),
+                            ),
+                        ),
+                        array(
+                            'header' => '<font color="#61625D">Print</font>',
+                            'htmlOptions' => array('nowrap' => 'nowrap'),
+                            'class' => 'booster.widgets.TbButtonColumn',
+                            'template' => '{print}',
+                            'buttons' => array(
+                                'print' => array(
+                                    'url' => 'Yii::app()->request->baseUrl."/admin.php/products/orderProducts/print/id/$data->id"',
+                                    'label' => '<i class="fa fa-print" style="font-size:20px;padding:2px;"></i>',
+                                    'options' => array(
+                                        'data-toggle' => 'tooltip',
+                                        'title' => 'Print',
                                         'target' => '_blank',
                                     ),
                                 ),

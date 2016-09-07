@@ -176,8 +176,8 @@ class OrderController extends Controller {
 
         public function actionPrint($id) {
                 $order = Order::model()->findByPk($id);
-                $user_address = UserAddress::model()->findByPk($order->ship_address_id);
-                $bill_address = UserAddress::model()->findByPk($order->bill_address_id);
+                $user_address = AddressBook::model()->findByPk($order->ship_address_id);
+                $bill_address = AddressBook::model()->findByPk($order->bill_address_id);
 
                 $order_details = OrderProducts::model()->findAllByAttributes(array('order_id' => $id));
 

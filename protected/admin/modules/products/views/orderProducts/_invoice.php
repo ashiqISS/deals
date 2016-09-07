@@ -149,19 +149,19 @@
                                 <tr class="pro_info">
                                         <th class="new">PRODUCT NAME</th><th class="new"> QUANTITY  </th><th class="new"> UNIT PRICE  </th><th class="new"> TOTAL  </th>
                                 </tr>
-                                <?php foreach ($order_details as $orders) { ?>
+                                <?php if (!empty($order_details)) { ?>
                                         <?php
-                                        $product_names = Products::model()->findAllByAttributes(array('id' => $orders->product_id));
-                                        foreach ($product_names as $p_names) {
+                                        $p_names = Products::model()->findByAttributes(array('id' => $order_details->product_id));
+                                        if (!empty($p_names)) {
                                                 ?>
                                                 <tr> <td style="border: 1px solid #ddd; text-align: left; padding: 6px 0px 0px 20px;"><?php echo $p_names->product_name; ?></td>
                                                         <td style="border: 1px solid #ddd; text-align: left;padding: 6px 0px 0px 20px;">
-                                                                <?php echo $orders->quantity; ?>
+                                                                <?php echo $order_details->quantity; ?>
                                                         </td>
                                                         <td style="border: 1px solid #ddd; text-align: left;padding: 6px 0px 0px 20px;"><?php
-                                                                echo $orders->amount . '.00';
+                                                                echo $p_names->price . '.00';
                                                                 ?></td>
-                                                        <td style="border: 1px solid #ddd; text-align: left;padding: 6px 0px 0px 20px;"> <?php echo ($orders->quantity * $orders->amount) . '.00'; ?></td>
+                                                        <td style="border: 1px solid #ddd; text-align: left;padding: 6px 0px 0px 20px;"> <?php echo ($order_details->quantity * $order_details->amount) . '.00'; ?></td>
                                                 </tr>
                                                 </br>
                                         <?php }
@@ -170,7 +170,7 @@
                                 }
                                 ?>
                                 <tr>
-                                        <td align="center">TOTAL</td><td></td><td></td><td><strong  style="padding: 6px 0px 0px 17px;"><?php echo $order->total_amount . '.00'; ?></strong></td>
+                                        <td align="center">TOTAL</td><td></td><td></td><td><strong  style="padding: 6px 0px 0px 17px;"><?php echo ($order_details->quantity * $order_details->amount) . '.00'; ?></strong></td>
                                 </tr>
                         </table>
                         <!--            <button onclick="myFunction()">Print this page</button>-->

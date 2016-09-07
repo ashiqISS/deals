@@ -32,7 +32,7 @@ class OrderProductsController extends Controller {
         public function accessRules() {
                 return array(
                     array('allow', // allow all users to perform 'index' and 'view' actions
-                        'actions' => array('index', 'view', 'create', 'update', 'admin', 'delete'),
+                        'actions' => array('index', 'view', 'create', 'update', 'admin', 'delete', 'print'),
                         'users' => array('*'),
                     ),
                     array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -47,6 +47,19 @@ class OrderProductsController extends Controller {
                         'users' => array('*'),
                     ),
                 );
+        }
+
+        public function actionPrint($id) {
+                $order_details = OrderProducts::model()->findByAttributes(array('id' => $id));
+                $order = Order::model()->findByAttributes(array('id' => $order_details->order_id));
+                $user_address = AddressBook::model()->findByPk($order->ship_address_id);
+                $bill_address = AddressBook::model()->findByPk($order->bill_address_id);
+
+
+
+
+                $this->renderPartial('_invoice', array(
+                    'user_address' => $user_address, 'bill_address' => $bill_address, 'order_details' => $order_details, 'order' => $order));
         }
 
         /**

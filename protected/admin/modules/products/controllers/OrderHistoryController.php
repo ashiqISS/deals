@@ -76,7 +76,7 @@ class OrderHistoryController extends Controller {
                         $model->order_id = $order_product->order_id;
                         $model->date = $_POST['OrderHistory']['date'];
                         if ($model->save())
-                                $this->createUrl('');
+                                $this->redirect(Yii::app()->user->returnUrl);
                 }
 
                 $this->render('create', array(
