@@ -42,7 +42,7 @@
                         <div class="item">
                             <div class="main">
                                 <?php
-                                $top = AdPayment::model()->findByAttributes(array('position' => 1, 'status' => 1));
+                                $top = AdPayment::model()->findByAttributes(array('position' => 1, 'admin_approve' => 1, 'status' => 1));
 //                                <?php $top = AdPayment::model()->findByAttributes(array('position' => 1, 'vendor_name' => Yii::app()->session['merchant']['id'], 'status' => 1));
                                 $folder = Yii::app()->Upload->folderName(0, 1000, $top->id);
                                 ?>
@@ -66,7 +66,7 @@
             <div class="col-md-4">
                 <div class="ads-banner">
                     <?php
-                    $top_left = AdPayment::model()->findAllByAttributes(array('position' => 2, 'status' => 1), array('order' => 'id DESC', 'limit' => 2));
+                    $top_left = AdPayment::model()->findAllByAttributes(array('position' => 2, 'admin_approve' => 1, 'status' => 1), array('order' => 'id DESC', 'limit' => 2));
 //                    $top_left = AdPayment::model()->findAllByAttributes(array('position' => 2, 'vendor_name' => Yii::app()->session['merchant']['id'], 'status' => 1), array('order' => 'id DESC', 'limit' => 2));
                     foreach ($top_left as $tp_left) {
                             $folder = Yii::app()->Upload->folderName(0, 1000, $tp_left->id);
