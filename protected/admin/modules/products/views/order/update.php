@@ -52,7 +52,7 @@
             'type' => ' bordered condensed hover',
             'id' => 'order-products-grid',
             'dataProvider' => $model1->search(array('condition' => 'order_id = ' . $model->id)),
-            'filter' => $model1,
+//            'filter' => $model1,
             'columns' => array(
                 'order_id',
                 array('name' => 'product_id',

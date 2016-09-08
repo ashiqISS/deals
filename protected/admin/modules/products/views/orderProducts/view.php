@@ -47,6 +47,31 @@ $this->widget('zii.widgets.CDetailView', array(
         'quantity',
         'amount',
         'DOC',
+        array('name' => 'Ship Address',
+            'type' => 'raw',
+            'value' => function($data) {
+                    $order_id = Order::model()->findbyPk($data->order_id);
+                    $shipp_add = AddressBook::model()->findByPk($order_id->ship_address_id);
+                    $result .= $shipp_add->name . '<br />';
+                    $result .= $shipp_add->address_line_1 . ' ' . $shipp_add->address_line_2 . '<br />';
+                    $result .= $shipp_add->city . ' ' . $shipp_add->pincode . '<br />';
+                    $result .= MasterState::model()->findByPk($shipp_add->state)->state . ' , ' . MasterCountry::model()->findByPk($shipp_add->country)->country . ' ' . '<br />';
+                    return $result;
+            },
+        ),
+        array('name' => 'bill Address ',
+            'type' => 'raw',
+            'value' => function($data) {
+                    $order_id = Order::model()->findbyPk($data->order_id);
+                    $bill_add = AddressBook::model()->findByPk($order_id->bill_address_id);
+                    $result1 .= $bill_add->name . '<br />';
+                    $result1 .= $bill_add->address_line_1 . ' ' . $bill_add->address_line_2 . '<br />';
+                    $result1 .= $bill_add->city . ' ' . $bill_add->pincode . '<br />';
+                    $result1 .= MasterState::model()->findByPk($bill_add->state)->state . ' , ' . MasterCountry::model()->findByPk($bill_add->country)->country . ' ' . '<br />';
+
+                    return $result1;
+            },
+        ),
         array('name' => 'status',
 //                        'filter' => CHtml::listData(Products::model()->findAll(), 'id', 'product_name'),
             'value' => function($data) {
@@ -62,6 +87,8 @@ $this->widget('zii.widgets.CDetailView', array(
         <h1>Order History</h1>
         <br />
         <a href="<?php echo Yii::app()->baseUrl; ?>/admin.php/products/orderHistory/create/id/<?php echo $model->id; ?>" class="btn  btn-success manage">Add New History</a>
+        <a href="<?php echo Yii::app()->baseUrl; ?>/admin.php/products/orderProducts/print/id/<?php echo $model->id; ?>"  target="_blank" style="    background-color: #d86565;" class="btn  btn-success manage">Print Invoice</a>
+        <a href="<?php echo Yii::app()->baseUrl; ?>/admin.php/products/orderProducts/printship/id/<?php echo $model->id; ?>"  target="_blank" style="background-color: #5757ab;" class="btn  btn-success manage">Print Ship Details</a>
 </section>
 
 <?php $history = new OrderHistory('search'); ?>

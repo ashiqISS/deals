@@ -29,11 +29,11 @@
                                 array('name' => 'ship_address_id',
                                     'type' => 'raw',
                                     'value' => function($data) {
-                                            $shipp_add = UserAddress::model()->findByPk($data->ship_address_id);
-                                            $result .= $shipp_add->first_name . ' ' . $shipp_add->last_name . '<br />';
-                                            $result .= $shipp_add->address_1 . ' ' . $shipp_add->address_2 . '<br />';
-                                            $result .= $shipp_add->city . ' ' . $shipp_add->postcode . '<br />';
-                                            $result .= MasterCountry::model()->findByPk($shipp_add->country)->country_name . ' ' . MasterState::model()->findByPk($shipp_add->state)->state_name . '<br />';
+                                            $shipp_add = AddressBook::model()->findByPk($data->ship_address_id);
+                                            $result .= $shipp_add->name . '<br />';
+                                            $result .= $shipp_add->address_line_1 . ' ' . $shipp_add->address_line_2 . '<br />';
+                                            $result .= $shipp_add->city . ' ' . $shipp_add->pincode . '<br />';
+                                            $result .= MasterState::model()->findByPk($shipp_add->state)->state . ' , ' . MasterCountry::model()->findByPk($shipp_add->country)->country . ' ' . '<br />';
                                             return $result;
                                     },
                                 ),
@@ -41,11 +41,11 @@
                                     'type' => 'raw',
                                     'value' => function($data) {
 
-                                            $bill_add = UserAddress::model()->findByPk($data->bill_address_id);
-                                            $result1 .= $bill_add->first_name . ' ' . $bill_add->last_name . '<br />';
-                                            $result1 .= $bill_add->address_1 . ' ' . $bill_add->address_2 . '<br />';
-                                            $result1 .= $bill_add->city . ' ' . $bill_add->postcode . '<br />';
-                                            $result1 .= MasterCountry::model()->findByPk($bill_add->country)->country_name . ' ' . MasterState::model()->findByPk($bill_add->state)->state_name . '<br />';
+                                            $bill_add = AddressBook::model()->findByPk($data->bill_address_id);
+                                            $result1 .= $bill_add->name . '<br />';
+                                            $result1 .= $bill_add->address_line_1 . ' ' . $bill_add->address_line_2 . '<br />';
+                                            $result1 .= $bill_add->city . ' ' . $bill_add->pincode . '<br />';
+                                            $result1 .= MasterState::model()->findByPk($bill_add->state)->state . ' , ' . MasterCountry::model()->findByPk($bill_add->country)->country . ' ' . '<br />';
                                             return $result1;
                                     },
                                 ),
@@ -103,15 +103,16 @@
 
 
                         <section class="content-header">
-                                <h1>Products</h1>
+                                <h1>Products With These Orders</h1>
                         </section>
                         <?php $model1 = new OrderProducts('search'); ?>
                         <?php
+                        $model1->order_id = $model->id;
                         $this->widget('booster.widgets.TbGridView', array(
                             'type' => ' bordered condensed hover',
                             'id' => 'order-products-grid',
-                            'dataProvider' => $model1->search(array('condition' => 'order_id = ' . $model->id)),
-                            'filter' => $model1,
+                            'dataProvider' => $model1->search(),
+                            //'filter' => $model1,
                             'columns' => array(
                                 'order_id',
                                 array('name' => 'product_id',
