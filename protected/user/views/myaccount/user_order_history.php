@@ -1,6 +1,3 @@
-
-
-
 <link href="<?= Yii::app()->baseUrl ?>/css/hover.css" rel="stylesheet" media="all">
 <section class="title">
         <div class="container">

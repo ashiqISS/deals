@@ -431,6 +431,7 @@ span.dat {
         margin-top: 0;
         line-height: 24px;
         color: #333;
+        font-weight: bold;
 }
 .head-1{
         float: left;

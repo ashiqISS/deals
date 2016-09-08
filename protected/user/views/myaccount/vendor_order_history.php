@@ -1,7 +1,13 @@
+<style>
 
-
-
-<link href="<?= Yii::app()->baseUrl ?>/css/hover.css" rel="stylesheet" media="all">
+        .head-1.order i {
+                font-size: 19px;
+                color: #000;
+        }
+        i.fa.fa-inr {
+                font-size: 12px;
+        }
+</style><link href="<?= Yii::app()->baseUrl ?>/css/hover.css" rel="stylesheet" media="all">
 <section class="title">
         <div class="container">
                 <div class="row">
@@ -101,16 +107,10 @@
                                                                                 echo 'Error';
                                                                         }
                                                                         ?></h2></div>
-                                                        <div class="head-1 order"><h2><?php echo CHtml::link('<i class="fa fa-eye"  style="max-width:15%"></i>', array('Myaccount/ViewOrderHistory', 'id' => CHtml::encode($order->id))); ?></h2></div>
+                                                        <div class="head-1 order"><h2><?php echo CHtml::link('<i class="fa fa-eye"  style="max-width:15%"></i>', array('Myaccount/OrderViewDetail', 'id' => CHtml::encode($order->id))); ?></h2></div>
                                                         <div class="head-1 order"><h2><?php echo CHtml::link('<i class="fa fa-list-ul" ></i>', array('Myaccount/NewOrderHistory', 'id' => CHtml::encode($order->id))); ?></h2></div>
-                                                        <div class="head-1 order"><h2>
-                                                                        <a href="<?php echo Yii::app()->request->baseUrl . '/index.php/Myaccount/PrintProductInvoice/id/' . $order->id ?>" target="_blank"><img  src="<?php echo Yii::app()->request->baseUrl; ?>/images/print.jpg" style="max-width: 15%;" title="Print"></a>
-                                                                </h2>
-                                                        </div>
-                                                        <div class="head-1 order"><h2>
-                                                                        <a href="<?php echo Yii::app()->request->baseUrl . '/index.php/Myaccount/PrintShippingDetail/id/' . $order->id ?>" target="_blank"><img  src="<?php echo Yii::app()->request->baseUrl; ?>/images/print.jpg" style="max-width: 15%;" title="Print"></a>
-                                                                </h2>
-                                                        </div>
+                                                        <div class="head-1 order"><h2><?php echo CHtml::link('<i class="fa fa-print"></i>', array('Myaccount/PrintProductInvoice', 'id' => CHtml::encode($order->id))); ?></h2></div>
+                                                        <div class="head-1 order"><h2><?php echo CHtml::link('<i class="fa fa-truck"></i>', array('Myaccount/PrintShippingDetail', 'id' => CHtml::encode($order->id))); ?></h2></div>
                                                 </div>
                                         <?php } ?>
                                         <!--</form>-->
