@@ -40,3 +40,8 @@ div.newsletter_msg{
 .middle_modal{
         padding-left: 158px;
 }
+.order{
+        float: left;
+        width: 10%;
+        padding-right: inherit;
+}

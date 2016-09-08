@@ -232,7 +232,7 @@ class Products extends CActiveRecord {
                 $criteria->compare('wholesale_price', $this->wholesale_price);
                 $criteria->compare('is_discount_available', $this->is_discount_available);
                 $criteria->compare('discount', $this->discount);
-                $criteria->compare('bidded_amount', $this->bidded_amount);
+//                $criteria->compare('bidded_amount', $this->bidded_amount);
                 $criteria->compare('bargain_price', $this->bargain_price);
                 $criteria->compare('discount_type', $this->discount_type, true);
                 $criteria->compare('discount_rate', $this->discount_rate);

@@ -71,7 +71,7 @@ class Merchant extends CActiveRecord {
                     array('password, confirm', 'compare', 'compareAttribute' => 'confirm', 'message' => 'Password and Confirm Password should match.'),
                     // The following rule is used by search().
                     // @todo Please remove those attributes that should not be searched.
-                    array('first_name, last_name, email, phone_number, password, confirm, verification_code, email_verification, product_categories, merchant_type, product_count, shop_name, shop_logo, shop_banner, address, pincode, city, locality, district, state, country, vat_tin, status, last_login, bad_attempts, CB, UB, DOC, DOU, is_payment_done, merchant_point, merchant_badge, merchant_rating', 'safe', 'on' => 'search'),
+                    array('first_name, last_name, email, phone_number, password, confirm, verification_code, email_verification, product_categories, merchant_type, product_count, shop_name, shop_logo, shop_banner, address, pincode, city, locality, district, state, country,account_no,ifsc_code, vat_tin, status, last_login, bad_attempts, CB, UB, DOC, DOU, is_payment_done, merchant_point, merchant_badge, merchant_rating', 'safe', 'on' => 'search'),
                 );
         }
 
@@ -121,6 +121,8 @@ class Merchant extends CActiveRecord {
                     'DOC' => 'Doc',
                     'DOU' => 'Dou',
                     'is_payment_done' => 'Is Payment Done',
+                    'account_no' => 'Account Number',
+                    'ifsc_code' => 'IFSC Code',
                     'merchant_point' => 'Merchant Point',
                     'merchant_badge' => 'Merchant Badge',
                     'merchant_rating' => 'Merchant Rating',
@@ -175,6 +177,8 @@ class Merchant extends CActiveRecord {
                 $criteria->compare('DOC', $this->DOC, true);
                 $criteria->compare('DOU', $this->DOU, true);
                 $criteria->compare('is_payment_done', $this->is_payment_done);
+                $criteria->compare('account_no', $this->account_no);
+                $criteria->compare('ifsc_code', $this->ifsc_code);
                 $criteria->compare('merchant_point', $this->merchant_point);
                 $criteria->compare('merchant_badge', $this->merchant_badge);
                 $criteria->compare('merchant_rating', $this->merchant_rating);

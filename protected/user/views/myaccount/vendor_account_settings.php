@@ -242,6 +242,55 @@
                                                                 <?php echo $form1->error($vendor, 'city', array('class' => 'red')); ?>
                                                         </div>
                                                 </div>
+
+                                                <div class="ui-set">
+                                                        <div class="settings1">
+                                                                <div class="form-group">
+                                                                        <label class="set">Account Number</label>
+                                                                </div>
+                                                        </div>
+                                                        <div class="settings2">
+                                                                <span>:</span>
+                                                        </div>
+                                                        <div class="settings3">
+                                                                <div class="form-group">
+                                                                        <?php echo $form1->textField($vendor, 'account_no', array('class' => 'form-set')); ?>
+                                                                </div>
+                                                                <?php echo $form1->error($vendor, 'account_no', array('class' => 'red')); ?>
+                                                        </div>
+                                                </div>
+                                                <div class="ui-set">
+                                                        <div class="settings1">
+                                                                <div class="form-group">
+                                                                        <label class="set">IFSC Code</label>
+                                                                </div>
+                                                        </div>
+                                                        <div class="settings2">
+                                                                <span>:</span>
+                                                        </div>
+                                                        <div class="settings3">
+                                                                <div class="form-group">
+                                                                        <?php echo $form1->textField($vendor, 'ifsc_code', array('class' => 'form-set')); ?>
+                                                                </div>
+                                                                <?php echo $form1->error($vendor, 'ifsc_code', array('class' => 'red')); ?>
+                                                        </div>
+                                                </div>
+                                                <div class="ui-set">
+                                                        <div class="settings1">
+                                                                <div class="form-group">
+                                                                        <label class="set">Shop Name</label>
+                                                                </div>
+                                                        </div>
+                                                        <div class="settings2">
+                                                                <span>:</span>
+                                                        </div>
+                                                        <div class="settings3">
+                                                                <div class="form-group">
+                                                                        <?php echo $form1->textField($vendor, 'shop_name', array('class' => 'form-set')); ?>
+                                                                </div>
+                                                                <?php echo $form1->error($vendor, 'shop_name', array('class' => 'red')); ?>
+                                                        </div>
+                                                </div>
                                         </div>
                                         <div class="btn-place-1">
                                                 <a href="#" class="reward hvr-shutter-in-horizontal left-btns">Back</a>

@@ -6,7 +6,7 @@
         <div class="container">
                 <div class="row">
                         <div class="col-xs-12">
-                                <h1>Checkout</h1>
+                                <h1>My Account</h1>
                         </div>
                 </div>
         </div>
@@ -16,7 +16,7 @@
                 <div class="col-xs-12">
                         <ul class="breadcrumb">
                                 <li><a href="#"><i class="fa hom fa-home"></i></a></li>
-                                <li><a href="#">Account</a></li>
+                                <li><?php echo CHtml::link('Account', array('Myaccount/index')); ?></li>
                                 <li><span class="last"> Order History</span></li>
 
                         </ul>
@@ -75,7 +75,7 @@
                                                         <div class="commission-2">
                                                                 <div class="head-1"><h2>ID-<?= $order->id; ?></h2></div>
                                                                 <div class="head-1"><h2><?= $order_products->product_name; ?></h2></div>
-                                                                <div class="head-1"><h2><?= $order->total_amount; ?></h2></div>
+                                                                <div class="head-1"><h2><?= Yii::app()->Currency->convert($order->total_amount); ?></h2></div>
                                                                 <div class="head-1"><h2><?= date('d-m-Y', strtotime($order->order_date)); ?></h2></div>
                                                                 <div class="head-1"><h2><?= $user->first_name; ?>  <?= $user->last_name; ?></h2></div>
                                                                 <div class="head-1"><h2><?php

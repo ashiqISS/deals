@@ -31,6 +31,8 @@ return array(
     'plan-upgration' => 'Myaccount/UpgradePlan',
     'email-verification' => 'site/UserActivation',
     'email-verification' => 'site/VendorActivation',
+    'view-order-history' => 'Myaccount/ViewOrderHistory',
+    'new-order-history' => 'Myaccount/NewOrderHistory',
 //    'ss' => '?name',
     'merchant-registration' => 'registration/merchantDetails/create',
 //    'merchant-activation' => 'registration/merchantDetails/UserActivation',

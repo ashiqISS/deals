@@ -32,10 +32,10 @@
                 <li class="<?= $active3; ?>"><?php echo CHtml::link('Account settings', array('Myaccount/VendorSettings')); ?></li>
         <?php } ?>
         <?php if (Yii::app()->session['user']) { ?>
-                <li class="<?= $active9; ?>"><?php echo CHtml::link('Order History', array('Myaccount/UserOrderHistory')); ?></li>
+                <li class="<?= $active9; ?>"><?php echo CHtml::link('My Orders', array('Myaccount/UserOrderHistory')); ?></li>
         <?php } ?>
         <?php if (Yii::app()->session['merchant']) { ?>
-                <li class="<?= $active9; ?>"><?php echo CHtml::link('Order History', array('Myaccount/VendorOrderHistory')); ?></li>
+                <li class="<?= $active9; ?>"><?php echo CHtml::link('Orders', array('Myaccount/VendorOrderHistory')); ?></li>
         <?php } ?>
         <?php if (Yii::app()->session['user']) { ?>
                 <li class="<?= $active4; ?>"><?php echo CHtml::link('Address Book', array('Myaccount/AddressBook')); ?></li>

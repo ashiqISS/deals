@@ -192,6 +192,9 @@ class MyaccountController extends Controller {
                                         $vendor->country = $_POST['Merchant']['country'];
                                         $vendor->state = $_POST['Merchant']['state'];
                                         $vendor->city = $_POST['Merchant']['city'];
+                                        $vendor->shop_name = $_POST['Merchant']['shop_name'];
+                                        $vendor->account_no = $_POST['Merchant']['account_no'];
+                                        $vendor->ifsc_code = $_POST['Merchant']['ifsc_code'];
                                         if ($vendor->save(false)) {
                                                 Yii::app()->user->setFlash('success', "your account  has been  successfully updated");
                                                 $this->redirect(Yii::app()->request->urlReferrer);
@@ -384,6 +387,79 @@ class MyaccountController extends Controller {
                                 }
                         }
                 }
+        }
+
+        public function actionChangeOrderStatus() {
+                if (isset($_POST['order_id'])) {
+                        $order_id = $_POST['order_id'];
+                        $product_id = $_POST['product_id'];
+                        $order_status = $_POST["order_status"];
+                        $history = OrderHistory::model()->findByAttributes(array('order_id' => $order_id, 'product_id' => $product_id));
+                        $history->order_status = $order_status;
+                        $history->order_status_comment = OrderStatus::model()->findByPk($order_status)->description;
+                        if ($history->update()) {
+                                Yii::app()->user->setFlash('history_update', "Order Status updated successfully.");
+                                if ($order_status == 5) { // completed
+                                        $productOrder = OrderProducts::model()->findByAttributes(array('order_id' => $order_id, 'product_id' => $product_id));
+                                        //   Create new Sales Report
+                                        $this->newSalesReport($product_id, $order_id, $productOrder);
+                                }
+                        } else {
+                                Yii::app()->user->setFlash('history_update', "Order Status updation failed.");
+                        }
+                }
+                $this->redirect(array('Myaccount/VendorOrderHistory'));
+        }
+
+        public function newSalesReport($product_id, $order_id, $productOrder) {
+                $merchant_id = Yii::app()->user->getState('merchant_id');
+                $sales = new SalesReport;
+                $sales->merchant_id = $merchant_id;
+                $sales->product_id = $product_id;
+                $sales->order_id = $order_id;
+                $sales->quantity = $productOrder->quantity;
+                $sales->total_amount = $productOrder->amount;
+                $sales->DOC = date('Y-m-d');
+                if ($sales->save()) {
+                        $type = 1; // deposit
+                        $amount = $productOrder->amount;
+                        MerchantModule::newTransaction($type, $amount);
+                        MerchantModule::updateAccountMaster($productOrder);
+                        // todo send earning mail
+                }
+        }
+
+        public function actionPrintProductInvoice($id) {
+                $product_order_id = $id;
+                if (isset($product_order_id)) {
+                        $productOrder = OrderProducts::model()->findByPk($product_order_id);
+                        $product = Products::model()->findByPk($productOrder->product_id);
+                        $order = Order::model()->findByPk($productOrder->order_id);
+                        $user_address = UserAddress::model()->findByPk($order->ship_address_id);
+                        $bill_address = UserAddress::model()->findByPk($order->bill_address_id);
+
+                        $params = array();
+                        $params['productOrder'] = $productOrder;
+                        $params['order'] = $order;
+                        $params['product'] = $product;
+                        $params['user_address'] = $user_address;
+                        $params['bill_address'] = $bill_address;
+
+//            $order_details = OrderProducts::model()->findAllByAttributes(array('order_id' => $id));
+                        $this->renderPartial('_product_invoice', $params);
+                }
+        }
+
+        public function actionViewOrderHistory($id) {
+                echo $id;
+        }
+
+        public function actionNewOrderHistory($id) {
+                echo $id;
+        }
+
+        public function actionPrintShippingDetail($id) {
+                echo $id;
         }
 
 }
