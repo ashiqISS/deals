@@ -21,7 +21,7 @@
             $this->widget('booster.widgets.TbGridView', array(
                 'type' => ' bordered condensed hover',
                 'id' => 'ad-payment-grid',
-                'dataProvider' => $model->search_2(),
+                'dataProvider' => $model->search(),
                 'filter' => $model,
                 'columns' => array(
 //                                'id',

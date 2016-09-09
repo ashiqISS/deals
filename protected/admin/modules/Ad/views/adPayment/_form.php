@@ -62,16 +62,6 @@
         </div>
     </div>
 
-    <!--    <div class="form-group">
-            <div class="col-sm-2 control-label">
-    <?php echo $form->labelEx($model, 'sort_order'); ?>
-            </div>
-            <div class="col-sm-10">
-    <?php echo $form->textField($model, 'sort_order', array('class' => 'form-control')); ?>
-    <?php echo $form->error($model, 'sort_order'); ?>
-            </div>
-        </div>-->
-
     <div class="form-group">
         <div class="col-sm-2 control-label">
             <?php echo $form->labelEx($model, 'display_from'); ?>
@@ -130,6 +120,16 @@
                 ),
             ));
             ?><?php echo $form->error($model, 'display_to'); ?>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-2 control-label">
+            <?php echo $form->labelEx($model, 'link'); ?>
+        </div>
+        <div class="col-sm-10">
+            <?php echo $form->textField($model, 'link', array('class' => 'form-control')); ?>
+            <?php echo $form->error($model, 'link'); ?>
         </div>
     </div>
 
