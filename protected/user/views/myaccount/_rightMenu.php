@@ -2,7 +2,6 @@
 
     <?php
     $active_menu = Yii::app()->controller->id . '/' . Yii::app()->controller->action->id;
-    echo $active_menu;
     if ($active_menu == 'myaccount/index') {
             $active1 = 'active';
     } else if ($active_menu == 'myaccount/ResetPassword') {
@@ -25,10 +24,14 @@
             $active10 = 'active';
     } else if ($active_menu == 'myaccount/paidAd') {
             $active11 = 'active';
+    } else if ($active_menu == 'myaccount/message') {
+            $active12 = 'active';
     }
     ?>
     <li class="<?= $active1; ?>"><?php echo CHtml::link('My Profile', array('Myaccount/index')); ?></li>
-    <li><a href="#">Message </a></li>
+    <?php if (Yii::app()->session['merchant']) { ?>
+            <li class="<?= $active12 ?>"><?php echo CHtml::link('Message', array('Myaccount/message')); ?></li>
+    <?php } ?>
     <li class="<?= $active2; ?>"><?php echo CHtml::link('Reset Password', array('Myaccount/ResetPassword')); ?></li>
     <?php if (Yii::app()->session['user']) { ?>
             <li class="<?= $active3; ?>"><?php echo CHtml::link('Account settings', array('Myaccount/UserSettings')); ?></li>

@@ -324,6 +324,27 @@ class MyaccountController extends Controller {
                 }
         }
 
+        public function actionMessage() {
+                if (isset(Yii::app()->session['merchant'])) {
+                        $model = new MerchantMessage();
+                        if (isset($_POST['MerchantMessage'])) {
+                                $model->attributes = $_POST['MerchantMessage'];
+                                $model->merchant_id = Yii::app()->session['merchant']['id'];
+                                $model->doc = date('Y-m-d H:i:s');
+                                $model->from_to = 1;
+                                if ($model->validate()) {
+                                        if ($model->save()) {
+                                                $this->redirect(array('Message'));
+                                        }
+                                }
+                        }
+                        $message = MerchantMessage::model()->findAllByAttributes(array('merchant_id' => Yii::app()->session['merchant']['id']), array('order' => 'id DESC'));
+                        $this->render('message', array(
+                            'model' => $model, 'messages' => $message
+                        ));
+                }
+        }
+
         public function actionUserOrderHistory() {
                 if (!isset(Yii::app()->session['user']) && !isset(Yii::app()->session['merchant'])) {
                         $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/login');

@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
-                <h1>Checkout</h1>
+                <h1>Ad Payment</h1>
             </div>
         </div>
     </div>
