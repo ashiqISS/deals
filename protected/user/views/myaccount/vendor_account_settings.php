@@ -298,6 +298,9 @@
                                         <div class="btn-place-2">
                                                 <button type="submit"  name="btn_submit" class="reward hvr-shutter-in-horizontal3 right-btn">Continue</button>
                                         </div>
+                                        <div class="btn-place-2">
+                                                <h3 style="margin-top: 50px;"><a style="color: #e8820b; font-size: 14px; font-weight: bold; " href="<?= Yii::app()->baseUrl ?>/index.php/myaccount/ResetPassword">Reset Your Password</a></h3>
+                                        </div>
                                         <?php $this->endWidget(); ?>
 
                                         <!-- form -->

@@ -342,16 +342,16 @@
                                         ?>
 
                                 </div>
-                                <div class="pull-right">
-                                        <a href="#" class=" hvr-shutter-in-horizontals request-btn">Continue</a>
+                                <!--                                <div class="pull-right">
+                                                                        <a href="#" class=" hvr-shutter-in-horizontals request-btn">Continue</a>
+                                                                </div>-->
+                                <!--</div>-->
+
+                                <div class="col-lg-3 col-md-4 mbb hidden-xs hidden-sm">
+                                        <?php echo $this->renderPartial('_rightMenu'); ?>
                                 </div>
                         </div>
-
-                        <div class="col-lg-3 col-md-4 mbb hidden-xs hidden-sm">
-                                <?php echo $this->renderPartial('_rightMenu'); ?>
-                        </div>
                 </div>
-        </div>
 </section>
 
 

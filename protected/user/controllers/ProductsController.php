@@ -258,12 +258,10 @@ class ProductsController extends Controller {
                         $model->special_price_to = $_POST['Products']['special_price_to'];
                         $model->DOC = date('Y-m-d');
 
-                        $image = CUploadedFile::getInstance($model, 'main_image');
+                        //  $image = CUploadedFile::getInstance($model, 'main_image');
                         $images = CUploadedFile::getInstancesByName('gallery_images');
                         $model->main_image = 'jpg';
                         $model->image_instence = $_POST['image_instence'];
-                        var_dump($image);
-                        exit;
                         $model->merchant_id = Yii::app()->session['merchant']['id'];
                         $model->merchant_type = Yii::app()->session['user_type_usrid'];
 
@@ -308,12 +306,10 @@ class ProductsController extends Controller {
                                 $model->canonical_name = preg_replace('#[ -]+#', '-', $model->product_name);
                                 $model->canonical_name = $model->canonical_name . '_' . $model->id;
                         }
-
                         $model->CB = Yii::app()->session['merchant']['id'];
                         $model->UB = 0;
                         $model->DOC = date('Y-m-d H:i:s');
                         $model->status = 1;
-//
 //                        var_dump($model);
 //                        exit;
 //                        if ($model->validate()) {

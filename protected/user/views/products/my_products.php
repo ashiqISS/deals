@@ -45,6 +45,11 @@
 
 
                         <div class="col-lg-9 col-md-8">
+                                <div class="row">
+                                        <div class="col-xs-12">
+                                                <a href="<?= Yii::app()->baseUrl ?>/index.php/Products/AddProducts" <button type="submit"  name="btn_submit" class="reward hvr-shutter-in-horizontal3 right-btn">Add New Products</button></a>
+                                        </div>
+                                </div>
                                 <?php if (!empty($model)) {
                                         ?>
                                         <div class="comm">
@@ -79,7 +84,7 @@
 
 
                         <div class="col-lg-3 col-md-4 mbb hidden-xs hidden-sm">
-                                <?php echo $this->renderPartial('_rightMenu'); ?>
+                                <?php echo $this->renderPartial('//myaccount/_rightMenu'); ?>
                         </div>
                 </div>
         </div>
