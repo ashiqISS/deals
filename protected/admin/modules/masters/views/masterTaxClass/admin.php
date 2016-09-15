@@ -1,53 +1,57 @@
 <?php
-/* @var $this MaterTaxRatesController */
-/* @var $model MaterTaxRates */
+/* @var $this MasterTaxClassController */
+/* @var $model MasterTaxClass */
 ?>
 
 <section class="content-header">
         <h1>
-                Tax Rates    </h1>
+                Tax Class    </h1>
         <ol class="breadcrumb">
                 <li><a href="<?php echo Yii::app()->request->baseurl . '/site/home'; ?>"><i class="fa fa-dashboard"></i>Dashboard</a></li>
-                <li class="active">Tax Rates</li>
+                <li class="active">Tax Class</li>
         </ol>
 </section>
 
 <!-- Main content -->
 <section class="content">
-        <a href="<?php echo Yii::app()->request->baseurl . '/admin.php/masters/materTaxRates/create'; ?>" class='btn  btn-laksyah'>Add New Tax Rates</a>
+        <a href="<?php echo Yii::app()->request->baseurl . '/admin.php/masters/masterTaxClass/create'; ?>" class='btn  btn-laksyah'>Add New Tax Class</a>
         <div class="col-xs-12 form-page" style="margin-top: .5em;">
                 <div class="box">
 
                         <?php
                         $this->widget('booster.widgets.TbGridView', array(
                             'type' => ' bordered condensed hover',
-                            'id' => 'mater-tax-rates-grid',
+                            'id' => 'master-tax-class-grid',
                             'dataProvider' => $model->search(),
                             'filter' => $model,
                             'columns' => array(
 //                                'id',
-                                'tax_name',
-                                'tax_rate',
+                                'tax_class_name',
                                 array(
-                                    'name' => 'type',
+                                    'name' => 'tax_rate',
                                     'value' => function($data) {
-                                            if ($data->type == 1) {
-                                                    return 'Percentage';
-                                            } else if ($data->type == 1) {
-                                                    //return $data->merchant;
-
-                                                    return "Fixed";
+                                            $new_datas = explode(',', $data->tax_rate);
+                                            foreach ($new_datas as $new_data) {
+                                                    $rate .= MaterTaxRates::model()->findByPk($new_data)->tax_name . ', ';
                                             }
+                                            $rate = rtrim($rate, ', ');
+                                            return $rate;
                                     },
                                     'type' => 'raw'
                                 ),
-//                                'zone',
 //                                'doc',
+//                                'dou',
+//                                'cb',
+                                array(
+                                    'name' => 'status',
+                                    'filter' => array(1 => 'Enabled', 0 => 'Disabled'),
+                                    'value' => function($data) {
+                                    return $data->status == 1 ? 'Enabled' : 'Disabled';
+                            }
+                                ),
                                 /*
-                                  'dou',
-                                  'cb',
                                   'ub',
-                                  'status',
+
                                  */
                                 array(
                                     'header' => '<font color="#61625D">Edit</font>',

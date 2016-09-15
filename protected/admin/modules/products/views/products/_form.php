@@ -733,13 +733,12 @@ if (!$model->isNewRecord) {
                         ?><?php echo $form->error($model, 'special_price_to'); ?>
                 </div>
         </div>
-
         <div class="form-group">
                 <div class="col-sm-2 control-label">
                         <?php echo $form->labelEx($model, 'tax'); ?>
                 </div>
                 <div class="col-sm-10">
-                        <?php echo $form->textField($model, 'tax', array('class' => 'form-control')); ?>
+                        <?php echo CHtml::activeDropDownList($model, 'tax', CHtml::listData(MasterTaxClass::model()->findAll(array('condition' => 'status = 1')), 'id', 'tax_class_name'), array('empty' => '--Select--', 'class' => 'form-control')); ?>
                         <?php echo $form->error($model, 'tax'); ?>
                 </div>
         </div>
