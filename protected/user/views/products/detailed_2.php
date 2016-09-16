@@ -1,4 +1,5 @@
 <link rel="stylesheet" type="text/css" href="<?= Yii::app()->baseUrl; ?>/css/jquery.fancybox.css">
+
 <style>
     .product_thumb ul li {
         width: 88px;
@@ -251,10 +252,7 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
                         </div>
 
                         <div class="detail-3">
-                            <span class="sans3"><?php echo Yii::app()->Discount->Discount($products); ?></span><br />
-                            <?php if ($products->tax != 0) { ?>
-                                    <span class="extax">Ex Tax : <?php echo Yii::app()->Discount->extax($products); ?></span>
-                            <?php } ?>
+                            <span class="sans3"><?php echo Yii::app()->Discount->Discount($products); ?></span>
                         </div>
 
 
@@ -336,12 +334,22 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
                     </div>
                     <?php if (Yii::app()->session['user']['id'] != '') { ?>
                             <ul>
+
+                                                                                                                                                                                <!--                                <li><a class="facebook_share" href="javascript:window.open('https://www.facebook.com/sharer/sharer.php?u=http://intersmarthosting.in/dealsonindia/index.php/products?name=<?php echo $products->canonical_name ?>','mywindowtitle','width=500,height=150')"><i class="fa dev fa-facebook"></i></a></li>
+                                                                                                                                                                                                                <li><a href="javascript:window.open('https://twitter.com/home?status=http%3A//intersmarthosting.in/dealsonindia/index.php/products?name=<?php echo $products->canonical_name ?>','mywindowtitle','width=500,height=150')"><i class="fa dev fa-twitter"></i></a></li>
+                                                                                                                                                                                                                <li><a href="javascript:window.open('https://plus.google.com/share?url=http%3A//intersmarthosting.in/dealsonindia/index.php/products?name=<?php echo $products->canonical_name ?>','mywindowtitle','width=500,height=150')"><i class="fa dev fa-google-plus"></i></a></li>
+                                                                                                                                                                                                                <li><a target="_blank" href="#"><i class="fa dev fa-linkedin"></i></a></li>-->
+
+                                <!--                                                                <div  class="fb-share-button" id="shareBtn" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></div>
+                                                                                                <li class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse"><i class="fa dev fa-facebook"></i></a></li>-->
+
                                 <li><a id="shareBtn" ><i class="fa dev fa-facebook"></i></a></li>
                                 <li><a href="javascript:window.open('https://twitter.com/home?status=http%3A//intersmarthosting.in/dealsonindia/index.php/products?name=<?php echo $products->canonical_name ?>','mywindowtitle','width=500,height=150')"><i class="fa dev fa-twitter"></i></a></li>
                                 <li><a href="javascript:window.open('https://plus.google.com/share?url=http%3A//intersmarthosting.in/dealsonindia/index.php/products?name=<?php echo $products->canonical_name ?>','mywindowtitle','width=500,height=150')"><i class="fa dev fa-google-plus"></i></a></li>
                                 <li><a id="shareBtn3"><i class="fa dev fa-linkedin"></i></a></li>
                             </ul>
                     <?php } ?>
+
 
                 </div>
             </div>
@@ -433,7 +441,7 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
 
                         <form id="reviewform" class="form-inline" role="form">
                             <div class="form-group">
-                                <input type="text" class="form-review" id="name" value="<?php echo Yii::app()->session['user']['name']; ?>" placeholder="Name">
+                                <input type="text" class="form-review" id="name" value="<?php echo Yii::app()->session['user']['first_name']; ?>" placeholder="Name">
                             </div>
                             <div class="form-group">
                                 <input type="email" class="form-review" id="email" value="<?php echo Yii::app()->session['user']['email']; ?>" placeholder="Email address">
@@ -556,8 +564,7 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
 
                 });
             });
-        });
-</script>
+            });</script>
 
 
 
@@ -614,6 +621,66 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
 
     </div>
 </div>
+<div id="fb-root"></div>
+<script>
+                    window.fbAsyncInit = function () {
+                        FB.init({
+                            appId: '166556653788041',
+                            xfbml: true,
+                            version: 'v2.7'
+                        });
+                    };
+
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {
+                    return;
+                }
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+</script>
+
+
+
+<!--<script>(function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id))
+                return;
+            js = d.createElement(s);
+            js.id = id;
+//            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.7";
+            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1";
+            fjs.parentNode.insertBefore(js, fjs);
+        }
+        (document, 'script', 'facebook-jssdk'));</script>-->
+
+<script>window.twttr = (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0],
+                    t = window.twttr || {};
+            if (d.getElementById(id))
+                return t;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://platform.twitter.com/widgets.js";
+            fjs.parentNode.insertBefore(js, fjs);
+
+            t._e = [];
+            t.ready = function (f) {
+                t._e.push(f);
+            }
+            ;
+                    alert('sdadsa);
+                            return t;
+                }(document, "script", "twitter-wjs"));
+        twttr.events.bind(
+                'click',
+                function (ev) {
+                    console.log('ev');
+                }
+        );</script>
 
 <script>
         document.getElementById('shareBtn').onclick = function () {
@@ -634,6 +701,7 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
             });
         }
 </script>
+
 <script>
 
         $(document).ready(function () {
@@ -670,10 +738,7 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
                     }
                 ]
             });
-
-        });
-
-</script>
+        });</script>
 <script>
         $(document).ready(function () {
             $('.moreproducts').slick({
@@ -706,10 +771,7 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
                     }
                 ]
             });
-
-        });
-
-</script>
+        });</script>
 
 
 <script src="<?= Yii::app()->baseUrl; ?>/js/jquery.fancybox.pack.js"></script>
@@ -718,16 +780,12 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
 
 <script>
         $("#laksyah_zoom").elevateZoom({gallery: 'gal1', cursor: 'pointer', galleryActiveClass: 'active', imageCrossfade: true, loadingIcon: true, responsive: true});
-
 //pass the images to Fancybox
         $("#laksyah_zoom").bind("click", function (e) {
             var ez = $('#laksyah_zoom').data('elevateZoom');
             $.fancybox(ez.getGalleryList());
             return false;
-        });
-
-
-</script>
+        });</script>
 
 
 <script>

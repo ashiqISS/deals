@@ -14,7 +14,7 @@
 
 <!-- Main content -->
 <section class="content">
-    <a href="<?php echo Yii::app()->request->baseurl . '/merchantMessage/create'; ?>" class='btn  btn-laksyah'>Add New MerchantMessage</a>
+    <!--<a href="<?php echo Yii::app()->request->baseurl . '/merchantMessage/create'; ?>" class='btn  btn-laksyah'>Add New MerchantMessage</a>-->
     <div class="col-xs-12 form-page" style="margin-top: .5em;">
         <div class="box">
 

@@ -601,6 +601,40 @@ class ProductsController extends Controller {
                 $this->render('error');
         }
 
+        public function actionShare() {
+                if ($_POST['product']) {
+                        $check = RewardPointHistory::model()->findByAttributes(array('user_id' => Yii::app()->session['user']['id'], 'product_id' => $_POST['product'], 'social_id' => $_POST['social']));
+                        if (empty($check)) {
+                                $points = MasterSocial::model()->findByPk($_POST['social']);
+                                $model = new RewardPointHistory();
+                                $model->user_id = Yii::app()->session['user']['id'];
+                                $model->product_id = $_POST['product'];
+                                $model->social_id = $_POST['social'];
+                                $model->point = $points->point;
+                                if ($model->save()) {
+                                        $check_point = RewardPointTable::model()->findByAttributes(array('user_id' => Yii::app()->session['user']['id']));
+                                        if (!empty($check_point)) {
+                                                $model2 = RewardPointTable::model()->findByPk($check_point->id);
+                                                $model2->point = $model2->point + $points->point;
+                                                if ($model2->save()) {
+                                                        echo '1';
+                                                        exit;
+                                                }
+                                        } else {
+                                                $model3 = new RewardPointTable();
+                                                $model3->user_id = Yii::app()->session['user']['id'];
+                                                $model3->point = $points->point;
+                                                $model3->doc = date('Y-m-d');
+                                                if ($model3->save()) {
+                                                        echo '2';
+                                                        exit;
+                                                }
+                                        }
+                                }
+                        }
+                }
+        }
+
         public function actionList() {
 
 //        print_r($_POST);
