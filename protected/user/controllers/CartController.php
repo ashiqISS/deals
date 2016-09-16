@@ -354,7 +354,7 @@ class CartController extends Controller {
 
                 foreach ($cart as $cart_item) {
                         $product = Products::model()->findByPk($cart_item->product_id);
-                        $price = Yii::app()->Discount->DiscountAmount($product);
+                        $price = Yii::app()->Discount->DiscountExtax($product);
                         $subtotal += ($price * $cart_item->quantity);
                 }
 

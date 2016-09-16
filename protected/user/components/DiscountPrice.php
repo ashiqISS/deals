@@ -14,6 +14,18 @@ class DiscountPrice extends CApplicationComponent {
                 }
         }
 
+        public function Extax($model) {
+
+                //discount rate value not equal to null//
+
+                if ($model->is_discount_available == 1) {
+                        $value = $this->DiscountExtax($model);
+                        return Yii::app()->Currency->convert($value);
+                } else {
+                        return Yii::app()->Currency->convert($model->price);
+                }
+        }
+
         public function DiscountCart($model, $qty) {
 
                 //discount rate value not equal to null//
@@ -39,6 +51,75 @@ class DiscountPrice extends CApplicationComponent {
                 }
         }
 
+        public function DiscountExtax($data) {
+                date_default_timezone_set('Asia/Kolkata');
+                $date = date('Y-m-d');
+                if ($data->discount_type == 1) {     // type of discount wether its flat on percetange
+                        if ($data->product_type == 4) {  // the value 4 is baragain products
+                                if (($date > $data->special_price_to)) {
+                                        $criteria = new CDbCriteria;
+                                        $criteria->select = '*,MAX(bidd_amount) ';
+                                        $bargained_rate = BargainDetails::model()->find($criteria);
+                                        if (!empty($bargained_rate)) {
+                                                Products::model()->updateAll(array("bidded_amount" => $bargained_rate->bidd_amount), 'id = ' . $data->id);
+                                                $discountRate = $bargained_rate->bidd_amount;
+                                        } else {
+                                                $discountRate = $data->bargain_price;
+                                        }
+                                } else {
+                                        $discountRate = $data->bargain_price;
+                                }
+                        } else {
+                                $discountRate = $data->price - $data->discount;
+                        }
+                } else {
+                        $discountRate = $data->price - ( $data->price * ($data->discount / 100));
+                }
+                return $discountRate;
+        }
+
+        public function Taxcalculate($name, $cart) {
+                $i = 1;
+                foreach ($cart as $cart_item) {
+                        $product = Products::model()->findByPk($cart_item->product_id);
+                        $tax_class = $product->tax;
+                        $tax_details = MasterTaxClass::model()->findByPk($tax_class)->tax_rate;
+                        $tax_rates = MaterTaxRates::model()->findByAttributes(array('tax_name' => $name));
+                        $price = Yii::app()->Discount->DiscountExtax($product);
+                        $subtotal += ($price * $cart_item->quantity);
+                        if (!empty($tax_rates)) {
+
+                                $tax_details = explode(',', $tax_details);
+                                foreach ($tax_details as $tax_detail) {
+                                        if ($tax_rates->id == $tax_detail) {
+                                                if ($tax_rates->type == 1) {
+                                                        $total_tax += ($tax_rates->tax_rate * $subtotal ) / 100;
+//                                                        $total_tax .= $i . ' + ';
+                                                } else if ($tax_rates->type == 2) {
+                                                        $total_tax += $tax_rates->tax_rate;
+                                                }
+                                        }
+                                }
+//                                if (in_array($tax_rates->id, $tax_details)) {
+//
+//                                }
+                        }
+                        $i++;
+                }
+//                                $tax_rates = $tax_exist->tax_rate;
+//
+//                if (!empty($tax_rates)) {
+//
+//                        if ($tax_rates->type == 1) {
+//                                $total_tax = ($tax * $subtotal ) / 100;
+//                        } else if ($tax_rates->type == 2) {
+//                                $total_tax = $tax;
+//                        }
+//                }
+
+                return $total_tax;
+        }
+
         public function DiscountType($data) {
                 date_default_timezone_set('Asia/Kolkata');
                 $date = date('Y-m-d');
@@ -62,6 +143,26 @@ class DiscountPrice extends CApplicationComponent {
                         }
                 } else {
                         $discountRate = $data->price - ( $data->price * ($data->discount / 100));
+                }
+                if ($data->tax != 0) {
+                        $tax_exist = MasterTaxClass::model()->findByPk($data->tax);
+                        if (!empty($tax_exist)) {
+//                                $tax_rates = $tax_exist->tax_rate;
+                                $tax_rates = MaterTaxRates::model()->findAll(array("condition" => "id IN($tax_exist->tax_rate)"));
+                                if (!empty($tax_rates)) {
+                                        foreach ($tax_rates as $tax_rate) {
+                                                if ($tax_rate->type == 1) {
+                                                        $total_per += $tax_rate->tax_rate;
+                                                } else if ($tax_rate->type == 2) {
+                                                        $total_fixed += $tax_rate->tax_rate;
+                                                }
+                                        }
+                                        $total_tax = ($total_per * $discountRate ) / 100;
+                                        $discountRate = $discountRate + $total_tax + $total_fixed;
+                                } else {
+                                        $discountRate = $discountRate;
+                                }
+                        }
                 }
                 return $discountRate;
         }

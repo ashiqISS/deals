@@ -104,12 +104,88 @@
                                                         <td><span class="subs">Sub-Total</span></td>
                                                         <td><span class="colors1"><?php echo $subtotal; ?></span></td>
                                                 </tr>
+                                                <?php
+                                                $sumarray = array();
+                                                $billcat = array();
+                                                foreach ($carts as $cart_tax) {
+                                                        ?>
+                                                        <?php $product_tax = Products::model()->findByPk($cart_tax->product_id); ?>
+                                                        <?php
+                                                        if ($product_tax->tax != 0) {
+                                                                $tax_exist = MasterTaxClass::model()->findByPk($product_tax->tax);
+                                                                if (!empty($tax_exist)) {
+                                                                        $tax_rates = MaterTaxRates::model()->findAll(array("condition" => "id IN($tax_exist->tax_rate)"));
+                                                                        ?>
+                                                                        <?php
+//
+                                                                        foreach ($tax_rates as $tax_rate) {
+                                                                                if (array_key_exists($tax_rate->tax_name, $billcat)) {
+                                                                                        $billcat[$tax_rate->tax_name] = $billcat[$tax_rate->tax_name] + $tax_rate->tax_rate;
+                                                                                } else {
+                                                                                        $billcat[$tax_rate->tax_name] = $tax_rate->tax_rate;
+                                                                                }
+
+//
+//                                                                                $tax_value = Yii::app()->Discount->Taxcalculate($tax_rate->id, $product_tax);
+                                                                                ?>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <!--                                                                                <tr>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <td><span class="subs"><?php echo $tax_rate->tax_name; ?></span></td>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <td><span class="colors1"><?php echo $tax_value; ?></span></td>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </tr>-->
+                                                                                <?php
+                                                                        }
+                                                                        ?>
+                                                                        <?php
+                                                                }
+                                                        }
+                                                        ?>
+                                                        <?php
+                                                }
+
+
+                                                //print_r($billcat);
+//                                                print_r($sumarray);
+                                                ?>
+                                                <?php
+                                                foreach ($billcat as $key11 => $value11) {
+                                                        ?>
+                                                        <tr>
+                                                                <td><span class="subs"><?php echo $key11; ?></span></td>
+                                                                <td><span class="colors1"><?php echo Yii::app()->Discount->Taxcalculate($key11, $carts); ?></span></td>
+                                                                <td><span class="colors1"><?php //var_dump(Yii::app()->Discount->Taxcalculate($key11, $carts));  ?></span></td>
+                                                        </tr>
+                                                <?php } ?>
                                                 <tr>
                                                         <td>Shipping Charge</td>
                                                         <td><span class="colors1"><?php echo Yii::app()->Currency->convert(1225); ?></span></td>
                                                 </tr>
 
-                                                <?php //echo $coupon_amount; ?>
+
+
+                                                <?php
+//                                                echo '<br><br>';
+//                                                $sales = array('FIRST' => array('RED' => array(9, 3), 'GREEN' => array(4, 5, 8, 2)),
+//                                                    'SECOND' => array('RED' => array(3, 5, 5, 2), 'YELLOW' => array(4, 2, 5)),
+//                                                    'THIRD' => array('BLUE' => array(1, 2, 4), 'RED' => array(9, 4, 6)),
+//                                                    'FOUR' => array('BLUE' => array(2, 3, 3, 5), 'BLACK' => array(4, 5, 8, 9)));
+//
+//                                                $sumarray = array();
+//                                                foreach ($sales as $key1 => $value1) {
+//                                                        foreach ($value1 as $key2 => $value2) {
+//
+//                                                                if (array_key_exists($key2, $sumarray)) {
+//
+//                                                                        $sumarray[$key2] = $sumarray[$key2] + array_sum($value2);
+//                                                                } else {
+//                                                                        $sumarray[$key2] = array_sum($value2);
+//                                                                }
+//                                                        }
+//                                                }
+//
+//                                                print_r($sumarray);
+                                                ?>
+
+                                                <?php //echo $coupon_amount;          ?>
                                                 <?php if ($coupon_amount > 0) { ?>
                                                         <tr>
                                                                 <td>Coupon Code (<span style="font-size: 9px;"><?php echo $coupen_details->code; ?></span>)</td>
@@ -155,7 +231,7 @@
                                                 <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#p2"> <div class="panel-heading headz">
 
                                                                 <span class="panel-title">
-                                                                        <i class="glyphicon gly glyphicon-plus"></i>  Estimate Shipping & Taxes
+                                                                        <i class="glyphicon gly glyphicon-plus"></i>  Estimate Shipping
                                                                 </span>
 
 

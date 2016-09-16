@@ -251,7 +251,10 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
                                                 </div>
 
                                                 <div class="detail-3">
-                                                        <span class="sans3"><?php echo Yii::app()->Discount->Discount($products); ?></span>
+                                                        <span class="sans3"><?php echo Yii::app()->Discount->Discount($products); ?></span><br />
+                                                        <?php if ($products->tax != 0) { ?>
+                                                                <span class="extax">Ex Tax : <?php echo Yii::app()->Discount->extax($products); ?></span>
+                                                        <?php } ?>
                                                 </div>
 
 
