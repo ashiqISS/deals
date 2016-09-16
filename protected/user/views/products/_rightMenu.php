@@ -30,22 +30,24 @@
         ?>
         <li class="<?= $active1; ?>"><?php echo CHtml::link('Dashboard', array('Myaccount/index')); ?></li>
         <?php if (Yii::app()->session['merchant']) { ?>
-                <li><a href="#">Messages </a></li>
+                <li class="<?= $active12; ?>"><?php echo CHtml::link('Messages', array('myaccount/message')); ?></li>
+
         <?php } ?>
-        <li class="<?= $active2; ?>"><?php echo CHtml::link('Reset Password', array('Myaccount/ResetPassword')); ?></li>
+
         <?php if (Yii::app()->session['user']) { ?>
                 <li class="<?= $active3; ?>"><?php echo CHtml::link('Account settings', array('Myaccount/UserSettings')); ?></li>
         <?php } ?>
         <?php if (Yii::app()->session['merchant']) { ?>
                 <li class="<?= $active3; ?>"><?php echo CHtml::link('Account settings', array('Myaccount/VendorSettings')); ?></li>
         <?php } ?>
+        <li class="<?= $active2; ?>"><?php echo CHtml::link('Reset Password', array('Myaccount/ResetPassword')); ?></li>
         <?php if (Yii::app()->session['merchant']) { ?>
-                    <!--<li class="<?//= $active5; ?>"><?php //echo CHtml::link('Add Products', array('Products/AddProducts'));                            ?></li>-->
+                                                                                           <!--<li class="<?//= $active5; ?>"><?php //echo CHtml::link('Add Products', array('Products/AddProducts'));                                                ?></li>-->
                 <li class="<?= $active6; ?>"><?php echo CHtml::link('Products', array('Products/MyProducts')); ?></li>
 
         <?php } ?>
         <?php if (Yii::app()->session['user']) { ?>
-                <li class="<?= $active9; ?>"><?php echo CHtml::link('My Order', array('Myaccount/UserOrderHistory')); ?></li>
+                <li class="<?= $active9; ?>"><?php echo CHtml::link('My Orders', array('Myaccount/UserOrderHistory')); ?></li>
         <?php } ?>
         <?php if (Yii::app()->session['merchant']) { ?>
                 <li class="<?= $active9; ?>"><?php echo CHtml::link('Orders', array('Myaccount/VendorOrderHistory')); ?></li>
@@ -54,30 +56,32 @@
                 <li class="<?= $active4; ?>"><?php echo CHtml::link('Address Books', array('Myaccount/AddressBook')); ?></li>
         <?php } ?>
         <?php if (Yii::app()->session['merchant']) { ?>
-                <li class="<?= $active5; ?>"><?php echo CHtml::link('Add Products', array('Products/AddProducts')); ?></li>
-                <li class="<?= $active6; ?>"><?php echo CHtml::link('My Product', array('Products/MyProducts')); ?></li>
+        <!--                <li class="<?= $active5; ?>"><?php echo CHtml::link('Add Products', array('Products/AddProducts')); ?></li>
+                <li class="<?= $active6; ?>"><?php echo CHtml::link('My Product', array('Products/MyProducts')); ?></li>-->
         <?php } ?>
         <?php if (Yii::app()->session['user']) { ?>
-                <li><a href="#">Wishlisted Products</a></li>
+                <li><a href="#">Wish Listed Products</a></li>
 
-                <li class="<?= $active7; ?>"><?php echo CHtml::link('Submit a product', array('Myaccount/SubmitDeal')); ?></li>
+                <li class="<?= $active7; ?>"><?php echo CHtml::link('Submit a Product', array('Myaccount/SubmitDeal')); ?></li>
         <?php } ?>
-        <li class="<?= $active8; ?>"><?php echo CHtml::link('Newsletter Subscription', array('Myaccount/Newsletter')); ?></li>
 
-        <li><a href="#">Set interest deals/ wish listed deals</a></li>
-        <li class="<?= $active7; ?>"><?php echo CHtml::link('Submit a deal/ product', array('Myaccount/SubmitDeal')); ?></li>
-        <?php if (Yii::app()->session['merchant']) { ?>
-                <li class="<?= $active10; ?>"><?php echo CHtml::link('Sales Report', array('Myaccount/MySalesReport')); ?></li>
-        <?php } ?>
+
         <?php if (Yii::app()->session['user']) { ?>
                 <li class="<?= $active8; ?>"><?php echo CHtml::link('Newsletter Subscription', array('Myaccount/Newsletter')); ?></li>
         <?php } ?>
-        <li><a href="#"> Transaction</a></li>
-        <li><a href="#"> Payment/Payout</a></li>
-        <li><a href="#"> Plans</a></li>
+        <?php if (Yii::app()->session['merchant']) { ?>
+                <li class="<?= $active10; ?>"><?php echo CHtml::link('Sales Report', array('Myaccount/MySalesReport')); ?></li>
+
+
+                <li><a href="#"> Transaction</a></li>
+                <li><a href="#"> Payment/Payout</a></li>
+                <li><a href="#"> Plans</a></li>
+        <?php } ?>
         <!--<li><a href="#"> Affiliate commission</a></li>-->
         <li><a href="#"> Reward points</a></li>
         <!--<li><a href="#">Used and refurbished (Return products)</a></li>-->
-        <li class="<?= $active11; ?>"><?php echo CHtml::link('Advertisements', array('Myaccount/paidAd')); ?></li>
+        <?php if (Yii::app()->session['merchant']) { ?>
+                <li class="<?= $active11; ?>"><?php echo CHtml::link('Advertisements', array('Myaccount/paidAd')); ?></li>
+        <?php } ?>
         <!--<li><a href="#"> Bargain zone</a></li>-->
 </ul>

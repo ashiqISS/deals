@@ -342,7 +342,7 @@ class CartController extends Controller {
                         $price = Yii::app()->Discount->DiscountAmount($product);
                         $subtotal += ($price * $cart_item->quantity);
                 }
-                return $subtotal - $coupon_amount;
+                return $subtotal - $coupon_amount + Yii::app()->Shipping->Calculate();
         }
 
         public function subtotal() {
@@ -423,18 +423,16 @@ class CartController extends Controller {
         public function actionProceed() {
 
                 if (Yii::app()->session['user']['id'] != '' && Yii::app()->session['user']['id'] != NULL) {
-
                         if (Yii::app()->session['orderid'] == '') {
-
-
-
                                 $cart = Cart::model()->findAllByAttributes(array('user_id' => Yii::app()->session['user']['id']));
                                 if (!empty($cart)) {
                                         $order_id = $this->addOrder($cart);
 //                                $select_coupon = Yii::app()->session['coupen_id'];
 //                                $this->addcoupens();
                                         Yii::app()->session['orderid'] = $order_id;
+
                                         $this->orderProducts($order_id, $cart);
+
                                         $this->updatecoupenhistory($order_id);
                                         $this->redirect(array('CheckOut/CheckOut'));
                                 } else {
@@ -450,9 +448,12 @@ class CartController extends Controller {
 
 //                                $select_coupon = Yii::app()->session['coupen_id'];
 //                                $this->addcoupens();
+
                                         $order_id = Yii::app()->session['orderid'];
                                         $this->updatecoupenhistory($order_id1);
-                                        $this->orderProducts($order_id, $cart);
+
+                                        $new = $this->orderProducts($order_id, $cart);
+
                                         $this->redirect(array('CheckOut/CheckOut'));
                                 } else {
                                         $this->redirect(array('Cart/Mycart'));
@@ -536,10 +537,11 @@ class CartController extends Controller {
 
                 $model = CouponHistory::model()->findByAttributes(array('session_id' => Yii::app()->session['temp_user']));
                 $coupen = Coupons::model()->findByPk($model->coupon_id);
-
                 $model1 = Order::model()->findByPk(Yii::app()->session['orderid']);
+
                 if (!empty($model1)) {
                         $model1->user_id = Yii::app()->session['user']['id'];
+
                         $total_amt = $this->total($cart);
                         $model1->total_amount = $total_amt;
                         $model1->coupon_id = $model->coupon_id;
@@ -550,7 +552,6 @@ class CartController extends Controller {
                         date_default_timezone_set('Asia/Kolkata');
                         $model1->order_date = date('Y-m-d H:i:s');
                         $model1->DOC = date('Y-m-d');
-
                         if ($model1->save()) {
                                 return $model1->id;
                         }
@@ -560,6 +561,7 @@ class CartController extends Controller {
         }
 
         public function orderProducts($orderid, $carts) {
+
                 foreach ($carts as $cart) {
                         $prod_details = Products::model()->findByPk($cart->product_id);
                         $check = OrderProducts::model()->findAllByAttributes(array('order_id' => $orderid, 'product_id' => $cart->product_id, 'option_id' => $cart->options));
@@ -567,6 +569,7 @@ class CartController extends Controller {
                         if (!empty($check)) {
 
                         } else {
+
                                 $model_prod = new OrderProducts;
                                 $model_prod->order_id = $orderid;
                                 $model_prod->product_id = $cart->product_id;
@@ -577,7 +580,9 @@ class CartController extends Controller {
                                 $model_prod->merchant_id = $prod_details->merchant_id;
                                 $price = Yii::app()->Discount->DiscountAmount($prod_details) * $cart->quantity;
                                 $model_prod->amount = ($cart->quantity) * ($price);
-                                if ($model_prod->save()) {
+                                if ($model_prod->save(false)) {
+
+                                } else {
 
                                 }
                         }

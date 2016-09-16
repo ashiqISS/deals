@@ -23,7 +23,7 @@
                                                 <div class="ch_box"> <h1>Delivery Details</h1>
                                                         <h2>DTDC Shipping</h2>
                                                         <div class="checkbox txt">
-                                                                <h5>Shipping Charge : Rs.250</h5>
+                                                                <h5>Shipping Charge : <?php echo Yii::app()->Currency->convert(Yii::app()->Shipping->Calculate()); ?></h5>
                                                         </div>
                                                         <div style="clear:both"></div></div>
                                         </div>

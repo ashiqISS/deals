@@ -8,28 +8,7 @@
                 font-size: 12px;
         }
 </style><link href="<?= Yii::app()->baseUrl ?>/css/hover.css" rel="stylesheet" media="all">
-<section class="title">
-        <div class="container">
-                <div class="row">
-                        <div class="col-xs-12">
-                                <h1>My Account</h1>
-                        </div>
-                </div>
-        </div>
-</section>
-<div class="container">
-        <div class="row">
-                <div class="col-xs-12">
-                        <ul class="breadcrumb">
-                                <li><a href="#"><i class="fa hom fa-home"></i></a></li>
-                                <li><?php echo CHtml::link('Account', array('Myaccount/index')); ?></li>
-                                <li><span class="last"> Order History</span></li>
-                        </ul>
-                </div>
-        </div>
-</div>
-
-
+<?php echo $this->renderPartial('_breadcremb'); ?>
 <section class="checkout">
         <div class="container">
                 <div class="row">

@@ -3,27 +3,7 @@
 <script src="<?= Yii::app()->baseUrl ?>/js/classie.js"></script>
 <script src="<?= Yii::app()->baseUrl ?>/js/slick.min.js"></script>
 <link href="<?= Yii::app()->baseUrl ?>/css/hover.css" rel="stylesheet" media="all">
-<section class="title">
-        <div class="container">
-                <div class="row">
-                        <div class="col-xs-12">
-                                <h1>Add Products</h1>
-                        </div>
-                </div>
-        </div>
-</section>
-<div class="container">
-        <div class="row">
-                <div class="col-xs-12">
-                        <ul class="breadcrumb">
-                                <li><a href="#"><i class="fa hom fa-home"></i></a></li>
-                                <li><a href="#">Account</a></li>
-                                <li><span class="last">Add Products</span></li>
-
-                        </ul>
-                </div>
-        </div>
-</div>
+<?php echo $this->renderPartial('//myaccount/_breadcremb'); ?>
 <section class="checkout">
         <div class="container">
                 <div class="row">
@@ -42,7 +22,7 @@
                                         </a>
                                         <div id="m1" class="panel-collapse collapse">
                                                 <div class="panel-body mbb">
-                                                        <?php echo $this->renderPartial('_rightMenu'); ?>
+                                                        <?php echo $this->renderPartial('//myaccount/_rightMenu'); ?>
                                                 </div>
                                         </div>
 

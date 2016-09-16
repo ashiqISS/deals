@@ -25,7 +25,7 @@
                                                                 <label class="radio-inline ">
                                                                         <input type="radio" name="payment_option" value="1">CC Avenue Payment Gateway(Internet Banking, Credit,Debit)
                                                                 </label>
-                                                                <img src="<?php echo yii::app()->request->baseUrl; ?>/images/p-1.jpg">
+                                                                <!--<img style="max-width:60%" src="<?php echo yii::app()->request->baseUrl; ?>/images/p-1.jpg">-->
 
 
                                                         </div>
@@ -33,9 +33,11 @@
                                                                 <label class="radio-inline ">
                                                                         <input type="radio" name="payment_option" value="2">Paypal Checkout
                                                                 </label>
-
-
-
+                                                        </div>
+                                                        <div class="checkbox txt">
+                                                                <label class="radio-inline ">
+                                                                        <input type="radio" name="payment_option" value="3">Cash On Delivery
+                                                                </label>
                                                         </div>
 
                                                         <div style="clear:both"></div></div>

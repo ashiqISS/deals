@@ -30,29 +30,35 @@ class MyaccountController extends Controller {
                 } else {
                         if (Yii::app()->session['user']) {
                                 $model = BuyerDetails::model()->findByPk(Yii::app()->session['user']['id']);
-                                if ($_POST['password1'] != '' || $_POST['password1'] != NULL) {
-                                        $model->password = $_POST['password1'];
+                                if (isset($_POST['password1'])) {
+                                        if ($_POST['password1'] != '' || $_POST['password1'] != NULL) {
+                                                $model->password = $_POST['password1'];
 
-                                        if ($model->save()) {
-                                                Yii::app()->user->setFlash('success', "Your password changed successfully. ");
+                                                if ($model->save()) {
+                                                        Yii::app()->user->setFlash('success', "Your password changed successfully. ");
+                                                } else {
+                                                        Yii::app()->user->setFlash('error', "Inavlid user,..");
+                                                }
                                         } else {
-                                                Yii::app()->user->setFlash('error', "Inavlid user,..");
+                                                Yii::app()->user->setFlash('empty', "Internal Error Occured. ");
                                         }
-                                } else {
-                                        Yii::app()->user->setFlash('empty', "Internal Error Occured. ");
                                 }
                         } if (Yii::app()->session['merchant']) {
-                                if ($_POST['password1'] != '' || $_POST['password1'] != NULL) {
-                                        $model = Merchant::model()->findByPk(Yii::app()->session['merchant']['id']);
-                                        $model->password = $_POST['password1'];
-                                        $model->confirm = $_POST['password1'];
-                                        if ($model->save(false)) {
-                                                Yii::app()->user->setFlash('success', "Your password changed successfully. ");
+                                if (isset($_POST['password1'])) {
+
+
+                                        if ($_POST['password1'] != '' || $_POST['password1'] != NULL) {
+                                                $model = Merchant::model()->findByPk(Yii::app()->session['merchant']['id']);
+                                                $model->password = $_POST['password1'];
+                                                $model->confirm = $_POST['password1'];
+                                                if ($model->save(false)) {
+                                                        Yii::app()->user->setFlash('success', "Your password changed successfully. ");
+                                                } else {
+                                                        Yii::app()->user->setFlash('error', "Inavlid user,..");
+                                                }
                                         } else {
-                                                Yii::app()->user->setFlash('error', "Inavlid user,..");
+                                                Yii::app()->user->setFlash('empty', "Internal Error Occured. ");
                                         }
-                                } else {
-                                        Yii::app()->user->setFlash('empty', "Internal Error Occured. ");
                                 }
                         }
                         $this->render('password_reset', array('model' => $model));

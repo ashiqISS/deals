@@ -1,25 +1,5 @@
 <link href="<?= Yii::app()->baseUrl ?>/css/hover.css" rel="stylesheet" media="all">
-<section class="title">
-        <div class="container">
-                <div class="row">
-                        <div class="col-xs-12">
-                                <h1>My Account</h1>
-                        </div>
-                </div>
-        </div>
-</section>
-<div class="container">
-        <div class="row">
-                <div class="col-xs-12">
-                        <ul class="breadcrumb">
-                                <li><a href="#"><i class="fa hom fa-home"></i></a></li>
-                                <li><?php echo CHtml::link('Account', array('Myaccount/index')); ?></li>
-                                <li><span class="last"> Order History</span></li>
-
-                        </ul>
-                </div>
-        </div>
-</div>
+<?php echo $this->renderPartial('_breadcremb'); ?>
 
 
 <section class="checkout">
@@ -50,17 +30,18 @@
 
                         </div>
 
-                        <?php if (!empty($model)) { ?>
-                                <div class="col-lg-9 col-md-8">
+
+                        <div class="col-lg-9 col-md-8">
+                                <?php if (!empty($model)) { ?>
                                         <div class="comm">
 
                                                 <div class="commission-1">
                                                         <div class="head-1"><h2>Order ID</h2></div>
                                                         <div class="head-1"><h2>Product Name</h2></div>
                                                         <div class="head-1"><h2>Amount</h2></div>
-                                                        <div class="head-1"><h2>Date of order placed</h2></div>
-                                                        <div class="head-1"><h2>Customer Name</h2></div>
-                                                        <div class="head-1"><h2>Payment Status</h2></div>
+                                                        <div class="head-1"><h2>Date </h2></div>
+                                                        <div class="head-1"><h2>Name</h2></div>
+                                                        <div class="head-1"><h2>Status</h2></div>
                                                         <div class="head-1"><h2>Quantity</h2></div>
                                                 </div>
                                                 <?php
@@ -70,20 +51,20 @@
                                                         $order_products = Products::model()->findByPk($order_produ->product_id);
                                                         ?>
                                                         <div class="commission-2">
-                                                                <div class="head-1"><h2>ID-<?= $order->id; ?></h2></div>
+                                                                <div class="head-1"><h2>#<?= $order->id; ?></h2></div>
                                                                 <div class="head-1"><h2><?= $order_products->product_name; ?></h2></div>
                                                                 <div class="head-1"><h2><?= Yii::app()->Currency->convert($order->total_amount); ?></h2></div>
                                                                 <div class="head-1"><h2><?= date('d-m-Y', strtotime($order->order_date)); ?></h2></div>
                                                                 <div class="head-1"><h2><?= $user->first_name; ?>  <?= $user->last_name; ?></h2></div>
                                                                 <div class="head-1"><h2><?php
                                                                                 if ($order->status == 0) {
-                                                                                        echo 'Not Payed';
+                                                                                        echo 'Not Placed';
                                                                                 } elseif ($order->status == 1) {
-                                                                                        echo 'Payment Success';
+                                                                                        echo 'Order Processing';
                                                                                 } elseif ($order->status == 2) {
-                                                                                        echo 'Payment Failed';
+                                                                                        echo 'Order Canceled';
                                                                                 } else {
-                                                                                        echo 'Error';
+                                                                                        echo 'Order Returned';
                                                                                 }
                                                                                 ?></h2></div>
                                                                 <div class="head-1"><h2><?= $order_produ->quantity; ?></h2></div>
@@ -95,12 +76,13 @@
 
                                                 <a href="#" class="reward hvr-shutter-in-horizontal left-btns">Back</a>
                                         </div>
-                                </div>
-                                <?php
-                        } else {
-                                echo 'No Order History Found';
-                        }
-                        ?>
+                                        <?php
+                                } else {
+                                        echo 'No Orders Found';
+                                }
+                                ?>
+                        </div>
+
 
                         <div class="col-lg-3 col-md-4 mbb hidden-xs hidden-sm">
                                 <?php echo $this->renderPartial('_rightMenu'); ?>

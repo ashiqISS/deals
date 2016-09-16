@@ -60,7 +60,7 @@
                                                                                                 <td></td>
                                                                                                 <td></td>
                                                                                                 <td><h3>Shipping Rate:</h3></td>
-                                                                                                <td><h3><?php echo Yii::app()->Currency->convert(0); ?></h3></td>
+                                                                                                <td><h3><?php echo Yii::app()->Currency->convert(Yii::app()->Shipping->Calculate()); ?></h3></td>
                                                                                         </tr>
                                                                                         <?php if ($coupon_amount > 0) { ?>
                                                                                                 <tr>

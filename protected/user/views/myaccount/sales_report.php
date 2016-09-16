@@ -3,27 +3,7 @@
 
 
 <link href="<?= Yii::app()->baseUrl ?>/css/hover.css" rel="stylesheet" media="all">
-<section class="title">
-        <div class="container">
-                <div class="row">
-                        <div class="col-xs-12">
-                                <h1>Checkout</h1>
-                        </div>
-                </div>
-        </div>
-</section>
-<div class="container">
-        <div class="row">
-                <div class="col-xs-12">
-                        <ul class="breadcrumb">
-                                <li><a href="#"><i class="fa hom fa-home"></i></a></li>
-                                <li><a href="#">Account</a></li>
-                                <li><span class="last"> Order History</span></li>
-
-                        </ul>
-                </div>
-        </div>
-</div>
+<?php echo $this->renderPartial('_breadcremb'); ?>
 
 
 <section class="checkout">
@@ -54,8 +34,9 @@
 
                         </div>
 
-                        <?php if (!empty($model)) { ?>
-                                <div class="col-lg-9 col-md-8">
+
+                        <div class="col-lg-9 col-md-8">
+                                <?php if (!empty($model)) { ?>
                                         <div class="comm">
 
                                                 <div class="commission-1">
@@ -91,12 +72,13 @@
 
                                                 <a href="#" class="reward hvr-shutter-in-horizontal left-btns">Back</a>
                                         </div>
-                                </div>
-                                <?php
-                        } else {
-                                echo 'No Order History Found';
-                        }
-                        ?>
+                                        <?php
+                                } else {
+                                        echo 'No Sales Found';
+                                }
+                                ?>
+                        </div>
+
 
                         <div class="col-lg-3 col-md-4 mbb hidden-xs hidden-sm">
                                 <?php echo $this->renderPartial('_rightMenu'); ?>

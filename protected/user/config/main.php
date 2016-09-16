@@ -45,6 +45,7 @@ return array(
         'Currency' => array('class' => 'Converter'),
         'Discount' => array('class' => 'DiscountPrice'),
         'Menu' => array('class' => 'MenuCategory'),
+        'Shipping' => array('class' => 'Shipping'),
         'booster' => array(
             'class' => 'booster.components.Booster',
         ),

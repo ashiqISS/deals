@@ -1,6 +1,6 @@
 <link href="<?= Yii::app()->baseUrl ?>/css/hover.css" rel="stylesheet" media="all">
 
-
+<?php echo $this->renderPartial('_breadcremb'); ?>
 <section class="checkout">
         <div class="container">
                 <div class="row">
@@ -150,6 +150,9 @@
                                         <?php $this->endWidget(); ?>
 
                                 </div><!-- form -->
+                        </div>
+                        <div class="col-lg-3 col-md-4 mbb hidden-xs hidden-sm">
+                                <?php echo $this->renderPartial('_rightMenu'); ?>
                         </div>
                 </div>
         </div>

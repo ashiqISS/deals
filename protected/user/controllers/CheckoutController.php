@@ -152,6 +152,14 @@ class CheckoutController extends Controller {
                 }
         }
 
+        public function Calculateshipping($carts) {
+                foreach ($carts as $cart) {
+                        $product_details = Products::model()->findByPk($cart->product_id);
+                        $shipping_charge += ($product_details->shipping_rate * $cart->quantity);
+                }
+                return $shipping_charge;
+        }
+
         public function actionShipping() {
                 if (isset(Yii::app()->session['orderid'])) {
                         $checkout_exist = Checkout::model()->findByAttributes(array('session_id' => Yii::app()->session['temp_user']));
@@ -252,13 +260,13 @@ class CheckoutController extends Controller {
 
                         $cart_exist = Cart::model()->findAll(array('condition' => $condition));
                         //var_dump(Yii::app()->session['user']['id']);
-//                exit;
+                        //exit;
 
                         if (!empty($cart_exist)) {
-
+                                $shipping_charge = $this->Calculateshipping($cart_exist);
                                 $address = null;
 
-                                $this->render('shipping_charges', array('address' => $address, 'checkout_id' => $checkout_id, 'email_vari' => $varification));
+                                $this->render('shipping_charges', array('shipping_charge' => $shipping_charge, 'address' => $address, 'checkout_id' => $checkout_id, 'email_vari' => $varification));
                         } else {
                                 $this->redirect(array('Cart/Mycart'));
                         }
@@ -459,7 +467,7 @@ class CheckoutController extends Controller {
                         $price = Yii::app()->Discount->DiscountAmount($product);
                         $subtotal += ($price * $cart_item->quantity);
                 }
-                return $subtotal - $coupon_amount;
+                return $subtotal - $coupon_amount + Yii::app()->Shipping->Calculate();
         }
 
         public function subtotal() {

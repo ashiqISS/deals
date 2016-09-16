@@ -78,46 +78,33 @@ class DiscountPrice extends CApplicationComponent {
                 return $discountRate;
         }
 
-        public function Taxcalculate($name, $cart) {
-                $i = 1;
+        public function Taxcalculate($cart) {
+                $bills = array();
                 foreach ($cart as $cart_item) {
                         $product = Products::model()->findByPk($cart_item->product_id);
                         $tax_class = $product->tax;
-                        $tax_details = MasterTaxClass::model()->findByPk($tax_class)->tax_rate;
-                        $tax_rates = MaterTaxRates::model()->findByAttributes(array('tax_name' => $name));
+                        $tax_details = explode(',', MasterTaxClass::model()->findByPk($tax_class)->tax_rate);
                         $price = Yii::app()->Discount->DiscountExtax($product);
                         $subtotal += ($price * $cart_item->quantity);
-                        if (!empty($tax_rates)) {
+                        foreach ($tax_details as $key => $val) {
+                                $taxcalc = MaterTaxRates::model()->findByPk($val);
+                                if ($taxcalc->type == 1) {
+                                        if (array_key_exists($tax_rate->tax_name, $bills)) {
+                                                $bills[$taxcalc->tax_name] = $bills[$taxcalc->tax_name] + ($taxcalc->tax_rate * $subtotal ) / 100;
+                                        } else {
+                                                $bills[$taxcalc->tax_name] = ($taxcalc->tax_rate * $subtotal ) / 100;
+                                        }
+                                } else if ($taxcalc->type == 2) {
 
-                                $tax_details = explode(',', $tax_details);
-                                foreach ($tax_details as $tax_detail) {
-                                        if ($tax_rates->id == $tax_detail) {
-                                                if ($tax_rates->type == 1) {
-                                                        $total_tax += ($tax_rates->tax_rate * $subtotal ) / 100;
-//                                                        $total_tax .= $i . ' + ';
-                                                } else if ($tax_rates->type == 2) {
-                                                        $total_tax += $tax_rates->tax_rate;
-                                                }
+                                        if (array_key_exists($taxcalc->tax_name, $bills)) {
+                                                $bills[$taxcalc->tax_name] = $bills[$taxcalc->tax_name] + $taxcalc->tax_rate;
+                                        } else {
+                                                $bills[$taxcalc->tax_name] = $taxcalc->tax_rate;
                                         }
                                 }
-//                                if (in_array($tax_rates->id, $tax_details)) {
-//
-//                                }
                         }
-                        $i++;
                 }
-//                                $tax_rates = $tax_exist->tax_rate;
-//
-//                if (!empty($tax_rates)) {
-//
-//                        if ($tax_rates->type == 1) {
-//                                $total_tax = ($tax * $subtotal ) / 100;
-//                        } else if ($tax_rates->type == 2) {
-//                                $total_tax = $tax;
-//                        }
-//                }
-
-                return $total_tax;
+                return $bills;
         }
 
         public function DiscountType($data) {
