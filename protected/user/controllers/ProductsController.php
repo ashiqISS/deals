@@ -631,6 +631,9 @@ class ProductsController extends Controller {
                                                 }
                                         }
                                 }
+                        } else {
+                                echo 'Failed';
+                                exit;
                         }
                 }
         }
