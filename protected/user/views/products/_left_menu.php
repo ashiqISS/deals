@@ -6,9 +6,10 @@
         ?>
         <div class="col-md-3 heading hidden-xs hidden-sm">
                 <h1>Filter By Price</h1>
+                <input id="ex16b" name="priceRange" type="hidden"/>
                 <!--<input id="ex16b" type="text"/>-->
                 <?php
-                echo CHtml::dropDownList('price', $select, Utilities::getPriceList(), array('empty' => 'Price Range', 'class' => "form-control", 'onchange' => 'searchProduct()', 'options' => array($price => array('selected' => true))));
+                // echo CHtml::dropDownList('price', $select, Utilities::getPriceList(), array('empty' => 'Price Range', 'class' => "form-control", 'onchange' => 'searchProduct()', 'options' => array($price => array('selected' => true))));
                 ?>
 
 
@@ -84,11 +85,16 @@
 
         </div>
 
-        <input type="hidden" id="priceRange" name ="priceRange" value="<?= $price ?>">
+        <!--<input type="hidden" id="priceRange" name ="priceRange" value="<?= $price ?>">-->
         <input type="hidden" name="category" value="<?= $category ?>">
 </form>
 
 <script>
+        $(document).ready(function () {
+                $(".slider-horizontal").click(function () {
+                        $('#products_search').submit();
+                });
+        });
         function searchProduct()
         {
                 // get value of selected barnds

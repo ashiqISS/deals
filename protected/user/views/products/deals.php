@@ -31,20 +31,27 @@
                                                                             </div>
                                                                         </form>-->
 
-                                                <form class="form-inline" role="form">
-                                                        <label class="sortby">Sort By</label>
-                                                        <div class="form-group">
 
-                                                                <select class="chris-select animated fadeInUp" name="carlist" form="carform">
-                                                                        <option value="volvo">Default</option>
-                                                                        <option value="saab">Saab</option>
-                                                                        <option value="opel">Opel</option>
-                                                                        <option value="audi">Audi</option>
+
+                                                <div class="form-group">
+
+                                                        <form id="products_sort" method="POST" action="<?= Yii::app()->request->baseUrl . "/index.php/products/" . Yii::app()->controller->action->id; ?>" class="form-inline" role="form">
+                                                                <label class="sortby">Sort By</label>
+                                                                <input type="hidden" name="category" value="<?= $category ?>">
+                                                                <input type="hidden" name="sort_by" id='sort_by'>
+                                                                <select class="chris-select animated fadeInUp" name="product_sort" id="sel_sort" form="product_sort" onchange='sort()' selected='<?= $sort ?>' >
+                                                                        <option value="">Sort</option>
+                                                                        <option value="new_first">Newest First</option>
+                                                                        <option value="old_first">Oldest First</option>
+                                                                        <option value="price_low">Price - low to high</option>
+                                                                        <option value="price_high">Price - high to low</option>
+
                                                                 </select>
-                                                        </div>
+                                                        </form>
+                                                </div>
 
 
-                                                </form>
+
 
 
 
@@ -72,7 +79,16 @@
 
 
 </section>
+<script>
+        function sort()
+        {
+                var e = document.getElementById("sel_sort");
+                var sort = e.options[e.selectedIndex].value;
 
+                $("#sort_by").val(sort);
+                $('#products_sort').submit();
+        }
+</script>
 <script>
         (function (window, $) {
                 $(function () {

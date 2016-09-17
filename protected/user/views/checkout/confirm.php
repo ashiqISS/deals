@@ -72,11 +72,21 @@
                                                                                                 </tr>
                                                                                         <?php } ?>
                                                                                         <tr>
-                                                                                                <td></td>
+                                                                                                <?php $payment_mode = Order::model()->findByPk(Yii::app()->session['orderid'])->payment_mode; ?>
+                                                                                                <td><h5 style="font-weight: bold; text-align: center">Payment Method: <?php
+                                                                                                                if ($payment_mode == 1) {
+                                                                                                                        echo 'Pyament Gateway';
+                                                                                                                } else if ($payment_mode == 2) {
+                                                                                                                        echo 'Paypal Checkout';
+                                                                                                                } else {
+                                                                                                                        echo 'Cash On delivery';
+                                                                                                                }
+                                                                                                                ?></h5></td>
                                                                                                 <td></td>
                                                                                                 <td></td>
                                                                                                 <td><h3>Grant Total</h3></td>
-                                                                                                <td><h3><?php echo Yii::app()->Currency->convert($granttotal); ?></h3></td>
+                                                                                                <td><h3><?php echo Yii::app()->Currency->convert($granttotal);
+                                                                                                                ?></h3></td>
                                                                                         </tr>
                                                                                         <tr>
                                                                                         </tr>
@@ -97,7 +107,7 @@
                                                                                 &nbsp;
                                                                         </div>
                                                                         <div class="btn-place-2">
-                                                                                <a href="<?php echo yii::app()->request->baseUrl; ?>/index.php/Checkout/Success" ><button type="submit" class="ripple btn log-btn btn-default">Proceed to pay</button></a>
+                                                                                <a href="<?php echo yii::app()->request->baseUrl; ?>/index.php/Checkout/Success" ><button type="submit" class="ripple btn log-btn btn-default">Confirm Order</button></a>
                                                                         </div>
                                                                 </div>
                                                         </div>

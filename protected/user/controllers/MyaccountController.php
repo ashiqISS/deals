@@ -282,6 +282,17 @@ class MyaccountController extends Controller {
                 }
         }
 
+        public function actionWishlist() {
+                if (isset(Yii::app()->session['user'])) {
+                        $model = UserWishlist::model()->findAllByAttributes(array('user_id' => Yii::app()->session['user']['id']));
+                        $this->render('wishlist', array(
+                            'model' => $model,
+                        ));
+                } else {
+                        $this->redirect(array('Site/logout'));
+                }
+        }
+
         public function actionPaidAd() {
                 if (isset(Yii::app()->session['merchant'])) {
                         $model = new AdPayment('create');

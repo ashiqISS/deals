@@ -16,6 +16,22 @@ class ProductsController extends Controller {
                 $heading = "Daily Deals";
                 date_default_timezone_set('Asia/Kolkata');
                 $date = date('Y-m-d');
+                if ((isset($_POST['sort_by'])) && ($_POST['sort_by'] != '')) {
+                        $sort = $_POST['sort_by'];
+                        switch ($sort) {
+                                case 'new_first' : $criteria->order = 'id desc';
+                                        break;
+                                case 'old_first' : $criteria->order = 'id asc';
+                                        break;
+                                case 'price_low' : $criteria->order = 'price asc';
+                                        break;
+                                case 'price_high' : $criteria->order = 'price desc';
+                                        break;
+                                default : $criteria->order = 'id desc';
+                        }
+                } else {
+                        $criteria->order = 'id desc';
+                }
                 $criteria->addCondition("status = 1 AND is_admin_approved = 1 AND '" . $date . "' >= special_price_from AND  '" . $date . "' <= special_price_to ");
                 $products = Products::model()->findAll($criteria);
 
@@ -37,6 +53,22 @@ class ProductsController extends Controller {
                 $heading = "Bargain Zone";
                 date_default_timezone_set('Asia/Kolkata');
                 $date = date('Y-m-d');
+                if ((isset($_POST['sort_by'])) && ($_POST['sort_by'] != '')) {
+                        $sort = $_POST['sort_by'];
+                        switch ($sort) {
+                                case 'new_first' : $criteria->order = 'id desc';
+                                        break;
+                                case 'old_first' : $criteria->order = 'id asc';
+                                        break;
+                                case 'price_low' : $criteria->order = 'price asc';
+                                        break;
+                                case 'price_high' : $criteria->order = 'price desc';
+                                        break;
+                                default : $criteria->order = 'id desc';
+                        }
+                } else {
+                        $criteria->order = 'id desc';
+                }
                 $criteria->addCondition("status = 1 AND is_admin_approved = 1 AND  product_type = 4 AND'" . $date . "' >= special_price_from AND  '" . $date . "' <= special_price_to  AND ( '" . $date . "' >= sale_from AND  '" . $date . "' <= sale_to)");
                 $products = Products::model()->findAll($criteria);
 
@@ -58,6 +90,22 @@ class ProductsController extends Controller {
                 $heading = "Coupons";
                 date_default_timezone_set('Asia/Kolkata');
                 $date = date('Y-m-d');
+                if ((isset($_POST['sort_by'])) && ($_POST['sort_by'] != '')) {
+                        $sort = $_POST['sort_by'];
+                        switch ($sort) {
+                                case 'new_first' : $criteria->order = 'id desc';
+                                        break;
+                                case 'old_first' : $criteria->order = 'id asc';
+                                        break;
+                                case 'price_low' : $criteria->order = 'price asc';
+                                        break;
+                                case 'price_high' : $criteria->order = 'price desc';
+                                        break;
+                                default : $criteria->order = 'id desc';
+                        }
+                } else {
+                        $criteria->order = 'id desc';
+                }
                 $criteria->addCondition("status = 1 AND is_admin_approved = 1 AND  product_type = 3 AND ( '" . $date . "' >= sale_from AND  '" . $date . "' <= sale_to) ");
                 $products = Products::model()->findAll($criteria);
 
@@ -78,6 +126,22 @@ class ProductsController extends Controller {
                 $pages->applyLimit($criteria);
                 $heading = "Whole Sale Deals";
                 $date = date('Y-m-d');
+                if ((isset($_POST['sort_by'])) && ($_POST['sort_by'] != '')) {
+                        $sort = $_POST['sort_by'];
+                        switch ($sort) {
+                                case 'new_first' : $criteria->order = 'id desc';
+                                        break;
+                                case 'old_first' : $criteria->order = 'id asc';
+                                        break;
+                                case 'price_low' : $criteria->order = 'price asc';
+                                        break;
+                                case 'price_high' : $criteria->order = 'price desc';
+                                        break;
+                                default : $criteria->order = 'id desc';
+                        }
+                } else {
+                        $criteria->order = 'id desc';
+                }
                 $criteria->addCondition("status = 1 AND is_admin_approved = 1 AND  wholesale_price != 0 AND  ( '" . $date . "' >= sale_from AND  '" . $date . "' <= sale_to) ");
                 $products = Products::model()->findAll($criteria);
 
@@ -98,6 +162,22 @@ class ProductsController extends Controller {
                 $pages->applyLimit($criteria);
                 date_default_timezone_set('Asia/Kolkata');
                 $date = date('Y-m-d');
+                if ((isset($_POST['sort_by'])) && ($_POST['sort_by'] != '')) {
+                        $sort = $_POST['sort_by'];
+                        switch ($sort) {
+                                case 'new_first' : $criteria->order = 'id desc';
+                                        break;
+                                case 'old_first' : $criteria->order = 'id asc';
+                                        break;
+                                case 'price_low' : $criteria->order = 'price asc';
+                                        break;
+                                case 'price_high' : $criteria->order = 'price desc';
+                                        break;
+                                default : $criteria->order = 'id desc';
+                        }
+                } else {
+                        $criteria->order = 'id desc';
+                }
                 $criteria->addCondition("status = 1 AND is_admin_approved = 1 AND is_featured = 1 AND '" . $date . "' >= special_price_from AND  '" . $date . "' <= special_price_to ");
                 $products = Products::model()->findAll($criteria);
 
@@ -640,8 +720,10 @@ class ProductsController extends Controller {
 
         public function actionList() {
 
-//        print_r($_POST);
 
+//        print_r($_POST);
+                $min = 50;
+                $max = 50000;
                 $category = '';
                 $sort = '';
                 $criteria = new CDbCriteria;
@@ -680,13 +762,17 @@ class ProductsController extends Controller {
                 if (isset($_POST['priceRange'])) {
                         $price = $_POST['priceRange'];
 
+
                         if ($price != '') {
-                                $prc = explode(', ', $price);
-                                foreach ($prc as $price) {
-                                        $price_condition .= "price BETWEEN $price OR ";
-                                }
+                                $new_price = explode(',', $price);
+                                $min = $new_price[0];
+                                $max = $new_price[1];
+                                $price = str_replace(",", " AND ", $price);
+                                $price_condition .= "price BETWEEN $price OR ";
                                 $price_condition = rtrim($price_condition, ' OR');
                                 $criteria->addCondition($price_condition);
+//                                var_dump($criteria->addCondition($price_condition));
+//                                exit;
                         }
                 }
                 if ((isset($_POST['sort_by'])) && ($_POST['sort_by'] != '')) {
@@ -725,6 +811,8 @@ class ProductsController extends Controller {
 //            'brandsel' => $brands,
                     'sort' => $sort,
                     'price' => $price,
+                    'min' => $min,
+                    'max' => $max,
 //            'searchterm' => $searchterm
                 ));
 //        $this->render('products');

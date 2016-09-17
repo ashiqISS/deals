@@ -115,9 +115,9 @@
 <script>
 
         $("#ex16b").slider({
-                min: 1000,
-                max: 15000,
-                value: [1000, 15000],
+                min: 50,
+                max: 20000,
+                value: [<?php echo $min; ?>, <?php echo $max; ?>],
                 focus: true
         });
 

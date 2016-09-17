@@ -115,13 +115,18 @@
                                                 <form class="form-inline" role="form">
                                                         <label class="sortby">Sort By</label>
                                                         <div class="form-group">
+                                                                <form id="products_sort" method="POST" action="<?= Yii::app()->request->baseUrl . "/index.php/products/list"; ?>" class="form-inline" role="form">
+                                                                        <input type="hidden" name="category" value="<?= $category ?>">
+                                                                        <input type="hidden" name="sort_by" id='sort_by'>
+                                                                        <select class="chris-select animated fadeInUp" name="product_sort" id="sel_sort" form="product_sort" onchange='sort()' selected='<?= $sort ?>' >
+                                                                                <option value="">Sort</option>
+                                                                                <option value="new_first">Newest First</option>
+                                                                                <option value="old_first">Oldest First</option>
+                                                                                <option value="price_low">Price - low to high</option>
+                                                                                <option value="price_high">Price - high to low</option>
 
-                                                                <select class="chris-select animated fadeInUp" name="carlist" form="carform">
-                                                                        <option value="volvo">Default</option>
-                                                                        <option value="saab">Saab</option>
-                                                                        <option value="opel">Opel</option>
-                                                                        <option value="audi">Audi</option>
-                                                                </select>
+                                                                        </select>
+                                                                </form>
                                                         </div>
                                                 </form>
                                         </div>
@@ -525,12 +530,12 @@
 <script src="<?= Yii::app()->baseUrl ?>/js/bootstrap-slider.js"></script>
 
 <script>
-        $("#ex16b").slider({
-                min: 1000,
-                max: 15000,
-                value: [1000, 15000],
-                focus: true
-        });
+                                                                        $("#ex16b").slider({
+                                                                                min: 1000,
+                                                                                max: 15000,
+                                                                                value: [1000, 15000],
+                                                                                focus: true
+                                                                        });
 
 </script>
 

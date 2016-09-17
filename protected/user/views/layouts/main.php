@@ -430,7 +430,7 @@
                                                                 <ul class="nav navbar-nav">
                                                                         <li><?php echo CHtml::link('COUPONS', array('products/coupons')); ?></li>
                                                                         <li><?php echo CHtml::link('DAILY DEALS', array('products/Daily')); ?></li>
-                                                                        <li><?php //echo CHtml::link('FLASH DEALS', array('products/Daily'));               ?></li>
+                                                                        <li><?php //echo CHtml::link('FLASH DEALS', array('products/Daily'));                ?></li>
                                                                         <li><?php echo CHtml::link('HOT DEALS', array('products/hot')); ?></li>
                                                                         <li><?php echo CHtml::link('SUBMIT A DEAL', array('myaccount/SubmitDeal')); ?></li>
                                                                         <li><?php echo CHtml::link('WHOLESALE DEALS', array('products/wholesale')); ?></li>
@@ -580,7 +580,7 @@
         <script src="<?= Yii::app()->baseUrl ?>/js/slick.min.js"></script>
 
         <script src="<?= Yii::app()->baseUrl ?>/js/custom.js"></script>
-        <script src="<?= Yii::app()->baseUrl ?>/js/bootstrap.min.js"></script>
+        <!--<script src="<?= Yii::app()->baseUrl ?>/js/bootstrap.min.js"></script>-->
 
         <script src="<?= Yii::app()->baseUrl ?>/js/jquery.touchSwipe.min.js"></script>
         <script src="<?= Yii::app()->baseUrl ?>/js/paradise_slider_min.js"></script>

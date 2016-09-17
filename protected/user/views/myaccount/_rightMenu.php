@@ -42,7 +42,7 @@
         <?php } ?>
         <li class="<?= $active2; ?>"><?php echo CHtml::link('Reset Password', array('Myaccount/ResetPassword')); ?></li>
         <?php if (Yii::app()->session['merchant']) { ?>
-                                                                                   <!--<li class="<?//= $active5; ?>"><?php //echo CHtml::link('Add Products', array('Products/AddProducts'));                                               ?></li>-->
+                                                                                                   <!--<li class="<?//= $active5; ?>"><?php //echo CHtml::link('Add Products', array('Products/AddProducts'));                                                 ?></li>-->
                 <li class="<?= $active6; ?>"><?php echo CHtml::link('Products', array('Products/MyProducts')); ?></li>
 
         <?php } ?>
@@ -60,7 +60,7 @@
                 <li class="<?= $active6; ?>"><?php echo CHtml::link('My Product', array('Products/MyProducts')); ?></li>-->
         <?php } ?>
         <?php if (Yii::app()->session['user']) { ?>
-                <li><a href="#">Wish Listed Products</a></li>
+                <li><?php echo CHtml::link('Wish Listed Products', array('Myaccount/Wishlist')); ?></li>
 
                 <li class="<?= $active7; ?>"><?php echo CHtml::link('Submit a Product', array('Myaccount/SubmitDeal')); ?></li>
         <?php } ?>

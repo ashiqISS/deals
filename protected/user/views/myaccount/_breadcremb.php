@@ -51,6 +51,9 @@ if (Yii::app()->controller->action->id == 'index') {
 } else if (Yii::app()->controller->action->id == 'EditProduct') {
         $name = 'Edit Products';
         $action = 'Myaccount/EditAddressBook';
+} else if (Yii::app()->controller->action->id == 'Wishlist') {
+        $name = 'Wishlisted Products';
+        $action = 'Myaccount/Wishlist';
 }
 ?>
 <section class="title">

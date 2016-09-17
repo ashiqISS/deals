@@ -278,6 +278,13 @@ class CheckoutController extends Controller {
         public function actionPayment_details() {
                 if (isset(Yii::app()->session['orderid'])) {
                         if (isset(Yii::app()->session['orderid'])) {
+                                if (isset($_POST['payment_option'])) {
+                                        $model = Order::model()->findByPk(Yii::app()->session['orderid']);
+                                        $model->payment_mode = $_POST['payment_option'];
+                                        if ($model->save(false)) {
+                                                $this->redirect(array('Checkout/Confirm'));
+                                        }
+                                }
                                 $checkout_exist = Checkout::model()->findByAttributes(array('session_id' => Yii::app()->session['temp_user']));
                                 $varification = BuyerDetails::model()->findByAttributes(array('id' => Yii::app()->session['user']['id']))->email_verification;
                                 if ($varification != 1) {
