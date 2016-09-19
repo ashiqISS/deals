@@ -25,6 +25,14 @@ $(document).ready(function () {
 
 
         });
+        $("body").on("click", ".purchase>.pur-3>.remove_this", function () {
+
+                var cartid = $(this).attr('cartid');
+                var canname = $(this).attr('canname');
+                removecart(cartid, canname);
+
+
+        });
 
 
 });

@@ -5639,3 +5639,8 @@ a.buybtn:hover {
 .deals-effect.img-wrapper {
         height: 141px;
 }
+i.fa.fa-trash {
+        font-size: 24px;
+        margin-top: 23px;
+        color: #525252;
+}
