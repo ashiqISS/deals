@@ -124,11 +124,13 @@
                                         </section>
 
                                         <?php $history = new OrderHistory('search'); ?>
+                                        <?php $history->order_id = $model->order_id; ?>
+                                        <?php $history->product_id = $model->product_id; ?>
                                         <?php
                                         $this->widget('booster.widgets.TbGridView', array(
                                             'type' => ' bordered condensed hover',
                                             'id' => 'order-products-grid',
-                                            'dataProvider' => $history->search(array('condition' => 'order_id = ' . $model->order_id . ' AND product_id = ' . $model->product_id)),
+//                                            'dataProvider' => $history->search(array('condition' => 'order_id = ' . $model->order_id . ' AND product_id = ' . $model->product_id)),
                                             'dataProvider' => $history->search(),
                                             //'filter' => $products,
                                             'columns' => array(

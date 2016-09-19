@@ -113,16 +113,16 @@
                                                                 <td style="border: 1px solid #ddd;
                                                                     text-align: left;padding: 13px 0px 10px 20px" class="addr">
                                                                         <b> SHIPPING ADDRESS.</b><br>
-                                                                        <?php echo $user_address->first_name; ?>   <span>   <?php echo $user_address->last_name; ?></span><br>
-                                                                        <?php echo $user_address->address_1 . ', ' . $user_address->address_2; ?></br>
+                                                                        <?php echo $user_address->name; ?>   <span>   </span><br>
+                                                                        <?php echo $user_address->address_line_1 . ', ' . $user_address->address_line_2; ?></br>
                                                                         <?php
-                                                                        if ($user_address->company != '') {
-                                                                                echo $user_address->company . '<br>';
+                                                                        if ($user_address->phone != '') {
+                                                                                echo $user_address->phone . '<br>';
                                                                         }
                                                                         ?>
-                                                                        <?php echo 'Post Code: ' . $user_address->postcode; ?></br>
-                                                                        <?php echo MasterState::model()->findByPk($user_address->state)->state_name; ?></br>
-                                                                        <?php echo 'Phone : ' . $user_address->contact_number; ?>
+                                                                        <?php echo 'Post Code: ' . $user_address->pincode; ?></br>
+                                                                        <?php echo MasterState::model()->findByPk($user_address->state)->state; ?></br>
+                                                                        <?php echo 'Phone : ' . $user_address->phone; ?>
                                                                 </td>
                                                         </tr>
                                                 </table>

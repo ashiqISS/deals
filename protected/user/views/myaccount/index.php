@@ -256,11 +256,13 @@
                                                         <div class="comm">
 
                                                                 <div class="commission-1">
+                                                                        <div class="head-1"><h2>Order ID</h2></div>
                                                                         <div class="head-1"><h2>Product Name</h2></div>
-                                                                        <div class="head-1"><h2> Order Date</h2></div>
+                                                                        <div class="head-1"><h2>Order Date</h2></div>
                                                                         <div class="head-1"><h2>Price</h2></div>
-                                                                        <div class="head-1"><h2>Quantity</h2></div>
+                                                                        <!--<div class="head-1"><h2>Quantity</h2></div>-->
                                                                         <div class="head-1"><h2>Status</h2></div>
+                                                                        <div class="head-1"><h2>View Details</h2></div>
 
                                                                 </div>
                                                                 <?php
@@ -269,10 +271,11 @@
                                                                         $products_name = Products::model()->findByAttributes(array('id' => $sales->product_id));
                                                                         ?>
                                                                         <div class="commission-2">
+                                                                                <div class="head-1"><h2>#<?= $sales->order_id; ?></h2></div>
                                                                                 <div class="head-1"><h2><?= $products_name->product_name; ?></h2></div>
                                                                                 <div class="head-1"><h2><?= date('d - m - Y', strtotime($order_id->order_date)); ?></h2></div>
                                                                                 <div class="head-1"><h2><?= $products_name->price; ?></h2></div>
-                                                                                <div class="head-1"><h2><?= $sales->quantity; ?></h2></div>
+                                                                                <!--<div class="head-1"><h2><?= $sales->quantity; ?></h2></div>-->
                                                                                 <div class="head-1"><h2><?php
                                                                                                 if ($order_id->status == 0) {
                                                                                                         echo 'Not Placed';
@@ -286,6 +289,9 @@
                                                                                                         echo 'Error';
                                                                                                 }
                                                                                                 ?></h2></div>
+                                                                                <div class="head-1"><h2><?php echo CHtml::link('<i class="fa fa-eye"  style="max-width:15%;font-size: 19px;
+    color: #000;"></i>', array('Myaccount/OrderViewDetail', 'id' => CHtml::encode($sales->id))); ?></h2></div>
+
                                                                         </div>
                                                                 <?php }
                                                                 ?>

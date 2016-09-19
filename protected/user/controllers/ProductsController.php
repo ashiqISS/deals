@@ -339,8 +339,10 @@ class ProductsController extends Controller {
                         $model->DOC = date('Y-m-d');
 
                         $image = CUploadedFile::getInstance($model, 'main_image');
+                        $hover_image = CUploadedFile::getInstance($model, 'hover_image');
                         $images = CUploadedFile::getInstancesByName('gallery_images');
-                        $model->main_image = 'jpg';
+//                        $model->main_image = 'jpg';
+                        $model->main_image = $image->extensionName;
 //                        var_dump($images);
 //                        exit;
                         $model->image_instence = $_POST['image_instence'];
@@ -410,19 +412,22 @@ class ProductsController extends Controller {
                                                 }
                                         }
                                 }
-                                if ($_POST['image_set'] == 2) {
+                                if ($image != "") {
                                         $id = $model->id;
                                         $dimension[0] = array('width' => '38', 'height' => '75', 'name' => 'small');
                                         $dimension[1] = array('width' => '250', 'height' => '141', 'name' => 'medium');
                                         $dimension[2] = array('width' => '159', 'height' => '312', 'name' => 'big');
                                         $dimension[3] = array('width' => '635', 'height' => '1248', 'name' => 'zoom');
-                                        Yii::app()->Upload->uploadCropImage($_POST['image_instence'], $id, true, $dimension);
+                                        Yii::app()->Upload->uploadImage($image, $id, true, $dimension);
                                 }
 
                                 if ($hover_image != "") {
                                         $id = $model->id;
-                                        $dimensions[0] = array('width' => '250', 'height' => '141', 'name' => 'hover');
+                                        $dimensions[0] = array('width' => '322', 'height' => '500', 'name' => 'hover');
                                         Yii::app()->Upload->uploadHoverImage($hover_image, $id, true, $dimensions);
+                                } else {
+
+                                        $model->hover_image = $image2;
                                 }
 
                                 if ($images != "") {
@@ -432,6 +437,8 @@ class ProductsController extends Controller {
                                         $dimension[2] = array('width' => '159', 'height' => '312', 'name' => 'big');
                                         $dimension[3] = array('width' => '635', 'height' => '1248', 'name' => 'zoom');
                                         Yii::app()->Upload->uploadMultipleImage($images, $id, true, $dimension);
+                                } else {
+                                        $model->gallery_images = $image0;
                                 }
                                 $model->canonical_name = $model->canonical_name . '-' . $model->id;
                                 $model->save();
@@ -532,8 +539,10 @@ class ProductsController extends Controller {
                         $model->is_admin_approved = $_POST['Products']['is_admin_approved'];
 
                         $image = CUploadedFile::getInstance($model, 'main_image');
+                        $hover_image = CUploadedFile::getInstance($model, 'hover_image');
                         $images = CUploadedFile::getInstancesByName('gallery_images');
-                        $model->main_image = 'jpg';
+                        $model->main_image = $image->extensionName;
+                        $model->hover_image = $hover_image->extensionName;
 
                         $model->merchant_id = Yii::app()->session['merchant']['id'];
                         $model->merchant_type = Yii::app()->session['user_type_usrid'];
@@ -603,15 +612,13 @@ class ProductsController extends Controller {
                                                 }
                                         }
                                 }
-                                if ($_POST['image_set'] == 2) {
+                                if ($image != "") {
                                         $id = $model->id;
                                         $dimension[0] = array('width' => '38', 'height' => '75', 'name' => 'small');
                                         $dimension[1] = array('width' => '250', 'height' => '141', 'name' => 'medium');
                                         $dimension[2] = array('width' => '159', 'height' => '312', 'name' => 'big');
                                         $dimension[3] = array('width' => '635', 'height' => '1248', 'name' => 'zoom');
-                                        Yii::app()->Upload->uploadCropImage($_POST['image_instence'], $id, true, $dimension);
-                                } else {
-                                        $model->main_image = 'jpg';
+                                        Yii::app()->Upload->uploadImage($image, $id, true, $dimension);
                                 }
 
                                 if ($hover_image != "") {

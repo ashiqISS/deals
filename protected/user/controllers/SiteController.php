@@ -24,6 +24,45 @@ class SiteController extends Controller {
          * This is the default 'index' action that is invoked
          * when an action is not explicitly requested by users.
          */
+        public function actionLocationTag() {
+
+                if (Yii::app()->request->isAjaxRequest) {
+
+                        $criteria = new CDbCriteria();
+                        $criteria->addSearchCondition('city', $_REQUEST['tag'], 'AND');
+
+                        //$criteria->compare('category_id',$_REQUEST['category'],true,'AND');
+                        if ($_REQUEST['taged'] != '') {
+
+                                $arrs = explode(',', $_REQUEST['taged']);
+                                $criteria->addNotInCondition('city', $arrs, 'AND');
+                        }
+                        $tags = MasterCity::model()->findAll($criteria);
+                        foreach ($tags as $tag) {
+                                if ($_REQUEST['type'] == 'location') {
+
+                                }
+                                echo '<div class="' . $_REQUEST['type'] . '_tag-sub">' . $tag->city . '</div>';
+                        }
+                }
+        }
+
+        public function actionLocationTagAdd() {
+
+                if (Yii::app()->request->isAjaxRequest) {
+
+                        if (isset($_REQUEST['tag'])) {
+                                $model = new MasterCity;
+                                $model->city = $_REQUEST['tag'];
+                                $model->cb = Yii::app()->session['admin']['id'];
+                                $model->ub = Yii::app()->session['admin']['id'];
+                                $model->doc = date('Y-m-d');
+                                $model->status = 0;
+                                $model->save(false);
+                        }
+                }
+        }
+
         public function init() {
                 date_default_timezone_set('Asia/Kolkata');
         }

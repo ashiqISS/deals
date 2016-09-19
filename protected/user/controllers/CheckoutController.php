@@ -420,30 +420,35 @@ class CheckoutController extends Controller {
 
                 if (isset(Yii::app()->session['orderid'])) {
                         Order::model()->updateAll(array("status" => 1, "payment_status" => 1, "DOC" => date('Y-m-d H:i:s')), 'id=' . Yii::app()->session['orderid']);
-                        $order_history = new OrderHistory;
-                        $order_history->order_id = Yii::app()->session['orderid'];
-                        $order_history->order_status = 1;
-                        $order_history->order_status_comment = 'Order Placed';
-                        $order_history->date = date('Y-m-d H:i:s');
-                        $order_history->status = 1;
-                        $order_history->cb = Yii::app()->session['user']['id'];
-                        if ($order_history->save(false)) {
-                                $order_products = OrderProducts::model()->findAllByAttributes(array('order_id' => $order_history->order_id));
-                                foreach ($order_products as $order_product) {
+
+
+                        $order_products = OrderProducts::model()->findAllByAttributes(array('order_id' => Yii::app()->session['orderid']));
+
+                        foreach ($order_products as $order_product) {
+
+                                $order_history = new OrderHistory;
+                                $order_history->order_id = Yii::app()->session['orderid'];
+                                $order_history->order_status = 1;
+                                $order_history->order_status_comment = 'Order Placed';
+                                $order_history->date = date('Y-m-d H:i:s');
+                                $order_history->status = 1;
+                                $order_history->cb = Yii::app()->session['user']['id'];
+                                $order_history->product_id = $order_product->product_id;
+                                if ($order_history->save(false)) {
                                         $ids .= $order_product->product_id . ',';
                                 }
-                                $ids = rtrim($ids, ',');
-                                $bargains = BargainDetails::model()->findAllByAttributes(array('user_id' => Yii::app()->session['user']['id'], 'status' => 2, 'product_id' => array($ids)));
-//                                $bargain = BargainDetails::model()->findAllByAttributes(array('user_id' => Yii::app()->session['user']['id'], 'status' => 2), array('condition' => 'product_id in (select product_id from order_products where order_id=' . $order_history->order_id . ''));
-                                foreach ($bargains as $bargain) {
-                                        BargainDetails::model()->updateAll(array("status" => 4), 'user_id = ' . Yii::app()->session['user']['id'] . ' AND product_id = ' . $bargain->product_id);
-                                }
-
-                                Cart::model()->deleteAllByAttributes(array(), array('condition' => 'user_id = ' . Yii::app()->session['user']['id']));
-                                unset(Yii::app()->session['temp_user']);
-                                unset(Yii::app()->session['orderid']);
-                                $this->render('success');
                         }
+                        $ids = rtrim($ids, ',');
+                        $bargains = BargainDetails::model()->findAllByAttributes(array('user_id' => Yii::app()->session['user']['id'], 'status' => 2, 'product_id' => array($ids)));
+//                                $bargain = BargainDetails::model()->findAllByAttributes(array('user_id' => Yii::app()->session['user']['id'], 'status' => 2), array('condition' => 'product_id in (select product_id from order_products where order_id=' . $order_history->order_id . ''));
+                        foreach ($bargains as $bargain) {
+                                BargainDetails::model()->updateAll(array("status" => 4), 'user_id = ' . Yii::app()->session['user']['id'] . ' AND product_id = ' . $bargain->product_id);
+                        }
+
+                        Cart::model()->deleteAllByAttributes(array(), array('condition' => 'user_id = ' . Yii::app()->session['user']['id']));
+                        unset(Yii::app()->session['temp_user']);
+                        unset(Yii::app()->session['orderid']);
+                        $this->render('success');
                 } else {
                         $this->redirect(array('Cart/Mycart'));
                 }

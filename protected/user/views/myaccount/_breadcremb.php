@@ -74,9 +74,17 @@ if (Yii::app()->controller->action->id == 'index') {
                                 <li><?php echo CHtml::link('Dashboard', array('Myaccount/index')); ?></li>
                                 <?php if (Yii::app()->controller->action->id != 'index') { ?>
                                         <li><span class="last">  <?php echo $name ?></span></li>
-                                        <?php } ?>
-
+                                <?php } ?>
+                                <h4 style="margin: 0px; font-size: 14px;" class="pull-right"><?php
+                                        if (isset(Yii::app()->session['merchant'])) {
+                                                echo 'You Are logged in as Merchant';
+                                        } else if (isset(Yii::app()->session['user'])) {
+                                                echo 'You Are logged in as User';
+                                        }
+                                        ?></h4>
                         </ul>
+
+
                 </div>
         </div>
 </div>

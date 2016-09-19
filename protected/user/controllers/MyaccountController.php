@@ -380,7 +380,7 @@ class MyaccountController extends Controller {
                         $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/login');
                 } else {
                         if (Yii::app()->session['merchant']) {
-                                $model = OrderProducts::model()->findAllByAttributes(array('merchant_id' => Yii::app()->session['merchant']['id']));
+                                $model = OrderProducts::model()->findAllByAttributes(array('merchant_id' => Yii::app()->session['merchant']['id']), array('order' => 'id DESC'));
                         }
                 }
                 $this->render('vendor_order_history', array('model' => $model));
