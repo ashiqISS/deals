@@ -1,5 +1,15 @@
+<script>
+        $(document).ready(function () {
+                $(".img-wrapper").each(function () {
+                        var imageUrl = $(this).find('img').attr("src");
+                        $(this).find('img').css("visibility", "hidden");
+                        $(this).css('background-image', 'url(' + imageUrl + ')').css("background-repeat", "no-repeat").css("background-size", "contain").css("background-position", "50% 50%");
+                });
+        });
+
+</script>
 <div class="product_details">
-        <div class="deals-effect">
+        <div class="deals-effect img-wrapper">
                 <?php if ($product->main_image != "") { ?>
                         <img class="zoom"  src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/products/<?php
                         echo Yii::app()->Upload->folderName(0, 1000, $product->id)

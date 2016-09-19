@@ -257,54 +257,67 @@ if (!$model->isNewRecord) {
         </script>
         <input type="hidden" name="image_set" id="image_set" />
         <input type="hidden" value="<?php echo $image_instence; ?>" name="image_instence" id="image_instence" />
-        <div class = "form-group">
-                <?php echo $form->labelEx($model, 'Main Image ( image size : 250 X 141 )', array('class' => 'col-sm-2 control-label'));
-                ?>
+        <!--<div class = "form-group">
+        <?php echo $form->labelEx($model, 'Main Image ( image size : 250 X 141 )', array('class' => 'col-sm-2 control-label'));
+        ?>
                 <div class="col-sm-10">
-                        <?php
-                        $this->widget('admin.extensions.NavaJcrop.ImageJcrop', array(
-                            'config' => array(
-                                'title' => $model->main_image,
-                                'image' => $model->image_url, //required, all field below are not required.
-                                'id' => 'nava-jcrop',
-                                //'unique'=>true,
-                                'buttons' => array(
-                                    'cancel' => array(
-                                        'name' => 'Cancel',
-                                        'class' => 'button-crop',
-                                        'style' => 'margin-left: 5px;',
-                                    ),
-                                    /* 'edit'=>array(
-                                      'name'=>'Edit',
-                                      'class'=>'button-crop',
-                                      'style'=>'margin-left: 5px;',
-                                      ), */
-                                    'crop' => array(
-                                        'name' => 'Crop',
-                                        'class' => 'button-crop',
-                                        'style' => 'margin-left: 5px;',
-                                    )
-                                ),
-                                'options' => array(
-                                    'imageWidth' => 500,
-                                    'imageHeight' => 282,
-                                    'resultStyle' => 'position: fixed;top: 50px;max-width:350px;max-height:350px;z-index: 9999;',
-                                    'resultMaxWidth' => 350,
-                                    'resultMinWidth' => 350,
-                                ),
-                                'callBack' => array(
-                                    'success' => "function(obj,res){doSomething(obj,res);}",
-                                    'error' => "function(){alert('error');}",
-                                )
-                            )
-                        ));
-                        ?>
-                        <?php //echo $form->fileField($model, 'main_image', array('size' => 60, 'maxlength' => 100, 'class' => 'form-control')); ?>
+        <?php
+        $this->widget('admin.extensions.NavaJcrop.ImageJcrop', array(
+            'config' => array(
+                'title' => $model->main_image,
+                'image' => $model->image_url, //required, all field below are not required.
+                'id' => 'nava-jcrop',
+                //'unique'=>true,
+                'buttons' => array(
+                    'cancel' => array(
+                        'name' => 'Cancel',
+                        'class' => 'button-crop',
+                        'style' => 'margin-left: 5px;',
+                    ),
+                    /* 'edit'=>array(
+                      'name'=>'Edit',
+                      'class'=>'button-crop',
+                      'style'=>'margin-left: 5px;',
+                      ), */
+                    'crop' => array(
+                        'name' => 'Crop',
+                        'class' => 'button-crop',
+                        'style' => 'margin-left: 5px;',
+                    )
+                ),
+                'options' => array(
+                    'imageWidth' => 500,
+                    'imageHeight' => 282,
+                    'resultStyle' => 'position: fixed;top: 50px;max-width:350px;max-height:350px;z-index: 9999;',
+                    'resultMaxWidth' => 350,
+                    'resultMinWidth' => 350,
+                ),
+                'callBack' => array(
+                    'success' => "function(obj,res){doSomething(obj,res);}",
+                    'error' => "function(){alert('error');}",
+                )
+            )
+        ));
+        ?>
+        <?php //echo $form->fileField($model, 'main_image', array('size' => 60, 'maxlength' => 100, 'class' => 'form-control')); ?>
                         <br />
+        <?php
+        if ($model->main_image != '' && $model->id != "") {
+                $folder = Yii::app()->Upload->folderName(0, 1000, $model->id);
+                echo '<img width="125"  height="70" style="border: 2px solid #d2d2d2;" src="' . Yii::app()->baseUrl . '/uploads/products/' . $folder . '/' . $model->id . '/medium' . '.' . $model->main_image . '" />';
+        }
+        ?>
+                </div>
+        <?php echo $form->error($model, 'main_image'); ?>
+        </div>-->
+
+        <div class="form-group">
+                <?php echo $form->labelEx($model, 'Main Image ( image size : 250 X 141 )', array('class' => 'col-sm-2 control-label')); ?>
+                <div class="col-sm-10"><?php echo $form->fileField($model, 'main_image', array('size' => 60, 'maxlength' => 100, 'class' => 'form-control')); ?>
                         <?php
                         if ($model->main_image != '' && $model->id != "") {
                                 $folder = Yii::app()->Upload->folderName(0, 1000, $model->id);
-                                echo '<img width="125"  height="70" style="border: 2px solid #d2d2d2;" src="' . Yii::app()->baseUrl . '/uploads/products/' . $folder . '/' . $model->id . '/medium' . '.' . $model->main_image . '" />';
+                                echo '<img width="125" style="border: 2px solid #d2d2d2;" src="' . Yii::app()->baseUrl . '/uploads/products/' . $folder . '/' . $model->id . '/main' . '.' . $model->main_image . '" />';
                         }
                         ?>
                 </div>

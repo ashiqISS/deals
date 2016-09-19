@@ -114,18 +114,18 @@ class UploadFile extends CApplicationComponent {
                                 if ($foldername) {
                                         if (!is_dir(Yii::app()->basePath . '/../uploads/products/' . $folder))
                                                 mkdir(Yii::app()->basePath . '/../uploads/products/' . $folder);
-                                        chmod(Yii::app()->basePath . '/../uploads/products/' . $folder . '/', 0777);
+                                        chmod(Yii::app()->basePath . '/../uploads/products/' . $folder . '', 0777);
 
-                                        if (!is_dir(Yii::app()->basePath . '/../uploads/products/' . $folder . '/' . $id))
-                                                mkdir(Yii::app()->basePath . '/../uploads/products/' . $folder . '/' . $id);
+                                        if (!is_dir(Yii::app()->basePath . '/../uploads/products/' . $folder . '' . $id))
+                                                mkdir(Yii::app()->basePath . '/../uploads/products/' . $folder . '' . $id);
                                         chmod(Yii::app()->basePath . '/../uploads/products/' . $folder . '/' . $id . '/', 0777);
                                 }
-                                if ($uploadfile->saveAs(Yii::app()->basePath . '/../uploads/products/' . $folder . '/' . $id . '/main.' . $uploadfile->extensionName)) {
-                                        chmod(Yii::app()->basePath . '/../uploads/products/' . $folder . '/' . $id . '/main' . $uploadfile->extensionName, 0777);
+                                if ($uploadfile->saveAs(Yii::app()->basePath . '/../uploads/products/' . $folder . '' . $id . '/main.' . $uploadfile->extensionName)) {
+                                        chmod(Yii::app()->basePath . '/../uploads/products/' . $folder . '' . $id . '/main.' . $uploadfile->extensionName, 0777);
                                         //$this->WaterMark(Yii::app()->basePath . '/../uploads/products/' . $folder . '/' . $id . '/' . $id . '.' . $uploadfile->extensionName, '/../images/watermark.png');
 
-                                        $file = Yii::app()->basePath . '/../uploads/products/' . $folder . '/' . $id . '/main' . $uploadfile->extensionName;
-                                        $path = Yii::app()->basePath . '/../uploads/products/' . $folder . '/' . $id;
+                                        $file = Yii::app()->basePath . '/../uploads/products/' . $folder . '' . $id . '/main.' . $uploadfile->extensionName;
+                                        $path = Yii::app()->basePath . '/../uploads/products/' . $folder . '' . $id;
                                         if (!empty($dimensions)) {
                                                 foreach ($dimensions as $dimension) {
                                                         $this->Resize($file, $dimension['width'], $dimension['height'], $dimension['name'], $path, $uploadfile->extensionName);
@@ -253,7 +253,8 @@ class UploadFile extends CApplicationComponent {
 //                var_dump($file);
 ////                exit;
                 $resize = new EasyImage($file);
-                $resize->resize($width, $height, EasyImage::RESIZE_NONE);
+//                $resize->resize($width, $height, EasyImage::RESIZE_NONE);
+                $resize->resize($width, $height);
                 $resize->save($path . '/' . $name . '.' . $extension);
         }
 
