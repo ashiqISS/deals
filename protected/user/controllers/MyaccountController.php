@@ -11,6 +11,8 @@ class MyaccountController extends Controller {
                         $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/login');
                 } else {
                         if (Yii::app()->session['user']) {
+                                $sale = array();
+                                $plans = array();
                                 $model = BuyerDetails::model()->findByPk(Yii::app()->session['user']['id']);
                                 $deal = DealSubmission::model()->findAllByAttributes(array('user_id' => Yii::app()->session['user']['id']), array('order' => 'doc DESC'));
                                 $order = Order::model()->findAllByAttributes(array('user_id' => Yii::app()->session['user']['id']), array('order' => 'DOC DESC'));
