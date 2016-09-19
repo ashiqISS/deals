@@ -21,6 +21,47 @@ class UploadFile extends CApplicationComponent {
                 }
         }
 
+        public function uploadCropImage($uploadfile, $id, $foldername = false, $dimensions = array()) {
+
+                if ($foldername) {
+                        $folder = $this->folderName(0, 1000, $id) . '/';
+                } else {
+                        $folder = "";
+                }
+                $foldername = true;
+//                if (isset($uploadfile)) {
+                if (Yii::app()->basePath . '/../uploads/products') {
+                        chmod(Yii::app()->basePath . '/../uploads/products', 0777);
+                        if ($foldername) {
+                                if (!is_dir(Yii::app()->basePath . '/../uploads/products/' . $folder))
+                                        mkdir(Yii::app()->basePath . '/../uploads/products/' . $folder);
+                                chmod(Yii::app()->basePath . '/../uploads/products/' . $folder . '/', 0777);
+
+                                if (!is_dir(Yii::app()->basePath . '/../uploads/products/' . $folder . '/' . $id))
+                                        mkdir(Yii::app()->basePath . '/../uploads/products/' . $folder . '/' . $id);
+                                chmod(Yii::app()->basePath . '/../uploads/products/' . $folder . '/' . $id . '/', 0777);
+                        }
+                        $tempfile = Yii::app()->basePath . '/../uploads/tempimages/' . $uploadfile . '.jpg';
+                        $path = Yii::app()->basePath . '/../uploads/products/' . $folder . '/' . $id;
+                        $resize = new EasyImage($tempfile);
+                        $resize->resize(250, 141, EasyImage::RESIZE_NONE);
+                        $resize->save($path . '/main.jpg');
+//                                if ($uploadfile->saveAs(Yii::app()->basePath . '/../uploads/products/' . $folder . '/' . $id . '/main.' . $uploadfile->extensionName)) {
+                        chmod(Yii::app()->basePath . '/../uploads/products/' . $folder . '/' . $id . '/main.jpg', 0777);
+
+                        $file = Yii::app()->basePath . '/../uploads/products/' . $folder . '/' . $id . '/main.jpg';
+                        $path = Yii::app()->basePath . '/../uploads/products/' . $folder . '/' . $id;
+//                        $uploadfile->extensionName = 'jpg';
+                        if (!empty($dimensions)) {
+                                foreach ($dimensions as $dimension) {
+                                        $this->Resize($file, $dimension['width'], $dimension['height'], $dimension['name'], $path, 'jpg');
+                                }
+                        }
+//                                }
+                }
+//                }
+        }
+
         public function uploadImage($uploadfile, $id, $foldername = false) {
                 if ($foldername) {
                         $folder = $this->folderName(0, 1000, $id) . '/';

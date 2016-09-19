@@ -100,8 +100,24 @@
                                                 </div>
                                                 <div class="settings3">
                                                         <div class="form-group">
-                                                                <?php echo $form->textField($model, 'product_name', array('class' => 'form-set')); ?>
+                                                                <?php echo $form->textField($model, 'product_name', array('class' => 'form-set slug')); ?>
                                                                 <?php echo $form->error($model, 'product_name', array('class' => 'red')); ?>                                                        </div>
+                                                </div>
+                                        </div>
+                                        <div class="ui-set">
+                                                <div class="settings1">
+                                                        <div class="form-group">
+                                                                <label class="set"> <?php echo $form->labelEx($model, 'canonical_name'); ?></label>
+                                                        </div>
+                                                </div>
+                                                <div class="settings2">
+                                                        <span>:</span>
+                                                </div>
+                                                <div class="settings3">
+                                                        <div class="form-group">
+                                                                <?php echo $form->textField($model, 'canonical_name', array('class' => 'form-set', 'placeholder' => 'Canonical Name', 'readonly' => true)); ?>
+                                                                <?php echo $form->error($model, 'canonical_name', array('class' => 'red')); ?>
+                                                        </div>
                                                 </div>
                                         </div>
                                         <div class="ui-set">
@@ -146,7 +162,7 @@
                                                 </div>
                                                 <div class="settings3">
                                                         <div class="form-group">
-                                                                <?php echo $form->dropDownList($model, 'product_type', array('' => "---Select Type---", '1' => "Deal Product", '2' => "Normal Product", '3' => "Coupon"), array('class' => 'form-select type_change')); ?>
+                                                                <?php echo $form->dropDownList($model, 'product_type', array('' => "---Select Type---", '1' => "Deal Product", '2' => "Normal Product", '3' => "Coupon", '4' => "Bargain Product"), array('class' => 'form-select type_change')); ?>
                                                                 <?php echo $form->error($model, 'product_type'); ?>
                                                         </div>
                                                 </div>
@@ -231,6 +247,65 @@
                                                 </div>
                                                 <div class="settings3">
                                                         <div class="form-group">
+                                                                <script>
+<?php
+if (!$model->isNewRecord) {
+        if (count($prod_features) > 1) {
+                ?>
+                                                                                        var counter = <?php echo count($prod_features); ?>;
+
+        <?php } else {
+                ?>
+                                                                                        var counter = 2;
+                <?php
+        }
+} else {
+        ?>
+                                                                                var counter = 2;
+<?php } ?>
+
+                                                                        //$('#del_file').hide();
+                                                                        $('#add_file').click(function () {
+                                                                                if (counter < 50)
+                                                                                {
+                                                                                        $('#file_tools').before('<div class="featured_details" id="f' + counter + '"><div class="col-sm-6 col-xs-12 "><input size="60" maxlength="150" class="form-control" name="ProductFeatures[feature_heading][]" placeholder="Feature Heading" id="Products_deal_location6" type="text"></div><div class="col-sm-6 col-xs-12 bot"><textarea rows="2" cols="50" class="form-control" name="ProductFeatures[feature_disc][]" placeholder="Feature Descritpion" id="Products_meta_description"></textarea></div></div>');
+                                                                                        $('#del_file').fadeIn(0);
+                                                                                        counter++;
+                                                                                }
+                                                                        });
+                                                                        $('#del_file').click(function () {
+                                                                                if (counter == 2) {
+                                                                                        $('#del_file').hide();
+                                                                                }
+
+
+                                                                                counter--;
+                                                                                $('#f' + counter).remove();
+                                                                        });
+                                                                </script>
+
+
+
+                                                                <script>
+                                                                        function doSomething(obj, res) { //the 'obj' is IMG tag, 'res' is base64image
+                                                                                var name = $("#image_instence").val();
+                                                                                $.ajax({
+                                                                                        cache: false,
+                                                                                        type: 'post',
+                                                                                        url: '<?php echo Yii::app()->createUrl('Products/upload'); ?>',
+                                                                                        //                                data: 'image=' + res,
+                                                                                        data: {image: res, name: name},
+                                                                                        success: function () {
+                                                                                                $("#image_set").val('2');
+                                                                                                obj.attr('src', res);
+                                                                                        }
+                                                                                });
+                                                                        }
+                                                                </script>
+                                                                <input type="hidden" name="image_set" id="image_set" />
+                                                                <input type="hidden" value="<?php echo $image_instence; ?>" name="image_instence" id="image_instence" />
+
+                                                                <!--<div class="col-sm-10">-->
                                                                 <?php
                                                                 $this->widget('user.extensions.NavaJcrop.ImageJcrop', array(
                                                                     'config' => array(
@@ -242,7 +317,7 @@
                                                                             'cancel' => array(
                                                                                 'name' => 'Cancel',
                                                                                 'class' => 'button-crop',
-                                                                                'style' => 'margin-left: 5px;',
+//                                                                        'style' => 'margin-left: 5px;',
                                                                             ),
                                                                             /* 'edit'=>array(
                                                                               'name'=>'Edit',
@@ -269,15 +344,17 @@
                                                                     )
                                                                 ));
                                                                 ?>
-                                                                <?php // echo $form->fileField($model, 'main_image', array('size' => 60, 'maxlength' => 100, 'class' => 'form-set', 'placeholder' => 'Main Image')); ?>
+                                                                <?php //echo $form->fileField($model, 'main_image', array('size' => 60, 'maxlength' => 100, 'class' => 'form-control')); ?>
+                                                                <br />
                                                                 <?php
                                                                 if ($model->main_image != '' && $model->id != "") {
                                                                         $folder = Yii::app()->Upload->folderName(0, 1000, $model->id);
-                                                                        echo '<img width="125" style="border: 2px solid #d2d2d2;" src="' . Yii::app()->baseUrl . '/uploads/products/' . $folder . '/' . $model->id . '/main.' . $model->main_image . '" />';
+                                                                        echo '<img width="125"  height="70" style="border: 2px solid #d2d2d2;" src="' . Yii::app()->baseUrl . '/uploads/products/' . $folder . '/' . $model->id . '/medium' . '.' . $model->main_image . '" />';
                                                                 }
                                                                 ?>
-                                                                <?php echo $form->error($model, 'main_image', array('class' => 'red')); ?>
                                                         </div>
+                                                        <?php echo $form->error($model, 'main_image'); ?>
+
                                                 </div>
                                         </div>
                                         <div class="ui-set">
@@ -628,22 +705,7 @@
                                                 </div>
                                         </div>
 
-                                        <div class="ui-set">
-                                                <div class="settings1">
-                                                        <div class="form-group">
-                                                                <label class="set"> <?php echo $form->labelEx($model, 'canonical_name'); ?></label>
-                                                        </div>
-                                                </div>
-                                                <div class="settings2">
-                                                        <span>:</span>
-                                                </div>
-                                                <div class="settings3">
-                                                        <div class="form-group">
-                                                                <?php echo $form->textField($model, 'canonical_name', array('class' => 'form-set', 'placeholder' => 'Canonical Name')); ?>
-                                                                <?php echo $form->error($model, 'canonical_name', array('class' => 'red')); ?>
-                                                        </div>
-                                                </div>
-                                        </div>
+
                                         <div class="ui-set">
                                                 <div class="settings1">
                                                         <div class="form-group">
@@ -874,13 +936,12 @@
                                                                 }
                                                                 ?>
 
-                                                                <?php echo CHtml::activeDropDownList($model, 'related_products', CHtml::listData(Products::model()->findAll(), 'id', 'product_name'), array('empty' => '-Select-', 'class' => 'form-select', 'placeholder' => 'Related Products', 'multiple' => true, 'options' => $related_products));
+                                                                <?php echo CHtml::activeDropDownList($model, 'related_products', CHtml::listData(Products::model()->findAll(), 'id', 'product_name'), array('empty' => '-Select-', 'class' => 'form-select ', 'placeholder' => 'Related Products', 'multiple' => true, 'options' => $related_products));
                                                                 ?>
                                                                 <?php echo $form->error($model, 'related_products', array('class' => 'red')); ?>
                                                         </div>
                                                 </div>
                                         </div>
-
 
                                         <div class="ui-set">
                                                 <div class="settings1">
@@ -976,9 +1037,59 @@ if (!$model->isNewRecord) {
                 </div>
         </div>
 </section>
-
-
 <script>
+        $(document).ready(function () {
+                $('.slug').keyup(function () {
+                        $('#Products_canonical_name').val(slug($(this).val()));
+                });
+
+
+        });
+        $(document).ready(function () {
+                var name1 = $(".type_change").val();
+                if (name1 == 1 || name1 == 3) {
+                        $(".deal_link").show();
+                } else {
+                        $(".deal_link").hide();
+
+                }
+                if (name == 4) {
+                        $(".bargain").show();
+                } else {
+                        $(".bargain").hide();
+
+                }
+                $(".type_change").change(function () {
+                        var name = $(this).val();
+                        if (name == 1 || name == 3) {
+                                $(".deal_link").show();
+                        } else {
+                                $(".deal_link").hide();
+
+                        }
+                        if (name == 4) {
+                                $(".bargain").show();
+                        } else {
+                                $(".bargain").hide();
+
+                        }
+
+                });
+
+
+        });
+        var slug = function (str) {
+                var $slug = '';
+                var trimmed = $.trim(str);
+                $slug = trimmed.replace(/[^a-z0-9-]/gi, '-').
+                        replace(/-+/g, '-').
+                        replace(/^-|-$/g, '');
+                return $slug.toLowerCase();
+        };
+
+</script>
+
+<!--<script>
         $(document).ready(function () {
                 var name1 = $(".type_change").val();
                 if (name1 == 1 || name1 == 3) {
@@ -1000,4 +1111,4 @@ if (!$model->isNewRecord) {
 
         });
 
-</script>
+</script>-->

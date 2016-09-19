@@ -92,15 +92,16 @@
 
 <script>
         $(document).ready(function () {
-                $(".delete_product").on('click', function()){
+
+                $(".delete_product").on('click', function () {
                         var answer = confirm("Are you want to delete?");
                         if (answer) {
-                                //some code
+                                return true;
                         }
                         else {
-                                //some code
+                                return false;
                         }
-                }
+                });
         });
 
 </script>
