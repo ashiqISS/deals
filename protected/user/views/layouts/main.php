@@ -32,7 +32,7 @@
                         //            this script is for solving error : "Cannot read property 'msie' of undefined"
 
                         jQuery.browser = {};
-                        (function () {
+                        (function() {
                                 jQuery.browser.msie = false;
                                 jQuery.browser.version = 0;
                                 if (navigator.userAgent.match(/MSIE ([0-9]+)\./)) {
@@ -227,7 +227,14 @@
                                                                         </div>
                                                                 <?php } else { ?>
                                                                         <div class="sign-2 hidden-xs hidden-sm">
-                                                                                <?php echo CHtml::link('Sign Up', array('site/UserRegister'), array('class' => 'hd')); ?>
+                                                                                <div class="dropdowna">
+                                                                                        <a class="hd">Sign Up</a>
+                                                                                        <div class="dropdown-contenta">
+                                                                                                <a href="<?= Yii::app()->baseUrl ?>/index.php/site/UserRegister">User</a>
+                                                                                                <a href="<?= Yii::app()->baseUrl ?>/index.php/site/VendorRegister">Vendor</a>
+                                                                                        </div>
+                                                                                </div>
+                                                                                <?php //echo CHtml::link('Sign Up', array('site/UserRegister'), array('class' => 'hd')); ?>
                                                                         </div>
                                                                 <?php } ?>
                                                                 <?php if (Yii::app()->session['user'] != "") { ?>
@@ -246,7 +253,14 @@
                                                                         </div>
                                                                 <?php } else { ?>
                                                                         <div class="sign-3 hidden-xs hidden-sm">
-                                                                                <?php echo CHtml::link('Sign In', array('site/login'), array('class' => 'hd')); ?>
+                                                                                <div class="dropdowna">
+                                                                                        <a class="hd">Sign In</a>
+                                                                                        <div class="dropdown-contenta">
+                                                                                                <a href="<?= Yii::app()->baseUrl ?>/index.php/site/Userlogin">User</a>
+                                                                                                <a href="<?= Yii::app()->baseUrl ?>/index.php/site/Vendorlogin">Vendor</a>
+                                                                                        </div>
+                                                                                </div>
+                                                                                <?php //echo CHtml::link('Sign In', array('site/login'), array('class' => 'hd')); ?>
                                                                         </div>
                                                                 <?php } ?>
 
@@ -430,7 +444,7 @@
                                                                 <ul class="nav navbar-nav">
                                                                         <li><?php echo CHtml::link('COUPONS', array('products/coupons')); ?></li>
                                                                         <li><?php echo CHtml::link('DAILY DEALS', array('products/Daily')); ?></li>
-                                                                        <li><?php //echo CHtml::link('FLASH DEALS', array('products/Daily'));                ?></li>
+                                                                        <li><?php //echo CHtml::link('FLASH DEALS', array('products/Daily'));                 ?></li>
                                                                         <li><?php echo CHtml::link('HOT DEALS', array('products/hot')); ?></li>
                                                                         <li><?php echo CHtml::link('SUBMIT A DEAL', array('myaccount/SubmitDeal')); ?></li>
                                                                         <li><?php echo CHtml::link('WHOLESALE DEALS', array('products/wholesale')); ?></li>
@@ -588,8 +602,8 @@
 
         <script>
                                                 var selectIds = $('#panel1,#panel2,#panel3,#panel4,#panel5,#panel6,#panel7,#panel8,#panel9,#panel10,#panel11,#panel12,#panel13,#panel14');
-                                                $(function ($) {
-                                                        selectIds.on('show.bs.collapse hidden.bs.collapse', function () {
+                                                $(function($) {
+                                                        selectIds.on('show.bs.collapse hidden.bs.collapse', function() {
                                                                 $(this).prev().find('.glyphicon').toggleClass('glyphicon-plus glyphicon-minus');
                                                         });
                                                 });
@@ -597,8 +611,8 @@
 
         </script>
         <script>
-                jQuery(document).ready(function () {
-                        jQuery(window).scroll(function () {
+                jQuery(document).ready(function() {
+                        jQuery(window).scroll(function() {
 
                                 var body = jQuery("html, body");
 
@@ -615,8 +629,8 @@
 
         <script type = "text/javascript" language = "javascript">
 
-                $(document).ready(function () {
-                        $(".clickme").hover(function (event) {
+                $(document).ready(function() {
+                        $(".clickme").hover(function(event) {
                                 $(".target").stop().toggle('slow');
                         });
                 });
@@ -625,7 +639,7 @@
 
         <script>
 
-                $('.has-more span').click(function () {
+                $('.has-more span').click(function() {
                         $(this).toggleClass('active');
                         $('.has-sec').slideToggle().addClass('zoomIn animated m1');
 
@@ -639,7 +653,7 @@
                                 url: baseurl + 'site/PublicNewsletter',
                                 type: "POST",
                                 data: {email: email},
-                                success: function ()
+                                success: function()
                                 {
                                         $('.newsletter_msg').html("Email Sent Successfully in our newsletter!!!!");
                                         $("#newsletter_reset")[0].reset();

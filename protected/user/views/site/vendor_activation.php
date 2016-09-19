@@ -24,7 +24,7 @@
                                                 <br><br>
                                                 <h2><?php echo "Hi $model->first_name $model->last_name,"; ?></h2>
                                                 <br><br> Your account has successfully activated.
-                                                <br><br> <a href="<?php echo Yii::app()->baseUrl ?>/index.php/site/login">Please login to continue..</a>
+                                                <br><br> <a href="<?php echo Yii::app()->baseUrl ?>/index.php/site/Vendorlogin">Please login to continue..</a>
                                         </div>
                                 </div>
                         </div>

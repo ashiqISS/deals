@@ -53,12 +53,15 @@ class SiteController extends Controller {
 //                $this->render('home');
         }
 
-        public function actionLogin() {
+        public function actionUserLogin() {
+
                 if (isset(Yii::app()->session['user'])) {
+
                         $this->redirect($this->createUrl('index'));
                 } else {
+
                         $model = new BuyerDetails();
-                        $vendor = new Merchant();
+
                         if (isset($_POST['BuyerDetails'])) {
                                 Yii::app()->session['user_type_usrid'] = 1;
                                 $login = BuyerDetails::model()->findByAttributes(array('email' => $_POST['BuyerDetails']['email'], 'password' => $_POST['BuyerDetails']['password']));
@@ -83,6 +86,15 @@ class SiteController extends Controller {
                                 }
                                 $this->redirect(array('Myaccount/index'));
                         }
+                }
+                $this->render('userlogin', array('model' => $model));
+        }
+
+        public function actionVendorLogin() {
+                if (isset(Yii::app()->session['user'])) {
+                        $this->redirect($this->createUrl('index'));
+                } else {
+                        $vendor = new Merchant();
                         if (isset($_POST['Merchant'])) {
                                 Yii::app()->session['user_type_usrid'] = 2;
                                 $login = Merchant::model()->findByAttributes(array('email' => $_REQUEST['Merchant']['email'], 'password' => $_REQUEST['Merchant']['password']));
@@ -95,9 +107,11 @@ class SiteController extends Controller {
                                                 Yii::app()->user->setFlash('verify_code', $login->id);
                                                 Yii::app()->session['user_email_verify'] = $login->id;
                                         } else if ($login->email_verification == 1 && $login->status == 1) {
-                                                Cart::model()->updateAll(array("user_id" => $user->id), 'session_id=' . Yii::app()->session['temp_user']);
-                                                CouponHistory::model()->updateAll(array("user_id" => $user->id), 'session_id=' . Yii::app()->session['temp_user']);
-                                                Order::model()->updateAll(array("user_id" => $user->id), 'session_id=' . Yii::app()->session['temp_user']);
+                                                if (Yii::app()->session['temp_user']) {
+                                                        Cart::model()->updateAll(array("user_id" => $user->id), 'session_id=' . Yii::app()->session['temp_user']);
+                                                        CouponHistory::model()->updateAll(array("user_id" => $user->id), 'session_id=' . Yii::app()->session['temp_user']);
+                                                        Order::model()->updateAll(array("user_id" => $user->id), 'session_id=' . Yii::app()->session['temp_user']);
+                                                }
                                                 $this->redirect(array('Myaccount/index'));
                                         }
                                 } else {
@@ -106,7 +120,7 @@ class SiteController extends Controller {
                                 $this->redirect(array('Myaccount/index'));
                         }
                 }
-                $this->render('login', array('model' => $model, 'vendor' => $vendor));
+                $this->render('vendorlogin', array('vendor' => $vendor));
         }
 
         public function actionLogout() {
@@ -118,16 +132,16 @@ class SiteController extends Controller {
 
         public function actionUserRegister() {
                 $model = new BuyerDetails('create');
-                $vendor = new Merchant('create');
                 if (isset($_POST['BuyerDetails'])) {
                         $model->attributes = $_POST['BuyerDetails'];
+
                         $model->DOC = date('Y-m-d');
                         $model->user_status = 1;
                         $date1 = $_POST['BuyerDetails']['dob'];
                         $newDate = date("Y-m-d", strtotime($date1));
                         $ver_id = mt_rand(10000, 99999) . time();
                         $model->activation_link = $ver_id;
-                        if ($model->save()) {
+                        if ($model->save(false)) {
                                 $this->SuccessMail($model);
                                 Yii::app()->user->setFlash('success', " You are registered successfully!!! Check your mail and verify your account");
                                 $this->redirect(array('site/UserRegister'));
@@ -136,6 +150,11 @@ class SiteController extends Controller {
                                 $this->redirect(array('site/UserRegister'));
                         }
                 }
+                $this->render('user_register', array('model' => $model));
+        }
+
+        public function actionVendorRegister() {
+                $vendor = new Merchant('create');
                 if (isset($_POST['Merchant'])) {
                         $vendor->attributes = $_POST['Merchant'];
                         $vendor->DOC = date('Y-m-d');
@@ -148,17 +167,60 @@ class SiteController extends Controller {
                                 if ($vendor->save(false)) {
                                         $this->SuccessMailVendor($vendor);
                                         Yii::app()->user->setFlash('success', " You are registered successfully!!! Check your mail and verify your account");
-//                                        $this->redirect('UserRegister');
-                                        $this->redirect(Yii::app()->user->returnUrl);
+                                        $this->redirect('VendorRegister');
                                 } else {
                                         Yii::app()->user->setFlash('error', "Error Occured");
-//                                        $this->redirect('UserRegister');
-                                        $this->redirect(Yii::app()->user->returnUrl);
+                                        $this->redirect('VendorRegister');
                                 }
                         }
                 }
-                $this->render('register', array('model' => $model, 'vendor' => $vendor));
+                $this->render('vendor_register', array('vendor' => $vendor));
         }
+
+        /*     public function actionUserRegister() {
+          $model = new BuyerDetails('create');
+          $vendor = new Merchant('create');
+          if (isset($_POST['BuyerDetails'])) {
+          $model->attributes = $_POST['BuyerDetails'];
+          $model->DOC = date('Y-m-d');
+          $model->user_status = 1;
+          $date1 = $_POST['BuyerDetails']['dob'];
+          $newDate = date("Y-m-d", strtotime($date1));
+          $ver_id = mt_rand(10000, 99999) . time();
+          $model->activation_link = $ver_id;
+          if ($model->save()) {
+          $this->SuccessMail($model);
+          Yii::app()->user->setFlash('success', " You are registered successfully!!! Check your mail and verify your account");
+          $this->redirect(array('site/UserRegister'));
+          } else {
+          Yii::app()->user->setFlash('error', "Error Occured");
+          $this->redirect(array('site/UserRegister'));
+          }
+          }
+          if (isset($_POST['Merchant'])) {
+          $vendor->attributes = $_POST['Merchant'];
+          $vendor->DOC = date('Y-m-d');
+          $vendor->status = 4;
+          $date1 = $_POST['BuyerDetails']['dob'];
+          $newDate = date("Y-m-d", strtotime($date1));
+          $ver_id = mt_rand(10000, 9999999) . time();
+          $vendor->activation_link = $ver_id;
+          if ($vendor->validate()) {
+          if ($vendor->save(false)) {
+          $this->SuccessMailVendor($vendor);
+          Yii::app()->user->setFlash('success', " You are registered successfully!!! Check your mail and verify your account");
+          //                                        $this->redirect('UserRegister');
+          $this->redirect(Yii::app()->user->returnUrl);
+          } else {
+          Yii::app()->user->setFlash('error', "Error Occured");
+          //                                        $this->redirect('UserRegister');
+          $this->redirect(Yii::app()->user->returnUrl);
+          }
+          }
+          }
+          $this->render('register', array('model' => $model, 'vendor' => $vendor));
+          }
+         */
 
         public function SuccessMail($model) {
                 Yii::import('user.extensions.yii-mail.YiiMail');
