@@ -118,8 +118,8 @@ class CheckoutController extends Controller {
                                         $billing->attributes = $_POST['BuyerDetails'];
                                         $billing->DOC = date('Y-m-d');
                                         $billing->user_status = 1;
-                                        $ver_id = mt_rand(10000, 99999) . time();
-                                        $billing->activation_link = $ver_id;
+//                                        $ver_id = mt_rand(10000, 99999) . time();
+//                                        $billing->activation_link = $ver_id;
                                         $billing->shipping_same = $_POST['BuyerDetails']['shipping_same'];
                                         if ($billing->save(false)) {
 
@@ -282,8 +282,8 @@ class CheckoutController extends Controller {
                                         $model = Order::model()->findByPk(Yii::app()->session['orderid']);
                                         $model->payment_mode = $_POST['payment_option'];
                                         if ($model->save(false)) {
-                                                $this->SuccessMail($model);
-                                                $this->SuccessMailAdmin($model, 1);
+                                                $this->SuccessOrderMail($model);
+                                                $this->SuccessMailAdmin($model);
                                                 $this->redirect(array('Checkout/Confirm'));
                                         }
                                 }
@@ -332,6 +332,45 @@ class CheckoutController extends Controller {
                         }
                 } else {
                         $this->redirect(array('Cart/Mycart'));
+                }
+        }
+
+        public function SuccessOrderMail($model) {
+                $user = BuyerDetails::model()->findByPk(Yii::app()->session['user']['id']);
+                Yii::import('user.extensions.yii-mail.YiiMail');
+                $message = new YiiMailMessage;
+                $message->view = "_order_mail";
+                $params = array('model' => $model);
+                $message->subject = 'Welcome To Dealsonindia';
+                $message->setBody($params, 'text/html');
+                $message->addTo($user->email);
+//                $message->addTo($model->email);
+                $message->from = 'dealsonindia@intersmart.in';
+                if (Yii::app()->mail->send($message)) {
+//            echo 'message send';
+//            exit;
+                } else {
+                        echo 'message not send';
+                        exit;
+                }
+        }
+
+        public function SuccessMailAdmin($model) {
+                $email = AdminSettings::model()->findByAttributes(array('status' => 1), array('limit' => 1));
+                Yii::import('user.extensions.yii-mail.YiiMail');
+                $message = new YiiMailMessage;
+                $message->view = "_admin_order_mail";
+                $params = array('model' => $model);
+                $message->subject = 'Dealsonindia';
+                $message->setBody($params, 'text/html');
+                $message->addTo($email->email);
+                $message->from = 'dealsonindia@intersmart.in';
+                if (Yii::app()->mail->send($message)) {
+//            echo 'message send';
+//            exit;
+                } else {
+                        echo 'message not send';
+                        exit;
                 }
         }
 

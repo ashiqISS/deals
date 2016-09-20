@@ -599,20 +599,60 @@ class SiteController extends Controller {
 
 
         public function actionPublicNewsletter() {
-                $newexist = Newsletter::model()->findByAttributes(array('email' => $_REQUEST['email']));
-                if (!empty($newexist)) {
-                        echo 2;
-                } else {
-                        $newsletter = new Newsletter;
-                        if (isset($_REQUEST['email'])) {
-                                $newsletter->email = $_REQUEST['email'];
-                                $newsletter->status = 1;
-                                $newsletter->date = date('Y-m-d');
-                                if ($newsletter->save()) {
-                                        $this->redirect(Yii::app()->request->urlReferrer);
-                                        echo 1;
-                                }
+                $newsletter = new Newsletter;
+                if (isset($_REQUEST['email'])) {
+                        $newsletter->email = $_REQUEST['email'];
+                        $newsletter->status = 1;
+                        $newsletter->date = date('Y-m-d');
+                        if ($newsletter->save()) {
+                                $this->NewsletterMail($newsletter);
+                                $this->NewsletterMailAdmin($newsletter);
+                                $this->redirect(Yii::app()->request->urlReferrer);
+                        } else {
+
                         }
+                }
+        }
+
+        public function NewsletterMail($newsletter) {
+                $email = Newsletter::model()->findAll();
+
+                foreach ($email as $mail) {
+                        Yii::import('user.extensions.yii-mail.YiiMail');
+                        $message = new YiiMailMessage;
+                        $message->view = "_newsletter_mail";
+                        $params = array('model' => $newsletter);
+                        $message->subject = 'Dealsonindia';
+                        $message->setBody($params, 'text/html');
+                        $message->addTo($mail->email);
+                        $message->from = 'dealsonindia@intersmart.in';
+                        if (Yii::app()->mail->send($message)) {
+//            echo 'message send';
+//            exit;
+                        } else {
+                                echo 'message not send';
+                                exit;
+                        }
+                }
+        }
+
+        public function NewsletterMailAdmin($newsletter) {
+                $email = AdminSettings::model()->findByAttributes(array('status' => 1), array('limit' => 1));
+                Yii::import('user.extensions.yii-mail.YiiMail');
+                $message = new YiiMailMessage;
+                $message->view = "_newsletter_mail_admin";
+                $params = array('vendor' => $newsletter);
+                $message->subject = 'Welcome To Dealsonindia';
+                $message->setBody($params, 'text/html');
+                $message->addTo('siyad@intersmart.in');
+//                $message->addTo($email->email);
+                $message->from = 'dealsonindia@intersmart.in';
+                if (Yii::app()->mail->send($message)) {
+//            echo 'message send';
+//            exit;
+                } else {
+                        echo 'message not send';
+                        exit;
                 }
         }
 
