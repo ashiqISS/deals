@@ -92,6 +92,8 @@ $this->widget('zii.widgets.CDetailView', array(
 </section>
 
 <?php $history = new OrderHistory('search'); ?>
+<?php $history->order_id = $model->order_id; ?>
+<?php $history->product_id = $model->product_id; ?>
 <?php
 $this->widget('booster.widgets.TbGridView', array(
     'type' => ' bordered condensed hover',

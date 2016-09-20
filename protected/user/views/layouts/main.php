@@ -444,7 +444,7 @@
                                                                 <ul class="nav navbar-nav">
                                                                         <li><?php echo CHtml::link('COUPONS', array('products/coupons')); ?></li>
                                                                         <li><?php echo CHtml::link('DAILY DEALS', array('products/Daily')); ?></li>
-                                                                        <li><?php //echo CHtml::link('FLASH DEALS', array('products/Daily'));                      ?></li>
+                                                                        <li><?php //echo CHtml::link('FLASH DEALS', array('products/Daily'));                                         ?></li>
                                                                         <li><?php echo CHtml::link('HOT DEALS', array('products/hot')); ?></li>
                                                                         <li><?php echo CHtml::link('SUBMIT A DEAL', array('myaccount/SubmitDeal')); ?></li>
                                                                         <li><?php echo CHtml::link('WHOLESALE DEALS', array('products/wholesale')); ?></li>
@@ -649,16 +649,39 @@
         <script>
                 function submit_newsletter() {
                         var email = $(".newsletter_email").val();
-                        $.ajax({
-                                url: baseurl + 'site/PublicNewsletter',
-                                type: "POST",
-                                data: {email: email},
-                                success: function ()
-                                {
-                                        $('.newsletter_msg').html("Email Sent Successfully in our newsletter!!!!");
-                                        $("#newsletter_reset")[0].reset();
+                        if (email == '') {
+                                $('.newsletter_msg').html("Please enter a Email");
+                        } else {
+                                if (IsEmail(email) == false) {
+                                        $('.newsletter_msg').html("Please enter a Valid Email");
+                                } else {
+                                        $.ajax({
+                                                url: baseurl + 'site/PublicNewsletter',
+                                                type: "POST",
+                                                data: {email: email},
+                                                success: function (data)
+                                                {
+                                                        if (data == 2) {
+                                                                $('.newsletter_msg').html("This Email Already Subscibe the newsletter");
+                                                        } else {
+                                                                $('.newsletter_msg').html("Email Sent Successfully in our newsletter!!!!");
+                                                                $("#newsletter_reset")[0].reset();
+                                                        }
+
+                                                }
+                                        });
                                 }
-                        });
+
+                        }
+
+                }
+                function IsEmail(email) {
+                        var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                        if (!regex.test(email)) {
+                                return false;
+                        } else {
+                                return true;
+                        }
                 }
 
         </script>

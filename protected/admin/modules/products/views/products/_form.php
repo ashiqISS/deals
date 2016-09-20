@@ -226,6 +226,8 @@ if (!$model->isNewRecord) {
                                 }
                         });
                         $('#del_file').click(function () {
+//                                alert();
+//                                return false;
                                 if (counter == 2) {
                                         $('#del_file').hide();
                                 }

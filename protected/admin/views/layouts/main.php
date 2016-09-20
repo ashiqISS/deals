@@ -10,7 +10,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <meta http-equiv="X-UA-Compatible" content="IE=edge">
                 <title><?php echo Yii::app()->name; ?></title>
                 <!-- Tell the browser to be responsive to screen width -->
-                <!--<link rel="stylesheet" href="<?php // echo Yii::app()->baseUrl;                                                   ?>/css/admin.css">-->
+                <!--<link rel="stylesheet" href="<?php // echo Yii::app()->baseUrl;                                                       ?>/css/admin.css">-->
                 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
                 <!-- Bootstrap 3.3.5 -->
 
@@ -318,6 +318,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                                 <a href="#"><i class="fa fa-mail-reply-all"></i> <span>Message </span> <i class="fa fa-angle-left pull-right"></i></a>
                                                                 <ul class="treeview-menu">
                                                                         <li class="<?php echo $action23 ?> treeview"><a href="<?php echo Yii::app()->baseUrl ?>/admin.php/merchantMessage/admin"><i class="fa fa-circle-o"></i>Messages</a></li>
+                                                                </ul>
+                                                        </li>
+
+                                                <?php } ?>
+                                                <?php if (isset(Yii::app()->session['post']['masters']) && Yii::app()->session['post']['masters'] == 1) { ?>
+                                                        <li class="<?php echo $actionn8 ?> treeview">
+                                                                <a href="#"><i class="fa fa-reply"></i><span>Reports </span> <i class="fa fa-angle-left pull-right"></i></a>
+                                                                <ul class="treeview-menu">
+                                                                        <li class="<?php echo $action23 ?> treeview"><a href="<?php echo Yii::app()->baseUrl ?>/admin.php/reports/productViewed/admin"><i class="fa fa-circle-o"></i>Products Viewed</a></li>
                                                                 </ul>
                                                         </li>
 

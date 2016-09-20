@@ -153,6 +153,41 @@ class ProductsController extends Controller {
                 ));
         }
 
+        public function actionSeller($id) {
+                $criteria = new CDbCriteria;
+                $total = Products::model()->count();
+                $pages = new CPagination($total);
+                $pages->pageSize = 8;
+                $pages->applyLimit($criteria);
+                $heading = Merchant::model()->findByPk($id)->shop_name;
+                $date = date('Y-m-d');
+                if ((isset($_POST['sort_by'])) && ($_POST['sort_by'] != '')) {
+                        $sort = $_POST['sort_by'];
+                        switch ($sort) {
+                                case 'new_first' : $criteria->order = 'id desc';
+                                        break;
+                                case 'old_first' : $criteria->order = 'id asc';
+                                        break;
+                                case 'price_low' : $criteria->order = 'price asc';
+                                        break;
+                                case 'price_high' : $criteria->order = 'price desc';
+                                        break;
+                                default : $criteria->order = 'id desc';
+                        }
+                } else {
+                        $criteria->order = 'id desc';
+                }
+                $criteria->addCondition("status = 1 AND is_admin_approved = 1 AND merchant_id = $id AND   wholesale_price != 0 AND  ( '" . $date . "' >= sale_from AND  '" . $date . "' <= sale_to) ");
+                $products = Products::model()->findAll($criteria);
+
+                $this->render('deals', array(
+                    'products' => $products,
+                    'pages' => $pages,
+                    'total' => $total,
+                    'heading' => $heading,
+                ));
+        }
+
         public function actionHot() {
                 $criteria = new CDbCriteria;
                 $total = Products::model()->count();
@@ -242,8 +277,18 @@ class ProductsController extends Controller {
 
         public function actionDetail($name) {
                 $date = date('Y-m-d');
-//                $prduct = Products::model()->findByAttributes(array('canonical_name' => $name, 'status' => 1, 'is_admin_approved' => 1), array('condition' => $date . ' >= sale_from AND ' . $date . ' <= sale_to)'));
                 $prduct = Products::model()->findByAttributes(array('canonical_name' => $name, 'status' => 1, 'is_admin_approved' => 1), array('condition' => "'$date'  >= sale_from AND '$date' <= sale_to"));
+
+                $product_view = new ProductViewed;
+                $product_view_exist = ProductViewed::model()->findByAttributes(array('user_id' => Yii::app()->session['user']['id'], 'product_id' => $prduct->id));
+                if ($product_view_exist == NULL) {
+                        $product_view->date = date('Y-m-d');
+                        $product_view->product_id = $prduct->id;
+                        $product_view->session_id = Yii::app()->session['temp_user'];
+                        $product_view->user_id = Yii::app()->session['user']['id'];
+                        $product_view->save(FALSE);
+                }
+//                $prduct = Products::model()->findByAttributes(array('canonical_name' => $name, 'status' => 1, 'is_admin_approved' => 1), array('condition' => $date . ' >= sale_from AND ' . $date . ' <= sale_to)'));
                 $value = trim($prduct->category_id, ",");
                 $category = explode(",", $value);
                 foreach ($category as $cats) {

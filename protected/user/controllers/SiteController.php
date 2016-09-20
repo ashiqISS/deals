@@ -500,15 +500,19 @@ class SiteController extends Controller {
 
 
         public function actionPublicNewsletter() {
-                $newsletter = new Newsletter;
-                if (isset($_REQUEST['email'])) {
-                        $newsletter->email = $_REQUEST['email'];
-                        $newsletter->status = 1;
-                        $newsletter->date = date('Y-m-d');
-                        if ($newsletter->save()) {
-                                $this->redirect(Yii::app()->request->urlReferrer);
-                        } else {
-
+                $newexist = Newsletter::model()->findByAttributes(array('email' => $_REQUEST['email']));
+                if (!empty($newexist)) {
+                        echo 2;
+                } else {
+                        $newsletter = new Newsletter;
+                        if (isset($_REQUEST['email'])) {
+                                $newsletter->email = $_REQUEST['email'];
+                                $newsletter->status = 1;
+                                $newsletter->date = date('Y-m-d');
+                                if ($newsletter->save()) {
+                                        $this->redirect(Yii::app()->request->urlReferrer);
+                                        echo 1;
+                                }
                         }
                 }
         }

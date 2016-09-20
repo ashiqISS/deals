@@ -351,8 +351,13 @@ class ProductsController extends Controller {
                         $image = CUploadedFile::getInstance($model, 'main_image');
                         $hover_image = CUploadedFile::getInstance($model, 'hover_image');
                         $images = CUploadedFile::getInstancesByName('gallery_images');
-                        $model->main_image = $image->extensionName;
+                        if (!empty($images)) {
+                                $model->main_image = $image->extensionName;
+                        } else {
+                                $model->main_image = $image1;
+                        }
                         $model->hover_image = $hover_image->extensionName;
+
 
 //            if ($model->search_tag != "") {
 //                $model->search_tag = implode(",", $model->search_tag);
@@ -431,20 +436,14 @@ class ProductsController extends Controller {
                                         if (isset($_POST['ProductFeatures'])) {
                                                 $desc = $_POST['ProductFeatures']['feature_disc'];
                                                 $heading = $_POST['ProductFeatures']['feature_heading'];
+                                                $exfeature = ProductFeatures::model()->findByAttributes(array('product_id' => $model->id));
+                                                $exfeature->deleteAll();
                                                 for ($i = 0; $i < count($desc); $i++) {
                                                         $features = new ProductFeatures;
                                                         $features->feature_disc = $desc[$i];
                                                         $features->product_id = $model->id;
                                                         $features->feature_heading = $heading[$i];
-                                                        $exfeature = ProductFeatures::model()->findByAttributes(array('feature_heading' => $heading[$i], 'feature_disc' => $desc[$i], 'product_id' => $model->id));
-
-                                                        if (!empty($exfeature)) {
-                                                                $exfeature->product_id = $model->id;
-                                                                $exfeature->feature_heading = $heading[$i];
-                                                                $exfeature->save(flase);
-                                                        } else {
-                                                                $features->save(false);
-                                                        }
+                                                        $features->save(false);
                                                 }
                                         }
 //                                        $model->canonical_name = $model->canonical_name . '-' . $model->id;

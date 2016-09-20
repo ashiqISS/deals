@@ -8,6 +8,9 @@
                 background-color: #f7f7f7;
                 margin-bottom: 5px;
         }
+        .sans strong {
+                color: #569277;
+        }
 </style>
 <style>
         @import url(http://fonts.googleapis.com/css?family=Roboto:500,100,300,700,400);
@@ -212,7 +215,7 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
 
                         <div class="col-xs-7 col-sm-12 col-md-7 for-mob">
                                 <div class="soon">
-                                        <img class="exp sd" src="<?= Yii::app()->baseUrl; ?>/images/soon.png">
+                                        <!--<img class="exp sd" src="<?= Yii::app()->baseUrl; ?>/images/soon.png">-->
                                         <h5><?php echo $products->product_name; ?></h5>
                                         <div class="detail">
                                                 <div class="detail-1">
@@ -256,6 +259,19 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
                                                         <?php if ($products->tax != 0) { ?>
                                                                 <span class="extax">Ex Tax : <?php echo Yii::app()->Discount->extax($products); ?></span>
                                                         <?php } ?>
+                                                </div>
+
+
+                                        </div>
+
+                                        <div class="detail">
+                                                <div class="detail-1">
+                                                        <span class="sans"><?php if ($products->merchant_id != 0) { ?>
+                                                                        Soled By <strong><a href="<?php echo yii::app()->request->baseUrl; ?>/index.php/Products/Seller/id/<?php echo $products->merchant_id; ?>"><?php echo Merchant::model()->findByPk($products->merchant_id)->shop_name; ?></a></strong>
+                                                                <?php } else {
+                                                                        ?>
+                                                                        Soled By <strong>Dealsonindia Fullfilled</strong>
+                                                                <?php } ?> </span>
                                                 </div>
 
 
@@ -678,17 +694,17 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
 
 
 
-<!--<script>(function (d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id))
-                return;
-            js = d.createElement(s);
-            js.id = id;
-//            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.7";
-            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1";
-            fjs.parentNode.insertBefore(js, fjs);
-        }
-        (document, 'script', 'facebook-jssdk'));</script>-->
+                <!--<script>(function (d, s, id) {
+                            var js, fjs = d.getElementsByTagName(s)[0];
+                            if (d.getElementById(id))
+                                return;
+                            js = d.createElement(s);
+                            js.id = id;
+                //            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.7";
+                            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1";
+                            fjs.parentNode.insertBefore(js, fjs);
+                        }
+                        (document, 'script', 'facebook-jssdk'));</script>-->
 
 
 <script>
@@ -696,11 +712,11 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
                 FB.ui({
                         method: 'share',
                         display: 'popup',
-//              action_type: 'og.likes',
+                        //              action_type: 'og.likes',
                         href: '<?php echo "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI']; ?>',
-//                action_properties: JSON.stringify({
-//                    object: 'https://developers.facebook.com/docs/',
-//                })
+                        //                action_properties: JSON.stringify({
+                        //                    object: 'https://developers.facebook.com/docs/',
+                        //                })
                 }, function (response) {
                         $.ajax({
                                 type: "POST",
@@ -802,7 +818,7 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
 <script>
         $("#laksyah_zoom").elevateZoom({gallery: 'gal1', cursor: 'pointer', galleryActiveClass: 'active', imageCrossfade: true, loadingIcon: true, responsive: true});
 
-//pass the images to Fancybox
+        //pass the images to Fancybox
         $("#laksyah_zoom").bind("click", function (e) {
                 var ez = $('#laksyah_zoom').data('elevateZoom');
                 $.fancybox(ez.getGalleryList());
