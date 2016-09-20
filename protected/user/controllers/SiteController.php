@@ -217,7 +217,7 @@ class SiteController extends Controller {
                                                 CouponHistory::model()->updateAll(array("user_id" => $user->id), 'session_id=' . Yii::app()->session['temp_user']);
                                                 Order::model()->updateAll(array("user_id" => $user->id), 'session_id=' . Yii::app()->session['temp_user']);
                                                 Yii::app()->user->setFlash('emailverify', null);
-                                                $this->redirect(array('Myaccount/index/type/user'));
+                                                $this->redirect(array('site/UserLogin'));
                                         }
                                 } else {
                                         Yii::app()->user->setFlash('login_error', "dealsonindia email or password invalid.Try again");
@@ -250,7 +250,7 @@ class SiteController extends Controller {
                                                         CouponHistory::model()->updateAll(array("user_id" => $user->id), 'session_id=' . Yii::app()->session['temp_user']);
                                                         Order::model()->updateAll(array("user_id" => $user->id), 'session_id=' . Yii::app()->session['temp_user']);
                                                 }
-                                                $this->redirect(array('Myaccount/index/type/vendor'));
+                                                $this->redirect(array('site/VendorLogin'));
                                         }
                                 } else {
                                         Yii::app()->user->setFlash('login_error', "dealsonindia email or password invalid.Try again");
@@ -553,7 +553,7 @@ class SiteController extends Controller {
         public static function siteURL() {
                 $protocol = isset($_SERVER['HTTPS']) ? 'https://' : 'http://';
                 $domainName = $_SERVER['HTTP_HOST'];
-                return $protocol . $domainName . '/dealsonindia/';
+                return $protocol . $domainName . '/deals/';
         }
 
 // if ($_POST['user'] == 1) {

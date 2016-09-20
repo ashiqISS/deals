@@ -39,6 +39,7 @@ class ForgotPasswordController extends Controller {
         }
 
         public function actionUser() {
+
                 if (isset($_POST['btn_submit'])) {
                         $email = $_POST['email'];
 
@@ -50,8 +51,9 @@ class ForgotPasswordController extends Controller {
 
                                 $forgot = new ForgotPassword;
                                 $forgot->user_id = $details->id;
-                                $forgot->user_type = $_POST['user'];
-                                $user_type = $forgot->user_type;
+                                $forgot->user_type = 1;
+//                                var_dump($forgot->user_type);
+//                                exit;
                                 $forgot->code = rand(10000, 1000000);
                                 $token = base64_encode($forgot->user_id . ':' . $forgot->code);
                                 $forgot->status = 1;
@@ -82,8 +84,7 @@ class ForgotPasswordController extends Controller {
 
                                 $forgot = new ForgotPassword;
                                 $forgot->user_id = $details->id;
-                                $forgot->user_type = $_POST['user'];
-                                $user_type = $forgot->user_type;
+                                $forgot->user_type = 2;
                                 $forgot->code = rand(10000, 1000000);
                                 $token = base64_encode($forgot->user_id . ':' . $forgot->code);
                                 $forgot->status = 1;
@@ -169,10 +170,16 @@ class ForgotPasswordController extends Controller {
                                 }
                                 $newpass = $_POST['password1'];
                                 $pass1->password = $newpass;
+                                $pass1->confirm = $newpass;
+
                                 $pass1->update(array('password'));
-                                if ($pass1->save()) {
+                                if ($pass1->save(false)) {
                                         Yii::app()->user->setFlash('success', "Your password changed successfully. Please login");
-                                        $this->redirect(array('site/login'));
+                                        if ($user_type == 1) {
+                                                $this->redirect(array('site/UserLogin'));
+                                        } else {
+                                                $this->redirect(array('site/VendorLogin'));
+                                        }
                                 } else {
                                         Yii::app()->user->setFlash('error', "Inavlid user,..");
                                 }

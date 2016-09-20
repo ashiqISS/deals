@@ -38,7 +38,7 @@ class MerchantPlans extends CActiveRecord {
                 // NOTE: you should only define rules for those attributes that
                 // will receive user inputs.
                 return array(
-                    array('plan_id, user_id, plan_name, amount, date_of_creation, no_of_product, no_of_ads,  no_of_days, status', 'required'),
+                    array('plan_id, user_id, plan_name, amount, date_of_creation', 'required'),
                     array('plan_id, status, cb, ub', 'numerical', 'integerOnly' => true),
                     array('user_id, amount, no_of_product, no_of_product_left, no_of_ads, no_of_ads_left, no_of_days, no_of_days_left', 'length', 'max' => 200),
                     array('plan_name', 'length', 'max' => 250),

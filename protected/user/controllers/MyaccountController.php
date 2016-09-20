@@ -564,4 +564,56 @@ class MyaccountController extends Controller {
                 }
         }
 
+        public function actionUpgradePlan() {
+                $model = new MerchantPlans;
+                if (isset($_POST['plan_submit'])) {
+                        $model->plan_id = $_POST['plan_id'];
+                        $plan = PlanDetails::model()->findByPk($model->plan_id);
+                        $model->user_id = Yii::app()->session['merchant']['id'];
+                        $model->plan_name = $_POST['MerchantPlans']['plan_name'];
+                        $model->amount = $_POST['plan_amount'];
+                        $model->date_of_creation = $_POST['MerchantPlans']['date_of_creation'];
+                        $model->no_of_product = $plan->no_of_products;
+                        $model->no_of_product_left = $plan->no_of_products;
+                        $model->no_of_ads = $plan->no_of_ads;
+                        $model->no_of_ads_left = $plan->no_of_ads;
+                        $model->no_of_days = $plan->no_of_days;
+                        $model->no_of_days_left = $plan->no_of_days;
+                        $model->status = 1;
+                        if ($model->save()) {
+                                Yii::app()->user->setFlash('success', "Your Plan Upgrade Successfully!!!!");
+                                $this->redirect(array('Myaccount/UpgradePlan'));
+                        } else {
+                                Yii::app()->user->setFlash('Error', "Error Occured!!!!");
+                                $this->redirect(array('Myaccount/UpgradePlan'));
+                        }
+                }
+                $this->render('merchant_plans', array('model' => $model, 'plan' => $plan));
+        }
+
+        public function actionUpgradePlanProduct() {
+                $plan_id = $_POST['plan_id'];
+                $plan_date = $_POST['plan_date'];
+                $plan = PlanDetails::model()->findByPk($plan_id)->amount;
+                $plan_featured = PlanDetails::model()->findByPk($plan_id)->featured;
+                $plan_products_id = PlanDetails::model()->findByPk($plan_id)->id;
+                $array = array('plan' => $plan, 'plan_featured' => $plan_featured, 'plan_products_id' => $plan_products_id);
+                $json = CJSON::encode($array);
+                echo $json;
+        }
+
+        public function actionUpgradePlanProductdate() {
+                $plan_date = $_POST['plan_date'];
+                $plan_id = $_POST['plan_id'];
+                $plan = PlanDetails::model()->findByPk($plan_id)->no_of_days;
+                $date = $plan_date;
+                $newdate = strtotime('+' . $plan . 'day', strtotime($date));
+                $newdates = date('j-m-Y', $newdate);
+
+                echo $newdates;
+                $array = array('plan_date' => $plan_date, 'newdates' => $newdates);
+                $json = CJSON::encode($array);
+                echo $json;
+        }
+
 }

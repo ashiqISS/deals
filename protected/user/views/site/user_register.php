@@ -131,21 +131,22 @@
                                                         </span>
                                                         <?php echo $form->error($model, 'phone_number', array('class' => 'form_error red')); ?>
                                                 </div>
+
                                                 <div class="col-xs-12 col-sm-12">
-                                                        <div class="col-xs-12 col-sm-12">
-                                                                <span class="field-span input input--ruri">
-                                                                        <?php if (CCaptcha::checkRequirements()): ?>
-                                                                                <div id="capche" >
-                                                                                        <?php echo $form->labelEx($model, 'verifyCode'); ?>
-                                                                                        <br/>
-                                                                                        <?php $this->widget('CCaptcha'); ?>
-                                                                                        <br/>
-                                                                                        <?php echo $form->textField($model, 'verifyCode', array('class' => "input-field input-field-ruri input__field input__field--ruri", 'required' => TRUE)); ?>
-                                                                                <?php endif; ?>
-                                                                        </div>
-                                                                </span>
-                                                                <?php echo $form->error($model, 'verifyCode', array('class' => 'red')); ?>
-                                                        </div>
+                                                        <span class="field-span input input--ruri">
+                                                                <?php if (CCaptcha::checkRequirements()): ?>
+                                                                        <div id="capche" >
+                                                                                <?php echo $form->labelEx($model, 'verifyCode'); ?>
+                                                                                <br/>
+                                                                                <?php $this->widget('CCaptcha'); ?>
+                                                                                <br/>
+                                                                                <?php echo $form->textField($model, 'verifyCode', array('class' => "input-field input-field-ruri input__field input__field--ruri", 'required' => TRUE)); ?>
+                                                                        <?php endif; ?>
+                                                                </div>
+                                                        </span>
+                                                        <?php echo $form->error($model, 'verifyCode', array('class' => 'red')); ?>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-12">
                                                         <div class="checkbox checkbox2">
                                                                 <label>
                                                                         <?php echo $form->checkBox($model, 'newsletter'); ?>
@@ -176,8 +177,8 @@
 
 </section>
 <script type="text/javascript">
-        $(document).ready(function() {
-                $("#buyer-details-form").submit(function() {
+        $(document).ready(function () {
+                $("#buyer-details-form").submit(function () {
                         var pass1 = $('#BuyerDetails_password').val();
                         var pass2 = $('#password1').val();
                         if (pass1 && pass2 != "") {
@@ -191,7 +192,7 @@
 
                         }
                 });
-                $('.pass').keyup(function() {
+                $('.pass').keyup(function () {
                         var pass1 = $('#BuyerDetails_password').val();
                         var pass2 = $('#password1').val();
                         if (pass1 && pass2 != "") {

@@ -76,7 +76,7 @@
                                                 <div class="row">
                                                         <div class="col-xs-12 col-sm-12">
                                                                 <span class="field-span input input--ruri">
-                                                                        <input type="password" class="input-field input-field-ruri input__field input__field--ruri" id="password1" name="password1" required="required" >
+                                                                        <input type="password" class="input-field input-field-ruri input__field input__field--ruri pass" id="password1" name="password1" required="required" >
                                                                         <label class="label-field label-field-ruri input__label input__label--ruri" for="input-1">
                                                                                 <span class="content-filed content-filed-ruri"><i class="fa pls fa-user"></i>New Password</span>
                                                                         </label>
@@ -86,7 +86,7 @@
                                                 <div class="row">
                                                         <div class="col-xs-12 col-sm-12">
                                                                 <span class="field-span input input--ruri">
-                                                                        <input type="password" class="input-field input-field-ruri input__field input__field--ruri" id="password2" name="password2" required="required" >
+                                                                        <input type="password" class="input-field input-field-ruri input__field input__field--ruri pass" id="password2" name="password2" required="required" >
                                                                         <label class="label-field label-field-ruri input__label input__label--ruri" for="input-1">
                                                                                 <span class="content-filed content-filed-ruri"><i class="fa pls fa-user"></i>Confirm Password</span>
                                                                         </label>

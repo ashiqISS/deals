@@ -31,22 +31,7 @@
                                                 <?php endif; ?>
                                                 <form role="form" action="<?php echo Yii::app()->request->baseUrl; ?>/index.php/ForgotPassword/index" method="post">
 
-                                                        <div class="common" id="common_login">
-                                                                <div class="col-sm-3 col-xs-3 zeros">
-                                                                        <label for="textinput" class="control-labele">Login Type</label>
-                                                                </div>
-                                                                <div class="col-sm-1 col-xs-1 zeros">
-                                                                        <label for="textinput" class="control-labele">:</label>
-                                                                </div>
-                                                                <div class="col-sm-8 col-xs-8 zeros login_common">
-                                                                        <label class="radio-inline sec">
-                                                                                <input id="user" type="radio" name="user" value="1" required="true">User
-                                                                        </label>
-                                                                        <label class="radio-inline sec">
-                                                                                <input id="merchant" type="radio" name="user" required="true" value="2">Merchant
-                                                                        </label>
-                                                                </div>
-                                                        </div>
+
                                                         <div class="row">
                                                                 <div class="col-xs-12 col-sm-12">
                                                                         <span class="field-span input input--ruri">
