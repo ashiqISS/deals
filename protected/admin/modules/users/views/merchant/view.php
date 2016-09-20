@@ -42,7 +42,19 @@ $this->widget('zii.widgets.CDetailView', array(
                     return $catt;
             },
         ),
-        'merchant_type',
+        'merchant_type', array(
+            'name' => 'merchant_badge',
+            'value' => function($data) {
+                    if ($data->merchant_badge == "1") {
+                            return "Gold";
+                    } else if ($data->merchant_badge == "2") {
+                            return 'Silver';
+                    } else if ($data->merchant_badge == "3") {
+                            return 'Bronze';
+                    }
+            },
+            'type' => 'raw'
+        ),
         'product_count',
         'shop_name',
         array(

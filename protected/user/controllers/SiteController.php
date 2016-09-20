@@ -182,6 +182,7 @@ class SiteController extends Controller {
                         $model->activation_link = $ver_id;
                         if ($model->save(false)) {
                                 $this->SuccessMail($model);
+                                $this->SuccessMailAdmin($model, 1);
                                 Yii::app()->user->setFlash('success', " You are registered successfully!!! Check your mail and verify your account");
                                 $this->redirect(array('site/UserRegister'));
                         } else {
@@ -205,6 +206,7 @@ class SiteController extends Controller {
                         if ($vendor->validate()) {
                                 if ($vendor->save(false)) {
                                         $this->SuccessMailVendor($vendor);
+                                        $this->SuccessMailAdmin($vendor, 2);
                                         Yii::app()->user->setFlash('success', " You are registered successfully!!! Check your mail and verify your account");
                                         $this->redirect('VendorRegister');
                                 } else {
@@ -269,6 +271,25 @@ class SiteController extends Controller {
                 $message->subject = 'Welcome To Dealsonindia';
                 $message->setBody($params, 'text/html');
                 $message->addTo($model->email);
+                $message->from = 'dealsonindia@intersmart.in';
+                if (Yii::app()->mail->send($message)) {
+//            echo 'message send';
+//            exit;
+                } else {
+                        echo 'message not send';
+                        exit;
+                }
+        }
+
+        public function SuccessMailAdmin($model, $id) {
+                $email = AdminSettings::model()->findByAttributes(array('status' => 1), array('limit' => 1));
+                Yii::import('user.extensions.yii-mail.YiiMail');
+                $message = new YiiMailMessage;
+                $message->view = "_registration_admin_mail";
+                $params = array('model' => $model, 'id' => $id);
+                $message->subject = 'Dealsonindia';
+                $message->setBody($params, 'text/html');
+                $message->addTo($email->email);
                 $message->from = 'dealsonindia@intersmart.in';
                 if (Yii::app()->mail->send($message)) {
 //            echo 'message send';

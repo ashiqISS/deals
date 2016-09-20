@@ -543,4 +543,13 @@ class MyaccountController extends Controller {
                 }
         }
 
+        public function actionMyRewards() {
+                if (Yii::app()->session['user']) {
+                        $model = BuyerDetails::model()->findByPk(Yii::app()->session['user']['id']);
+                        $rewards = RewardPointTable::model()->findByAttributes(array('user_id' => Yii::app()->session['user']['id']));
+                        $reward_history = RewardPointHistory::model()->findAllByAttributes(array('user_id' => Yii::app()->session['user']['id']));
+                        $this->render('rewards', array('model' => $model, 'rewards' => $rewards, 'reward_history' => $reward_history));
+                }
+        }
+
 }

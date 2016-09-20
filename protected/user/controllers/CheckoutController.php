@@ -282,6 +282,8 @@ class CheckoutController extends Controller {
                                         $model = Order::model()->findByPk(Yii::app()->session['orderid']);
                                         $model->payment_mode = $_POST['payment_option'];
                                         if ($model->save(false)) {
+                                                $this->SuccessMail($model);
+                                                $this->SuccessMailAdmin($model, 1);
                                                 $this->redirect(array('Checkout/Confirm'));
                                         }
                                 }

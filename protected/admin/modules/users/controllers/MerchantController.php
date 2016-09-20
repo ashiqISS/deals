@@ -127,7 +127,6 @@ class MerchantController extends Controller {
                         $model->merchant_point = $_POST['Merchant']['merchant_point'];
                         $model->merchant_rating = $_POST['Merchant']['merchant_rating'];
                         $model->merchant_badge = $_POST['Merchant']['merchant_badge'];
-
                         $model->CB = Yii::app()->session['admin']['id'];
                         $model->DOC = $doc;
 
