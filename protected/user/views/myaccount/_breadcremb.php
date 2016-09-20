@@ -1,13 +1,22 @@
 <?php
 if (Yii::app()->controller->action->id == 'index') {
         $name = 'Dashboard';
-        $action = 'Myaccount/index';
+        if (Yii::app()->session['user_type_usrid'] == 2)
+                $action = 'Myaccount/index/type/vendor';
+        else
+                $action = 'Myaccount/index/type/user';
 } else if (Yii::app()->controller->action->id == 'NewAddressBook') {
         $name = 'New Addressbook';
-        $action = 'Myaccount/index';
+        if (Yii::app()->session['user_type_usrid'] == 2)
+                $action = 'Myaccount/index/type/vendor';
+        else
+                $action = 'Myaccount/index/type/user';
 } else if (Yii::app()->controller->action->id == 'ResetPassword') {
         $name = 'Reset Password';
-        $action = 'Myaccount/index';
+        if (Yii::app()->session['user_type_usrid'] == 2)
+                $action = 'Myaccount/index/type/vendor';
+        else
+                $action = 'Myaccount/index/type/user';
 } else if (Yii::app()->controller->action->id == 'UserSettings') {
         $name = 'Account Settings';
         $action = 'Myaccount/UserSettings';
@@ -71,7 +80,12 @@ if (Yii::app()->controller->action->id == 'index') {
                 <div class="col-xs-12">
                         <ul class="breadcrumb">
                                 <li><a href="javascript:void(0)"><i class="fa hom fa-home"></i></a></li>
-                                <li><?php echo CHtml::link('Dashboard', array('Myaccount/index')); ?></li>
+                                <li><?php
+                                        if (Yii::app()->session['user_type_usrid'] == 2)
+                                                echo CHtml::link('Dashboard', array('Myaccount/index/type/vendor'));
+                                        else
+                                                echo CHtml::link('Dashboard', array('Myaccount/index/type/user'));
+                                        ?></li>
                                 <?php if (Yii::app()->controller->action->id != 'index') { ?>
                                         <li><span class="last">  <?php echo $name ?></span></li>
                                 <?php } ?>

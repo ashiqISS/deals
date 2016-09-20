@@ -32,7 +32,7 @@
                         //            this script is for solving error : "Cannot read property 'msie' of undefined"
 
                         jQuery.browser = {};
-                        (function () {
+                        (function() {
                                 jQuery.browser.msie = false;
                                 jQuery.browser.version = 0;
                                 if (navigator.userAgent.match(/MSIE ([0-9]+)\./)) {
@@ -203,8 +203,36 @@
                                                                 </form>
                                                         </div>
                                                 </div>
-                                                <div class="col-md-3 col-sm-6">
+                                                <div class="col-md-3 col-sm-6" style="position: relative">
 
+
+                                                        <ul class="list-unstyled abt" style="position: absolute; left:45px;">
+
+                                                                <li class="has_dropdown"><a href="#" class="active_currency">
+                                                                                <?php if (isset(Yii::app()->session['currency'])) { ?>
+                                                                                        <i class="fa currency_symbol"><img src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/currency/<?php echo Yii::app()->session['currency']['id']; ?>.<?php echo Yii::app()->session['currency']['image']; ?>" width="16" height="11" alt=""/>
+                                                                                        </i> <i class="fa <?php echo Yii::app()->session['currency']['symbol']; ?>"></i><?php echo Yii::app()->session['currency']['currency_code']; ?>
+                                                                                <?php } else { ?>
+                                                                                        <i class="fa currency_symbol"><img src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/currency/1.jpg" width="16" height="11" alt=""/></i> <i class="fa fa-inr"></i> INR
+                                                                                <?php } ?>
+                                                                                <i class="fa fa-angle-down"></i></a>
+                                                                        <div class="laksyah_dropdown currency_drop">
+                                                                                <ul class="drop_menu">
+                                                                                        <?php
+                                                                                        $currencies = Currency::model()->findAll();
+
+                                                                                        foreach ($currencies as $currency) {
+                                                                                                ?>
+                                                                                                <li>
+                                                                                                        <a href="<?php echo Yii::app()->baseUrl; ?>/index.php/Site/CurrencyChange/id/<?= $currency->id; ?>" class="currency" code="<?= $currency->id; ?>">
+                                                                                                                <i class="fa currency_symbol"><img src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/currency/<?= $currency->id; ?>.<?= $currency->image; ?>" width="16" height="11" alt=""/></i><?= $currency->currency_code; ?></a></li>
+                                                                                        <?php } ?>
+
+                                                                                </ul>
+                                                                        </div>
+                                                                </li>
+
+                                                        </ul>
 
 
 
@@ -240,7 +268,7 @@
                                                                 <?php if (Yii::app()->session['user'] != "") { ?>
                                                                         <?php if (BuyerDetails::model()->findByPk(Yii::app()->session['user'])->email_verification == 1) { ?>
                                                                                 <div class="sign-3 hidden-xs hidden-sm">
-                                                                                        <?php echo CHtml::link('My Account', array('Myaccount/index'), array('class' => 'hd')); ?>
+                                                                                        <?php echo CHtml::link('My Account', array('Myaccount/index/type/user'), array('class' => 'hd')); ?>
                                                                                 </div>
                                                                         <?php } else { ?>
                                                                                 <div class="sign-3 hidden-xs hidden-sm">
@@ -249,7 +277,7 @@
                                                                         <?php } ?>
                                                                 <?php } else if (Yii::app()->session['merchant'] != '') { ?>
                                                                         <div class="sign-3 hidden-xs hidden-sm">
-                                                                                <?php echo CHtml::link('My Account', array('Myaccount/index'), array('class' => 'hd')); ?>
+                                                                                <?php echo CHtml::link('My Account', array('Myaccount/index/type/vendor'), array('class' => 'hd')); ?>
                                                                         </div>
                                                                 <?php } else { ?>
                                                                         <div class="sign-3 hidden-xs hidden-sm">
@@ -444,7 +472,7 @@
                                                                 <ul class="nav navbar-nav">
                                                                         <li><?php echo CHtml::link('COUPONS', array('products/coupons')); ?></li>
                                                                         <li><?php echo CHtml::link('DAILY DEALS', array('products/Daily')); ?></li>
-                                                                        <li><?php //echo CHtml::link('FLASH DEALS', array('products/Daily'));                                         ?></li>
+                                                                        <li><?php //echo CHtml::link('FLASH DEALS', array('products/Daily'));                                          ?></li>
                                                                         <li><?php echo CHtml::link('HOT DEALS', array('products/hot')); ?></li>
                                                                         <li><?php echo CHtml::link('SUBMIT A DEAL', array('myaccount/SubmitDeal')); ?></li>
                                                                         <li><?php echo CHtml::link('WHOLESALE DEALS', array('products/wholesale')); ?></li>
@@ -530,32 +558,57 @@
                                 <div class="col-md-3 col-sm-6 col-xs-6 mobs foots">
                                         <h1>dealsonindia</h1>
                                         <ul>
-                                                <li><a href="#">About Us</a></li>
-                                                <li><a href="#">Privacy Policy</a></li>
-                                                <li><a href="#">Terms & Conditions</a></li>
-                                                <li><a href="#">Contact Uss</a></li>
+                                                <li><?php echo CHtml::link('About Us', array('site/aboutus')); ?></li>
+                                                <li><?php echo CHtml::link('Privacy Policy', array('site/privacy')); ?></li>
+                                                <li><?php echo CHtml::link('Terms & Conditions', array('site/terms')); ?></li>
+                                                <li><?php echo CHtml::link('Contact Us', array('site/contactus')); ?></li>
                                         </ul>
                                 </div>
                                 <div class="col-md-4 col-sm-6 col-xs-6 mobs foots">
                                         <h1>Work with dealsonindia</h1>
                                         <ul>
-                                                <li><a href="#">Join the Marketplace</a></li>
-                                                <li><a href="#">Run a Deal</a></li>
-                                                <li><a href="#">Learn About Merchant</a></li>
-                                                <li><a href="#">Affiliate Program</a></li>
+                                                <li><?php echo CHtml::link('Join the Marketplace', array('site/join')); ?></li>
+                                                <li><?php echo CHtml::link('Run a Deal', array('/submit-deals')); ?></li>
+                                                <li><?php echo CHtml::link('Learn about Merchant', array('site/learn')); ?></li>
+                                                <li><?php echo CHtml::link('Affiliate Program', array('site/affiliate')); ?></li>
                                         </ul>
                                 </div>
                                 <div class="col-md-5 foots-two">
                                         <h1>Quick Links</h1>
                                         <ul>
-                                                <li><?php echo CHtml::link('Sign Up', array('site/register')); ?></li>
-                                                <li><a href="#">Delivery Information</a></li>
-                                                <li><?php echo CHtml::link('Login', array('site/login')); ?></li>
-                                                <li><a href="#">Returns</a></li>
-                                                <li><a href="#">My Account</a></li>
-                                                <li><a href="#">Site Map</a></li>
-                                                <li><a href="#">Order History</a></li>
-                                                <li><a href="#">Brands</a></li>
+                                                <li><?php echo CHtml::link('Register', array('site/UserRegister')); ?></li>
+                                                <li><?php
+                                                        if (Yii::app()->session['user_type_usrid'] == 2)
+                                                                echo CHtml::link('Sales Report', array('Myaccount/MySalesReport'));
+                                                        else
+                                                                echo CHtml::link('Wishlist', array('Myaccount/Wishlist'));
+                                                        ?></li>
+                                                <li><?php echo CHtml::link('Login', array('site/Userlogin')); ?></li>
+                                                <li><?php
+                                                        if (Yii::app()->session['user_type_usrid'] == 2)
+                                                                echo CHtml::link('My Products', array('/my-products'));
+                                                        else
+                                                                echo CHtml::link('Submit a Product', array('/Myaccount/SubmitDeal'));
+                                                        ?></li>
+                                                <li><?php
+                                                        if (Yii::app()->session['user_type_usrid'] == 2)
+                                                                echo CHtml::link('My Account', array('Myaccount/index/type/vendor'));
+                                                        else
+                                                                echo CHtml::link('My Account', array('Myaccount/index/type/user'));
+                                                        ?></li>
+                                                <li><?php echo CHtml::link('Site Map', array('site/sitemap')); ?></li>
+                                                <li><?php
+                                                        if (Yii::app()->session['user_type_usrid'] == 2)
+                                                                echo CHtml::link('Order History', array('Myaccount/order-history'));
+                                                        else
+                                                                echo CHtml::link('Order History', array('Myaccount/UserOrderHistory'));
+                                                        ?></li>
+                                                <li><?php
+                                                        if (Yii::app()->session['user_type_usrid'] == 2)
+                                                                echo CHtml::link('Advertisements', array('Myaccount/paidAd'));
+                                                        else
+                                                                echo CHtml::link('Newsletter', array('/Newsletter-Subscription'));
+                                                        ?></li>
                                         </ul>
                                 </div>
                         </div>
@@ -602,8 +655,8 @@
 
         <script>
                                                 var selectIds = $('#panel1,#panel2,#panel3,#panel4,#panel5,#panel6,#panel7,#panel8,#panel9,#panel10,#panel11,#panel12,#panel13,#panel14');
-                                                $(function ($) {
-                                                        selectIds.on('show.bs.collapse hidden.bs.collapse', function () {
+                                                $(function($) {
+                                                        selectIds.on('show.bs.collapse hidden.bs.collapse', function() {
                                                                 $(this).prev().find('.glyphicon').toggleClass('glyphicon-plus glyphicon-minus');
                                                         });
                                                 });
@@ -611,8 +664,8 @@
 
         </script>
         <script>
-                jQuery(document).ready(function () {
-                        jQuery(window).scroll(function () {
+                jQuery(document).ready(function() {
+                        jQuery(window).scroll(function() {
 
                                 var body = jQuery("html, body");
 
@@ -629,8 +682,8 @@
 
         <script type = "text/javascript" language = "javascript">
 
-                $(document).ready(function () {
-                        $(".clickme").hover(function (event) {
+                $(document).ready(function() {
+                        $(".clickme").hover(function(event) {
                                 $(".target").stop().toggle('slow');
                         });
                 });
@@ -639,7 +692,7 @@
 
         <script>
 
-                $('.has-more span').click(function () {
+                $('.has-more span').click(function() {
                         $(this).toggleClass('active');
                         $('.has-sec').slideToggle().addClass('zoomIn animated m1');
 
@@ -659,7 +712,7 @@
                                                 url: baseurl + 'site/PublicNewsletter',
                                                 type: "POST",
                                                 data: {email: email},
-                                                success: function (data)
+                                                success: function(data)
                                                 {
                                                         if (data == 2) {
                                                                 $('.newsletter_msg').html("This Email Already Subscibe the newsletter");

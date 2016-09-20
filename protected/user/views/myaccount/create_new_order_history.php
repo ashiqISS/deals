@@ -46,7 +46,12 @@
                 <div class="col-xs-12">
                         <ul class="breadcrumb">
                                 <li><a href="#"><i class="fa hom fa-home"></i></a></li>
-                                <li><?php echo CHtml::link('Account', array('Myaccount/index')); ?></li>
+                                <li><?php
+                                        if (Yii::app()->session['user_type_usrid'] == 2)
+                                                echo CHtml::link('Account', array('Myaccount/index/type/vendor'));
+                                        else
+                                                echo CHtml::link('Account', array('Myaccount/index/type/user'));
+                                        ?></li>
                                 <li><span class="last"> Order History</span></li>
 
                         </ul>
@@ -72,45 +77,45 @@
 
                                         <h4 class="note"> Create New Order History For <?php echo Products::model()->findByPk($order_product->product_id)->product_name; ?> (#<?php echo $order_product->order_id; ?>)</h4>
 
-                                        <?php echo $form->errorSummary($model); ?>
+<?php echo $form->errorSummary($model); ?>
                                         <br/>
                                         <!--    <div class="form-group">
                                         <?php echo $form->labelEx($model, 'order_id', array('class' => 'col-sm-2 control-label')); ?>
                                                 <div class="col-sm-10"><?php echo $form->textField($model, 'order_id', array('class' => 'form-control')); ?></div>
-                                        <?php echo $form->error($model, 'order_id'); ?>
+<?php echo $form->error($model, 'order_id'); ?>
                                             </div>-->
 
                                         <div class="form-group">
-                                                <?php echo $form->labelEx($model, 'order_status_comment', array('class' => 'col-sm-2 control-label')); ?>
+<?php echo $form->labelEx($model, 'order_status_comment', array('class' => 'col-sm-2 control-label')); ?>
                                                 <div class="col-sm-10"><?php echo $form->textArea($model, 'order_status_comment', array('size' => 60, 'maxlength' => 500, 'class' => 'form-control')); ?>
                                                 </div>
-                                                <?php echo $form->error($model, 'order_status_comment'); ?>
+<?php echo $form->error($model, 'order_status_comment'); ?>
                                         </div>
 
                                         <div class="form-group">
-                                                <?php echo $form->labelEx($model, 'order_status', array('class' => 'col-sm-2 control-label')); ?>
+<?php echo $form->labelEx($model, 'order_status', array('class' => 'col-sm-2 control-label')); ?>
                                                 <div class="col-sm-10"> <?php echo CHtml::activeDropDownList($model, 'order_status', CHtml::listData(OrderStatus::model()->findAll(), 'id', 'title'), array('empty' => '--Select--', 'class' => 'form-control')); ?>
                                                 </div>
-                                                <?php echo $form->error($model, 'order_status'); ?>
+<?php echo $form->error($model, 'order_status'); ?>
                                         </div>
                                         <div id="ship_details">
                                                 <div class="form-group">
-                                                        <?php echo $form->labelEx($model, 'shipping_type', array('class' => 'col-sm-2 control-label')); ?>
+<?php echo $form->labelEx($model, 'shipping_type', array('class' => 'col-sm-2 control-label')); ?>
                                                         <div class="col-sm-10"> <?php echo CHtml::activeDropDownList($model, 'shipping_type', CHtml::listData(MasterShippingTypes::model()->findAll(), 'id', 'shipping_type'), array('empty' => '--Select--', 'class' => 'form-control')); ?>
                                                         </div>
-                                                        <?php echo $form->error($model, 'shipping_type'); ?>
+<?php echo $form->error($model, 'shipping_type'); ?>
                                                 </div>
 
                                                 <div class="form-group">
-                                                        <?php echo $form->labelEx($model, 'tracking_id', array('class' => 'col-sm-2 control-label')); ?>
+<?php echo $form->labelEx($model, 'tracking_id', array('class' => 'col-sm-2 control-label')); ?>
                                                         <div class="col-sm-10"><?php echo $form->textField($model, 'tracking_id', array('size' => 60, 'maxlength' => 225, 'class' => 'form-control')); ?>
                                                         </div>
-                                                        <?php echo $form->error($model, 'tracking_id'); ?>
+<?php echo $form->error($model, 'tracking_id'); ?>
                                                 </div>
                                         </div>
 
                                         <div class="form-group">
-                                                <?php echo $form->labelEx($model, 'date', array('class' => 'col-sm-2 control-label')); ?>
+                                                        <?php echo $form->labelEx($model, 'date', array('class' => 'col-sm-2 control-label')); ?>
                                                 <div class="col-sm-10">
                                                         <?php
                                                         $from = date('Y') - 80;
@@ -158,42 +163,42 @@
                                                         ));
                                                         ?>
                                                 </div>
-                                                <?php echo $form->error($model, 'date'); ?>
+<?php echo $form->error($model, 'date'); ?>
                                         </div>
 
                                         <div class="form-group">
-                                                <?php echo $form->labelEx($model, 'status', array('class' => 'col-sm-2 control-label')); ?>
+<?php echo $form->labelEx($model, 'status', array('class' => 'col-sm-2 control-label')); ?>
                                                 <div class="col-sm-10"><?php echo $form->dropDownList($model, 'status', array('1' => "Enabled", '0' => "Disabled"), array('class' => 'form-control')); ?>
                                                 </div>
-                                                <?php echo $form->error($model, 'status'); ?>
+<?php echo $form->error($model, 'status'); ?>
                                         </div>
 
                                         <!--    <div class="form-group">
                                         <?php echo $form->labelEx($model, 'cb'); ?>
                                         <?php echo $form->textField($model, 'cb', array('class' => 'form-control')); ?>
-                                        <?php echo $form->error($model, 'cb'); ?>
+<?php echo $form->error($model, 'cb'); ?>
                                             </div>
 
                                             <div class="form-group">
                                         <?php echo $form->labelEx($model, 'ub'); ?>
                                         <?php echo $form->textField($model, 'ub', array('class' => 'form-control')); ?>
-                                        <?php echo $form->error($model, 'ub'); ?>
+<?php echo $form->error($model, 'ub'); ?>
                                             </div>-->
 
                                         <div class="box-footer pull-right">
-                                                <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save', array('class' => 'btn request-btn')); ?>
+<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save', array('class' => 'btn request-btn')); ?>
                                         </div>
                                         <br />
                                         <br />
                                         <br />
-                                        <?php $this->endWidget(); ?>
+<?php $this->endWidget(); ?>
 
                                 </div><!-- form -->
 
                                 <script>
-                                        $(document).ready(function () {
+                                        $(document).ready(function() {
                                                 $("#ship_details").hide();
-                                                $('#OrderHistory_order_status').change(function () {
+                                                $('#OrderHistory_order_status').change(function() {
                                                         var element = $("#OrderHistory_order_status option:selected");
                                                         var value = element.val();
                                                         if (value == 3) {

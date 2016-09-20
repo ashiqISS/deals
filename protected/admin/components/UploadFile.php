@@ -227,6 +227,35 @@ class UploadFile extends CApplicationComponent {
                 }
         }
 
+        public function uploadGallery($uploadfile, $id, $dimensions = array(), $folder) {
+
+
+
+                if (isset($uploadfile)) {
+                        if (Yii::app()->basePath . '/../uploads/' . $folder) {
+                                chmod(Yii::app()->basePath . '/../uploads/' . $folder, 0777);
+
+                                if (!is_dir(Yii::app()->basePath . '/../uploads/' . $folder . '/' . $id))
+                                        mkdir(Yii::app()->basePath . '/../uploads/' . $folder . '/' . $id);
+                                chmod(Yii::app()->basePath . '/../uploads/' . $folder . '/' . $id . '/', 0777);
+
+
+                                if ($uploadfile->saveAs(Yii::app()->basePath . '/../uploads/' . $folder . '/' . $id . '/' . $id . '.' . $uploadfile->extensionName)) {
+                                        chmod(Yii::app()->basePath . '/../uploads/' . $folder . '/' . $id . '/' . $id . '.' . $uploadfile->extensionName, 0777);
+                                        //$this->WaterMark(Yii::app()->basePath . '/../uploads/products/' . $folder . '/' . $id . '/' . $id . '.' . $uploadfile->extensionName, '/../images/watermark.png');
+
+                                        $file = Yii::app()->basePath . '/../uploads/' . $folder . '/' . $id . '/' . $id . '.' . $uploadfile->extensionName;
+                                        $path = Yii::app()->basePath . '/../uploads/' . $folder . '/' . $id;
+                                        if (!empty($dimensions)) {
+                                                foreach ($dimensions as $dimension) {
+                                                        $this->Resize($file, $dimension['width'], $dimension['height'], $dimension['name'], $path, $uploadfile->extensionName);
+                                                }
+                                        }
+                                }
+                        }
+                }
+        }
+
         public function WaterMark($orginal, $watermark) {
 
                 $orginal1 = imagecreatefromjpeg($orginal);

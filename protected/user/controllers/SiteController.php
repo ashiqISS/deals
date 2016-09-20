@@ -47,6 +47,105 @@ class SiteController extends Controller {
                 }
         }
 
+        public function actionAboutus() {
+
+                $model = Pages::model()->findByPk(1);
+                $team = Team::model()->findAll();
+                $this->render('aboutus', array('model' => $model, 'team' => $team));
+        }
+
+        public function actionPrivacy() {
+
+                $model = Pages::model()->findByPk(2);
+                $this->render('privacy', array('model' => $model));
+        }
+
+        public function actionTerms() {
+
+                $model = Pages::model()->findByPk(3);
+                $this->render('terms', array('model' => $model));
+        }
+
+        public function actionJoin() {
+
+                $model = Pages::model()->findByPk(5);
+                $this->render('join', array('model' => $model));
+        }
+
+        public function actionLearn() {
+
+                $model = Pages::model()->findByPk(6);
+                $this->render('learn', array('model' => $model));
+        }
+
+        public function actionAffiliate() {
+
+                $model = Pages::model()->findByPk(7);
+                $this->render('affiliate', array('model' => $model));
+        }
+
+        public function actionSitemap() {
+
+                $model = Pages::model()->findByPk(8);
+                $this->render('sitemap', array('model' => $model));
+        }
+
+        public function actionCurrencyChange($id) {
+
+                $data = Currency::model()->findByPk($id);
+
+                Yii::app()->session['currency'] = $data;
+                $this->redirect(Yii::app()->request->urlReferrer);
+        }
+
+        public function actionContactus() {
+
+                $pages = Pages::model()->findByPk(4);
+                $model = new ContactUs;
+                if (isset($_POST['ContactUs'])) {
+
+                        $model->attributes = $_POST['ContactUs'];
+                        $model->name = $_POST['ContactUs']['name'];
+                        $model->email = $_POST['ContactUs']['email'];
+                        $model->phone = $_POST['ContactUs']['phone'];
+                        $model->comment = $_POST['ContactUs']['comment'];
+                        $model->date = date("Y-m-d");
+
+                        if ($model->validate()) {
+                                if ($model->save()) {
+                                        $this->contactmail($model);
+                                        Yii::app()->user->setFlash('success', " Your email sent successfully");
+                                } else {
+                                        Yii::app()->user->setFlash('error', "Error Occured");
+                                }
+
+                                $this->redirect(array('site/contactUs'));
+                        }
+                }
+                $this->render('contactus', array('model' => $model, 'pages' => $pages));
+        }
+
+        public function contactmail($model) {
+
+                Yii::import('user.extensions.yii-mail.YiiMail');
+                $message = new YiiMailMessage;
+                $message->view = "_admin_contact_email";
+                $params = array('model' => $model);
+                $message->subject = 'New Enquiry';
+                $message->setBody($params, 'text/html');
+                // $message->addTo($model->email);
+                $message->addTo("dhanyasasidhar@gmail.com");
+                $message->from = 'dealsonindia@intersmart.in';
+
+                if (Yii::app()->mail->send($message)) {
+//            echo 'message send';
+//            exit;
+                } else {
+                        echo 'message not send';
+                        exit;
+                }
+        }
+
         public function actionLocationTagAdd() {
 
                 if (Yii::app()->request->isAjaxRequest) {
@@ -118,12 +217,12 @@ class SiteController extends Controller {
                                                 CouponHistory::model()->updateAll(array("user_id" => $user->id), 'session_id=' . Yii::app()->session['temp_user']);
                                                 Order::model()->updateAll(array("user_id" => $user->id), 'session_id=' . Yii::app()->session['temp_user']);
                                                 Yii::app()->user->setFlash('emailverify', null);
-                                                $this->redirect(array('Myaccount/index'));
+                                                $this->redirect(array('Myaccount/index/type/user'));
                                         }
                                 } else {
                                         Yii::app()->user->setFlash('login_error', "dealsonindia email or password invalid.Try again");
                                 }
-                                $this->redirect(array('Myaccount/index'));
+                                $this->redirect(array('Myaccount/index/type/user'));
                         }
                 }
                 $this->render('userlogin', array('model' => $model));
@@ -151,12 +250,12 @@ class SiteController extends Controller {
                                                         CouponHistory::model()->updateAll(array("user_id" => $user->id), 'session_id=' . Yii::app()->session['temp_user']);
                                                         Order::model()->updateAll(array("user_id" => $user->id), 'session_id=' . Yii::app()->session['temp_user']);
                                                 }
-                                                $this->redirect(array('Myaccount/index'));
+                                                $this->redirect(array('Myaccount/index/type/vendor'));
                                         }
                                 } else {
                                         Yii::app()->user->setFlash('login_error', "dealsonindia email or password invalid.Try again");
                                 }
-                                $this->redirect(array('Myaccount/index'));
+                                $this->redirect(array('Myaccount/index/type/vendor'));
                         }
                 }
                 $this->render('vendorlogin', array('vendor' => $vendor));

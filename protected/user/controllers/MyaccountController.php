@@ -6,9 +6,12 @@ class MyaccountController extends Controller {
                 date_default_timezone_set('Asia/Kolkata');
         }
 
-        public function actionIndex() {
+        public function actionIndex($type) {
                 if (!isset(Yii::app()->session['user']) && !isset(Yii::app()->session['merchant'])) {
-                        $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/login');
+                        if ($type == 'vendor')
+                                $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/Vendorlogin');
+                        else
+                                $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/Userlogin');
                 } else {
                         if (Yii::app()->session['user']) {
                                 $sale = array();
@@ -250,7 +253,10 @@ class MyaccountController extends Controller {
                         if ($model->validate()) {
                                 if ($model->save()) {
                                         Yii::app()->user->setFlash('success', "Deal submission completed");
-                                        $this->redirect(array('myaccount/index'));
+                                        if (Yii::app()->session['user_type_usrid'] == 2)
+                                                $this->redirect(array('myaccount/index/type/vendor'));
+                                        else
+                                                $this->redirect(array('myaccount/index/type/user'));
                                 }
                         }
                 }
@@ -420,10 +426,16 @@ class MyaccountController extends Controller {
                                 $model->doc = date('Y-m-d H:i:s');
                                 if ($model->save()) {
                                         Yii::app()->user->setFlash('plan_success', "Your Plan Successfully Created");
-                                        $this->redirect(array('myaccount/index'));
+                                        if (Yii::app()->session['user_type_usrid'] == 2)
+                                                $this->redirect(array('myaccount/index/type/vendor'));
+                                        else
+                                                $this->redirect(array('myaccount/index/type/user'));
                                 } else {
                                         Yii::app()->user->setFlash('plan_error', "Error Occured");
-                                        $this->redirect(array('myaccount/index'));
+                                        if (Yii::app()->session['user_type_usrid'] == 2)
+                                                $this->redirect(array('myaccount/index/type/vendor'));
+                                        else
+                                                $this->redirect(array('myaccount/index/type/user'));
                                 }
                         }
                 }

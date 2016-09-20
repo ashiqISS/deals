@@ -28,7 +28,12 @@
                 $active12 = 'active';
         }
         ?>
-        <li class="<?= $active1; ?>"><?php echo CHtml::link('Dashboard', array('Myaccount/index')); ?></li>
+        <li class="<?= $active1; ?>"><?php
+                if (Yii::app()->session['user_type_usrid'] == 2)
+                        echo CHtml::link('Dashboard', array('Myaccount/index/type/vendor'));
+                else
+                        echo CHtml::link('Dashboard', array('Myaccount/index/type/user'));
+                ?></li>
         <?php if (Yii::app()->session['merchant']) { ?>
                 <li class="<?= $active12; ?>"><?php echo CHtml::link('Messages', array('myaccount/message')); ?></li>
 
@@ -42,7 +47,7 @@
         <?php } ?>
         <li class="<?= $active2; ?>"><?php echo CHtml::link('Reset Password', array('Myaccount/ResetPassword')); ?></li>
         <?php if (Yii::app()->session['merchant']) { ?>
-                                                                                           <!--<li class="<?//= $active5; ?>"><?php //echo CHtml::link('Add Products', array('Products/AddProducts'));                                                ?></li>-->
+                                                                                                   <!--<li class="<?//= $active5; ?>"><?php //echo CHtml::link('Add Products', array('Products/AddProducts'));                                                 ?></li>-->
                 <li class="<?= $active6; ?>"><?php echo CHtml::link('Products', array('Products/MyProducts')); ?></li>
 
         <?php } ?>
