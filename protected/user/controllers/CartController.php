@@ -32,6 +32,7 @@ class CartController extends Controller {
                                 $condition = "user_id = " . $user_id . " AND session_id = " . Yii::app()->session['temp_user'];
                         }
                 } else {
+
                         $user_id = Yii::app()->session['temp_user'];
                         $condition = "session_id = " . $user_id;
                 }
@@ -52,17 +53,17 @@ class CartController extends Controller {
                                         $new_coupen_value->session_id = $user_id;
                                 }
                                 if ($new_coupen_value->save()) {
-                                        Yii::app()->user->setFlash('success', "Successfully Added Your Coupen Code");
+                                        Yii::app()->user->setFlash('successcoupon', "Successfully Added Your Coupen Code");
                                         $this->redirect(array('cart/MyCart'));
                                 }
                         } else {
-                                Yii::app()->user->setFlash('error', "The Entered Coupen You Already Used");
+                                Yii::app()->user->setFlash('errorcoupon', "The Entered Coupen You Already Used");
                                 $this->redirect(array('cart/MyCart'));
                         }
                 } else {
 
 
-                        Yii::app()->user->setFlash('error', "The Entered Coupen Is Invalid");
+                        Yii::app()->user->setFlash('errorcoupon', "The Entered Coupen Is Invalid");
                         $this->redirect(array('cart/MyCart'));
                 }
         }

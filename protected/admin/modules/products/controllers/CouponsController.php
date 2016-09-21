@@ -67,7 +67,8 @@ class CouponsController extends Controller {
                         $model->attributes = $_POST['Coupons'];
                         $model->starting_date = date('Y-m-d', strtotime($_POST['Coupons']['starting_date']));
                         $model->expiry_date = date('Y-m-d', strtotime($_POST['Coupons']['expiry_date']));
-                        $model->product_id = implode(',', $_POST['Coupons']['product_id']);
+                        if ($_POST['Coupons']['product_id'])
+                                $model->product_id = implode(',', $_POST['Coupons']['product_id']);
                         if ($model->save()) {
                                 $this->redirect(array('admin'));
                         }
@@ -93,7 +94,8 @@ class CouponsController extends Controller {
                         $model->attributes = $_POST['Coupons'];
                         $model->starting_date = date('Y-m-d', strtotime($_POST['Coupons']['starting_date']));
                         $model->expiry_date = date('Y-m-d', strtotime($_POST['Coupons']['expiry_date']));
-                        $model->product_id = implode(',', $_POST['Coupons']['product_id']);
+                        if ($_POST['Coupons']['product_id'])
+                                $model->product_id = implode(',', $_POST['Coupons']['product_id']);
 
                         if ($model->save()) {
 
