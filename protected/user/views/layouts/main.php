@@ -472,7 +472,7 @@
                                                                 <ul class="nav navbar-nav">
                                                                         <li><?php echo CHtml::link('COUPONS', array('products/coupons')); ?></li>
                                                                         <li><?php echo CHtml::link('DAILY DEALS', array('products/Daily')); ?></li>
-                                                                        <li><?php //echo CHtml::link('FLASH DEALS', array('products/Daily'));                                          ?></li>
+                                                                        <li><?php //echo CHtml::link('FLASH DEALS', array('products/Daily'));                                           ?></li>
                                                                         <li><?php echo CHtml::link('HOT DEALS', array('products/hot')); ?></li>
                                                                         <li><?php echo CHtml::link('SUBMIT A DEAL', array('myaccount/SubmitDeal')); ?></li>
                                                                         <li><?php echo CHtml::link('WHOLESALE DEALS', array('products/wholesale')); ?></li>
@@ -676,6 +676,26 @@
                                 } else {
                                         jQuery('#static_cnt').addClass('dropup').addClass('fadeInDown animated m2');
                                 }
+                        });
+                        "use strict";
+                        //Top Drop Down
+                        //-----------------------------
+                        $('.has_dropdown').hover(function() {
+                                $(this).find('.laksyah_dropdown').fadeIn(500);
+                        }, function() {
+                                $(this).find('.laksyah_dropdown').fadeOut(10);
+                                $(this).find('.laksyah_dropdown').removeClass('active');
+                        }
+
+                        );
+
+
+                        $('.currency_drop a').click(function() {
+                                //e.preventDefault();
+                                $('.currency_drop li').removeClass('active');
+                                $(this).parent('li').addClass('active');
+                                var selectedCurrency = $(this).html();
+                                $('.active_currency').html(selectedCurrency + ' <i class="fa fa-angle-down"></i>');
                         });
                 });
         </script>

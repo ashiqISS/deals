@@ -322,7 +322,7 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
                                                                         <?php
                                                                 } else {
                                                                         ?>
-                                                                        <li><a class="cart1 " href="<?php echo Yii::app()->request->baseUrl; ?>/index.php/site/login"  id="<?= $products->id; ?>">Login to Bidding</a></li>
+                                                                        <li><a class="cart1 " href="<?php echo Yii::app()->request->baseUrl; ?>/index.php/site/Userlogin"  id="<?= $products->id; ?>">Login to Bidding</a></li>
                                                                 <?php } ?>
 
                                                         <?php } else { ?>
@@ -532,15 +532,15 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
 
 
 <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
                 $("#review_star").val(0);
-                $(".str").click(function () {
+                $(".str").click(function() {
                         var values = $(this).val();
                         $("#review_star").val(values);
                 });
         });
-        $(document).ready(function () {
-                $(".review_submit").click(function () {
+        $(document).ready(function() {
+                $(".review_submit").click(function() {
                         var name = $("#review_name").val();
                         if (name == "") {
                                 alert('Name Must be filled out');
@@ -564,7 +564,7 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
                                 async: false,
                                 url: baseurl + 'Products/Addreview',
                                 data: {name: name, email: email, comment: comment, star: star, review_product_id: review_product_id}
-                        }).done(function (data) {
+                        }).done(function(data) {
                                 $("#reviewform")[0].reset();
                                 if (data == 2) {
                                         $(".review_message").html("<h5 style='color:green;'>Your Review Successfully Sent</h4>");
@@ -672,7 +672,7 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
 </div>
 <div id="fb-root"></div>
 <script>
-        window.fbAsyncInit = function () {
+        window.fbAsyncInit = function() {
                 FB.init({
                         appId: '166556653788041',
                         xfbml: true,
@@ -680,7 +680,7 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
                 });
         };
 
-        (function (d, s, id) {
+        (function(d, s, id) {
                 var js, fjs = d.getElementsByTagName(s)[0];
                 if (d.getElementById(id)) {
                         return;
@@ -708,7 +708,7 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
 
 
 <script>
-        document.getElementById('shareBtn').onclick = function () {
+        document.getElementById('shareBtn').onclick = function() {
                 FB.ui({
                         method: 'share',
                         display: 'popup',
@@ -717,12 +717,12 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
                         //                action_properties: JSON.stringify({
                         //                    object: 'https://developers.facebook.com/docs/',
                         //                })
-                }, function (response) {
+                }, function(response) {
                         $.ajax({
                                 type: "POST",
                                 data: {'product':<?php echo $products->id ?>, 'social': '1'},
                                 url: baseurl + 'Products/share',
-                                success: function (data) {
+                                success: function(data) {
                                         if (data == "Failed") {
                                                 $('#success_social_fail').modal('show');
                                         } else {
@@ -735,7 +735,7 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
 </script>
 <script>
 
-        $(document).ready(function () {
+        $(document).ready(function() {
 
                 $('.gallery').slick({
                         slidesToShow: 1,
@@ -774,7 +774,7 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
 
 </script>
 <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
                 $('.moreproducts').slick({
                         slidesToShow: 4,
                         autoplay: true,
@@ -819,7 +819,7 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
         $("#laksyah_zoom").elevateZoom({gallery: 'gal1', cursor: 'pointer', galleryActiveClass: 'active', imageCrossfade: true, loadingIcon: true, responsive: true});
 
         //pass the images to Fancybox
-        $("#laksyah_zoom").bind("click", function (e) {
+        $("#laksyah_zoom").bind("click", function(e) {
                 var ez = $('#laksyah_zoom').data('elevateZoom');
                 $.fancybox(ez.getGalleryList());
                 return false;
@@ -831,7 +831,7 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
 
 <script>
 
-        $(".add_to_bid").click(function () {
+        $(".add_to_bid").click(function() {
 
                 var id = $(this).attr('id');
                 var bid_amount = $("#bid_value").val();
@@ -844,7 +844,7 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
                         type: "POST",
                         url: baseurl + 'Products/AddToBidd',
                         data: {id: id, bid_amount: bid_amount}
-                }).done(function (data) {
+                }).done(function(data) {
                         if (data == 3) {
 
                                 alert('Somthing Error on your submission.Please Try Again');
@@ -859,7 +859,7 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
                         hideLoader();
                 });
         });
-        $(".proceed_to_checkout").click(function () {
+        $(".proceed_to_checkout").click(function() {
 
                 var id = $(this).attr('id');
                 var canname = $("#cano_name_" + id).val();
@@ -869,7 +869,7 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
                 var master_option = 0;
                 proceedcheckout(canname, qty, option_color = null, option_size = null, master_option = null);
         });
-        $(".add_to_cart").click(function () {
+        $(".add_to_cart").click(function() {
 
                 var id = $(this).attr('id');
                 var canname = $("#cano_name_" + id).val();
@@ -894,7 +894,7 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
                         type: "POST",
                         url: baseurl + 'cart/Buynow',
                         data: {cano_name: canname, qty: qty, option_color: option_color, option_size: option_size, master_option: master_option}
-                }).done(function (data) {
+                }).done(function(data) {
                         if (data == 9) {
 
                                 $('.option_errors').html('<p>Invalid Product.Please try again</p>').show();
@@ -921,7 +921,7 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
                         type: "POST",
                         url: baseurl + 'cart/BuyBargain',
                         data: {cano_name: canname, qty: qty, option_color: option_color, option_size: option_size, master_option: master_option}
-                }).done(function (data) {
+                }).done(function(data) {
 
                         if (data == 10) {
                                 $('.option_errors').html('This Product Not Available');

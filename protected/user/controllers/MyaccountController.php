@@ -31,7 +31,7 @@ class MyaccountController extends Controller {
 
         public function actionResetPassword() {
                 if (!isset(Yii::app()->session['user']) && !isset(Yii::app()->session['merchant'])) {
-                        $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/login');
+                        $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/Userlogin');
                 } else {
                         if (Yii::app()->session['user']) {
                                 $model = BuyerDetails::model()->findByPk(Yii::app()->session['user']['id']);
@@ -72,20 +72,20 @@ class MyaccountController extends Controller {
 
         public function actionAddressBook() {
                 if (!isset(Yii::app()->session['user']) && !isset(Yii::app()->session['merchant'])) {
-                        $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/login');
+                        $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/Userlogin');
                 } else {
                         if (Yii::app()->session['user']['id'] != '') {
                                 $model = AddressBook::model()->findAllByAttributes(array('user_id' => Yii::app()->session['user']['id']));
                                 $this->render('addressbook', array('model' => $model));
                         } else {
-                                $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/login');
+                                $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/Userlogin');
                         }
                 }
         }
 
         public function actionNewAddressBook() {
                 if (!isset(Yii::app()->session['user']) && !isset(Yii::app()->session['merchant'])) {
-                        $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/login');
+                        $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/Userlogin');
                 } else {
                         $model = new AddressBook;
                         if (isset($_POST['AddressBook'])) {
@@ -112,7 +112,7 @@ class MyaccountController extends Controller {
 
         public function checkDefault($model, $default) {
                 if (!isset(Yii::app()->session['user']) && !isset(Yii::app()->session['merchant'])) {
-                        $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/login');
+                        $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/Userlogin');
                 } else {
                         $default_address = AddressBook::model()->findAllByAttributes(array('user_id' => Yii::app()->session['user']['id'], $default => 1));
                         if (empty($default_address)) {
@@ -129,7 +129,7 @@ class MyaccountController extends Controller {
 
         public function actionEditAddressBook($id) {
                 if (!isset(Yii::app()->session['user']) && !isset(Yii::app()->session['merchant'])) {
-                        $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/login');
+                        $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/Userlogin');
                 } else {
 
                         $model = AddressBook::model()->findByPk($id);
@@ -161,7 +161,7 @@ class MyaccountController extends Controller {
 
         public function actionUserSettings() {
                 if (!isset(Yii::app()->session['user']) && !isset(Yii::app()->session['merchant'])) {
-                        $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/login');
+                        $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/Userlogin');
                 } else {
                         if (Yii::app()->session['user']) {
                                 $user_id = Yii::app()->session['user']['id'];
@@ -191,7 +191,7 @@ class MyaccountController extends Controller {
 
         public function actionVendorSettings() {
                 if (!isset(Yii::app()->session['user']) && !isset(Yii::app()->session['merchant'])) {
-                        $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/login');
+                        $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/Userlogin');
                 } else {
                         if (Yii::app()->session['merchant']) {
                                 $user_id = Yii::app()->session['merchant']['id'];
@@ -265,7 +265,7 @@ class MyaccountController extends Controller {
 
         public function actionNewsletter() {
                 if (!isset(Yii::app()->session['user']) && !isset(Yii::app()->session['merchant'])) {
-                        $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/login');
+                        $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/Userlogin');
                 } else {
                         if (Yii::app()->session['user']) {
                                 $model = BuyerDetails::model()->findByPk(Yii::app()->session['user']['id']);
@@ -372,7 +372,7 @@ class MyaccountController extends Controller {
 
         public function actionUserOrderHistory() {
                 if (!isset(Yii::app()->session['user']) && !isset(Yii::app()->session['merchant'])) {
-                        $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/login');
+                        $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/Userlogin');
                 } else {
                         if (Yii::app()->session['user']) {
                                 $model = Order::model()->findAllByAttributes(array('user_id' => Yii::app()->session['user']['id']));
@@ -383,7 +383,7 @@ class MyaccountController extends Controller {
 
         public function actionVendorOrderHistory() {
                 if (!isset(Yii::app()->session['user']) && !isset(Yii::app()->session['merchant'])) {
-                        $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/login');
+                        $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/Userlogin');
                 } else {
                         if (Yii::app()->session['merchant']) {
                                 $model = OrderProducts::model()->findAllByAttributes(array('merchant_id' => Yii::app()->session['merchant']['id']), array('order' => 'id DESC'));
@@ -394,7 +394,7 @@ class MyaccountController extends Controller {
 
         public function actionMySalesReport() {
                 if (!isset(Yii::app()->session['user']) && !isset(Yii::app()->session['merchant'])) {
-                        $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/login');
+                        $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/Userlogin');
                 } else {
                         if (Yii::app()->session['merchant']) {
                                 $model = OrderProducts::model()->findAllByAttributes(array('merchant_id' => Yii::app()->session['merchant']['id']));

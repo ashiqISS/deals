@@ -2,7 +2,7 @@
 
 return array(
     '' => 'site/index',
-    'login' => 'site/login',
+    'login' => 'site/Userlogin',
     'sign-up' => 'site/UserRegister',
     'coupons' => 'products/coupons',
     'submit-deals' => 'myaccount/SubmitDeal',

@@ -176,9 +176,9 @@ class ForgotPasswordController extends Controller {
                                 if ($pass1->save(false)) {
                                         Yii::app()->user->setFlash('success', "Your password changed successfully. Please login");
                                         if ($user_type == 1) {
-                                                $this->redirect(array('site/UserLogin'));
+                                                $this->redirect(array('site/Userlogin'));
                                         } else {
-                                                $this->redirect(array('site/VendorLogin'));
+                                                $this->redirect(array('site/Vendorlogin'));
                                         }
                                 } else {
                                         Yii::app()->user->setFlash('error', "Inavlid user,..");

@@ -517,7 +517,7 @@ class ProductsController extends Controller {
 
         public function actionMyProducts() {
                 if (Yii::app()->session['user'] == "" && Yii::app()->session['merchant'] == "") {
-                        $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/login');
+                        $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/Userlogin');
                 } else {
                         $model = Products::model()->findAllByAttributes(array('merchant_id' => Yii::app()->session['merchant']['id']), array('order' => 'DOC DESC'));
 //                        var_dump($model);
