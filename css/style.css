@@ -9,67 +9,67 @@ body{
 
 input:focus, select:focus, textarea:focus, button:focus { outline: none; }
 .has_dropdown {
-    position: relative;
-    cursor: pointer;
+        position: relative;
+        cursor: pointer;
 }
 .has_dropdown .currency_drop {
-    background-color: #737179;
-    top: 100%;
-    box-shadow: none;
-    border: none;
-    padding: 0px;
-    padding-top: 12px;
-    right: 4px;
-    min-width: 70px;
+        background-color: #737179;
+        top: 100%;
+        box-shadow: none;
+        border: none;
+        padding: 0px;
+        padding-top: 12px;
+        right: 4px;
+        min-width: 70px;
 }
 .has_dropdown .drop_menu {
-    font-size: 13px;
-    line-height: 20px;
-    margin: 0px;
-    padding: 0px;
-    list-style: none;
-    display: block;
+        font-size: 13px;
+        line-height: 20px;
+        margin: 0px;
+        padding: 0px;
+        list-style: none;
+        display: block;
 }
 .has_dropdown .currency_drop ul li {
-    color: #fff;
-    border-bottom: 0px;
-    padding: 4px 8px;
-    margin: 0px;
-    line-height: 20px;
+        color: #fff;
+        border-bottom: 0px;
+        padding: 4px 8px;
+        margin: 0px;
+        line-height: 20px;
 }
 .has_dropdown .drop_menu li a {
-    color: #414042;
+        color: #414042;
 }
 .laksyah_dropdown {
-    position: absolute;
-    min-width: 150px;
-    padding: 2px 10px;
-    border: solid 2px #737179;
-    top: 94%;
-    box-shadow: 0px 0px 5px rgba(0,0,0,0.54);
-    display: none;
-    background: #fff;
-    z-index: 3000;
+        position: absolute;
+        min-width: 150px;
+        padding: 2px 10px;
+        border: solid 2px #737179;
+        top: 94%;
+        box-shadow: 0px 0px 5px rgba(0,0,0,0.54);
+        display: none;
+        background: #fff;
+        z-index: 3000;
 }
 .top-bar ul li {
-    display: inline-block;
-    margin-right: 25px;
-    font-size: 11px;
-    text-transform: uppercase;
+        display: inline-block;
+        margin-right: 25px;
+        font-size: 11px;
+        text-transform: uppercase;
 }
 
 ul.list-unstyled.abt li {
-    font-size: 11px;
-    color: #000 !important;
+        font-size: 11px;
+        color: #000 !important;
 }
 ul.list-unstyled.abt li a{
-    color: #000 !important;
+        color: #000 !important;
 }
 .top-bar div {
-    display: inline-block;
-    margin-right: 25px;
-    font-size: 11px;
-    text-transform: uppercase;
+        display: inline-block;
+        margin-right: 25px;
+        font-size: 11px;
+        text-transform: uppercase;
 }
 a{
         text-decoration: none;

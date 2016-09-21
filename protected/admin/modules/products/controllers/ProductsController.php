@@ -437,7 +437,9 @@ class ProductsController extends Controller {
                                                 $desc = $_POST['ProductFeatures']['feature_disc'];
                                                 $heading = $_POST['ProductFeatures']['feature_heading'];
                                                 $exfeature = ProductFeatures::model()->findByAttributes(array('product_id' => $model->id));
-                                                $exfeature->deleteAll();
+                                                if (!empty($exfeature)) {
+                                                        $exfeature->deleteAll();
+                                                }
                                                 for ($i = 0; $i < count($desc); $i++) {
                                                         $features = new ProductFeatures;
                                                         $features->feature_disc = $desc[$i];
