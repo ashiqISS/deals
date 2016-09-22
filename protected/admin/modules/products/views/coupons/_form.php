@@ -33,15 +33,15 @@
                     </div>
                 </div>-->
 
-        <!--                <div class="form-group">
-                    <div class="col-sm-2 control-label">
-        <?php echo $form->labelEx($model, 'cash_limit'); ?>
-                    </div>
-                    <div class="col-sm-10">
-        <?php echo $form->textField($model, 'cash_limit', array('class' => 'form-control')); ?>
-        <?php echo $form->error($model, 'cash_limit'); ?>
-                    </div>
-                </div>-->
+        <div class="form-group">
+                <div class="col-sm-2 control-label">
+                        <?php echo $form->labelEx($model, 'cash_limit'); ?>
+                </div>
+                <div class="col-sm-10">
+                        <?php echo $form->textField($model, 'cash_limit', array('class' => 'form-control')); ?>
+                        <?php echo $form->error($model, 'cash_limit'); ?>
+                </div>
+        </div>
         <!--
                         <div class="form-group">
                     <div class="col-sm-2 control-label">

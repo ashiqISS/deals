@@ -13,9 +13,36 @@ class CartController extends Controller {
         public function actionUpdateCart() {
                 $car_quantity = $_POST['car_quantity'];
                 $cart_id = $_POST['cart_id'];
+                if (Yii::app()->session['user'] != '' && Yii::app()->session['user'] != NULL) {
+
+                        $user_id = Yii::app()->session['user']['id'];
+                        if (isset(Yii::app()->session['temp_user'])) {
+                                $condition = "user_id = " . $user_id . " AND session_id = " . Yii::app()->session['temp_user'];
+                        } else {
+                                Yii::app()->session['temp_user'] = microtime(true);
+                                $condition = "user_id = " . $user_id . " AND session_id = " . Yii::app()->session['temp_user'];
+                        }
+                } else {
+
+                        $user_id = Yii::app()->session['temp_user'];
+                        $condition = "session_id = " . $user_id;
+                }
+                $cou_used = CouponHistory::model()->find(array('condition' => $condition));
+
                 $model = Cart::model()->findByPk($cart_id);
                 $model->quantity = $car_quantity;
                 if ($model->save()) {
+                        $total_amount = $this->subtotalamount();
+                        $coupon_validation = Coupons::model()->findByPk($cou_used->coupon_id);
+                        if ($coupon_validation->cash_limit != 0) {
+                                if ($total_amount <= $coupon_validation->cash_limit) {
+                                        $cou_used->deleteAll();
+                                }
+                        } else {
+                                if ($total_amount < $coupon_validation->discount) {
+                                        $cou_used->deleteAll();
+                                }
+                        }
                         $this->redirect(array('cart/MyCart'));
                 }
         }
@@ -36,34 +63,68 @@ class CartController extends Controller {
                         $user_id = Yii::app()->session['temp_user'];
                         $condition = "session_id = " . $user_id;
                 }
+                $cou_used = CouponHistory::model()->find(array('condition' => $condition));
+                if (empty($cou_used)) {
+                        $coupon_validation = Coupons::model()->find(array('condition' => "code = '" . $coupon_code . "'"));
+                        if (!empty($coupon_validation)) {
 
-                $coupon_validation = Coupons::model()->find(array('condition' => "code = '" . $coupon_code . "'"));
-                if (!empty($coupon_validation)) {
+                                $is_coupon_exist = CouponHistory::model()->findByAttributes(array('coupon_id' => $coupon_validation->id), array('condition' => $condition));
 
-                        $is_coupon_exist = CouponHistory::model()->findByAttributes(array('coupon_id' => $coupon_validation->id), array('condition' => $condition));
+                                if (empty($is_coupon_exist)) {
 
-                        if (empty($is_coupon_exist)) {
-                                $new_coupen_value = new CouponHistory;
-                                $new_coupen_value->coupon_id = $coupon_validation->id;
-                                $new_coupen_value->total_amount = $coupon_validation->discount;
-                                $new_coupen_value->status = 1;
-                                if (Yii::app()->session['user'] != '' && Yii::app()->session['user'] != NULL) {
-                                        $new_coupen_value->user_id = $user_id;
+                                        $total_amount = $this->subtotalamount();
+                                        if ($coupon_validation->cash_limit != 0) {
+                                                if ($total_amount > $coupon_validation->cash_limit) {
+                                                        $new_coupen_value = new CouponHistory;
+                                                        $new_coupen_value->coupon_id = $coupon_validation->id;
+                                                        $new_coupen_value->total_amount = $coupon_validation->discount;
+                                                        $new_coupen_value->status = 1;
+                                                        if (Yii::app()->session['user'] != '' && Yii::app()->session['user'] != NULL) {
+                                                                $new_coupen_value->user_id = $user_id;
+                                                        } else {
+                                                                $new_coupen_value->session_id = $user_id;
+                                                        }
+                                                        if ($new_coupen_value->save()) {
+                                                                Yii::app()->user->setFlash('successcoupon', "Successfully Added Your Coupen Code");
+                                                                $this->redirect(array('cart/MyCart'));
+                                                        }
+                                                } else {
+                                                        Yii::app()->user->setFlash('errorcoupon', "Your Coupon Code Cannot be applied . Because Your Sub Total  is shoulbe grater than  " . Yii::app()->Currency->convert($coupon_validation->cash_limit));
+                                                        $this->redirect(array('cart/MyCart'));
+                                                }
+                                        } else {
+                                                if ($total_amount > $coupon_validation->discount) {
+                                                        $new_coupen_value = new CouponHistory;
+                                                        $new_coupen_value->coupon_id = $coupon_validation->id;
+                                                        $new_coupen_value->total_amount = $coupon_validation->discount;
+                                                        $new_coupen_value->status = 1;
+                                                        if (Yii::app()->session['user'] != '' && Yii::app()->session['user'] != NULL) {
+                                                                $new_coupen_value->user_id = $user_id;
+                                                        } else {
+                                                                $new_coupen_value->session_id = $user_id;
+                                                        }
+                                                        if ($new_coupen_value->save()) {
+                                                                Yii::app()->user->setFlash('successcoupon', "Successfully Added Your Coupen Code");
+                                                                $this->redirect(array('cart/MyCart'));
+                                                        }
+                                                } else {
+                                                        Yii::app()->user->setFlash('errorcoupon', "Your Coupon Code Cannot be applied . Because Your Sub Total  is shoulbe grater than " . Yii::app()->Currency->convert($coupon_validation->discount));
+
+                                                        $this->redirect(array('cart/MyCart'));
+                                                }
+                                        }
                                 } else {
-                                        $new_coupen_value->session_id = $user_id;
-                                }
-                                if ($new_coupen_value->save()) {
-                                        Yii::app()->user->setFlash('successcoupon', "Successfully Added Your Coupen Code");
+                                        Yii::app()->user->setFlash('errorcoupon', "The Entered Coupen You Already Used");
                                         $this->redirect(array('cart/MyCart'));
                                 }
                         } else {
-                                Yii::app()->user->setFlash('errorcoupon', "The Entered Coupen You Already Used");
+
+
+                                Yii::app()->user->setFlash('errorcoupon', "The Entered Coupen Is Invalid");
                                 $this->redirect(array('cart/MyCart'));
                         }
                 } else {
-
-
-                        Yii::app()->user->setFlash('errorcoupon', "The Entered Coupen Is Invalid");
+                        Yii::app()->user->setFlash('errorcoupon', "You Already Applied A Coupon. Only One coupon can applay in a Order.");
                         $this->redirect(array('cart/MyCart'));
                 }
         }
@@ -362,6 +423,22 @@ class CartController extends Controller {
                 return Yii::app()->Currency->convert($subtotal);
         }
 
+        public function subtotalamount() {
+                if (isset(Yii::app()->session['user']['id'])) {
+                        $cart = cart::model()->findAllByAttributes(array('user_id' => Yii::app()->session['user']['id']));
+                } else {
+                        $cart = cart::model()->findAllByAttributes(array('session_id' => Yii::app()->session['temp_user']));
+                }
+
+                foreach ($cart as $cart_item) {
+                        $product = Products::model()->findByPk($cart_item->product_id);
+                        $price = Yii::app()->Discount->DiscountExtax($product);
+                        $subtotal += ($price * $cart_item->quantity);
+                }
+
+                return $subtotal;
+        }
+
         public function actionMycart() {
 
                 if (Yii::app()->session['user'] != '' && Yii::app()->session['user'] != NULL) {
@@ -435,7 +512,7 @@ class CartController extends Controller {
                                         $this->orderProducts($order_id, $cart);
 
                                         $this->updatecoupenhistory($order_id);
-                                        $this->redirect(array('CheckOut/CheckOut'));
+                                        $this->redirect(array('Checkout/CheckOut'));
                                 } else {
                                         $this->redirect(array('Cart/Mycart'));
                                 }
@@ -455,7 +532,7 @@ class CartController extends Controller {
 
                                         $new = $this->orderProducts($order_id, $cart);
 
-                                        $this->redirect(array('CheckOut/CheckOut'));
+                                        $this->redirect(array('Checkout/CheckOut'));
                                 } else {
                                         $this->redirect(array('Cart/Mycart'));
                                 }
@@ -474,7 +551,7 @@ class CartController extends Controller {
                                         Yii::app()->session['orderid'] = $order_id;
                                         $this->orderProducts($order_id, $cart);
                                         $this->updatecoupenhistory($order_id);
-                                        $this->redirect(array('CheckOut/CheckOut'));
+                                        $this->redirect(array('Checkout/CheckOut'));
                                 } else {
                                         $this->redirect(array('Cart/Mycart'));
                                 }
@@ -485,13 +562,14 @@ class CartController extends Controller {
                                 if (!empty($cart)) {
 
                                         $order_id1 = $this->addOrder1($cart);
-
+                                        echo 1;
+                                        exit;
 //                                $select_coupon = Yii::app()->session['coupen_id'];
 //                                $this->addcoupens();
                                         $order_id = Yii::app()->session['orderid'];
                                         $this->updatecoupenhistory($order_id1);
                                         $this->orderProducts($order_id, $cart);
-                                        $this->redirect(array('CheckOut/CheckOut'));
+                                        $this->redirect(array('Checkout/CheckOut'));
                                 } else {
                                         $this->redirect(array('Cart/Mycart'));
                                 }

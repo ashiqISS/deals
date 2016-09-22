@@ -14,6 +14,7 @@ class MyaccountController extends Controller {
                                 $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/Userlogin');
                 } else {
                         if (Yii::app()->session['user']) {
+                                $models = Order::model()->findAllByAttributes(array('user_id' => Yii::app()->session['user']['id']));
                                 $sale = array();
                                 $plans = array();
                                 $model = BuyerDetails::model()->findByPk(Yii::app()->session['user']['id']);
@@ -25,7 +26,7 @@ class MyaccountController extends Controller {
                                 $plans = PlanDetails::model()->findAll();
                                 $deal = DealSubmission::model()->findAllByAttributes(array('user_id' => Yii::app()->session['merchant']['id']), array('order' => 'doc DESC'));
                         }
-                        $this->render('index', array('model' => $model, 'deal' => $deal, 'order' => $order, 'sale' => $sale, 'plans' => $plans));
+                        $this->render('index', array('model' => $model, 'deal' => $deal, 'order' => $order, 'sale' => $sale, 'plans' => $plans, 'models' => $models));
                 }
         }
 
@@ -375,10 +376,10 @@ class MyaccountController extends Controller {
                         $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/Userlogin');
                 } else {
                         if (Yii::app()->session['user']) {
-                                $model = Order::model()->findAllByAttributes(array('user_id' => Yii::app()->session['user']['id']));
+                                $models = Order::model()->findAllByAttributes(array('user_id' => Yii::app()->session['user']['id']));
                         }
                 }
-                $this->render('user_order_history', array('model' => $model));
+                $this->render('user_order_history', array('models' => $models));
         }
 
         public function actionVendorOrderHistory() {
@@ -506,6 +507,19 @@ class MyaccountController extends Controller {
                 $model = OrderProducts::model()->findByPk($id);
                 if (!empty($model)) {
                         $this->render('order_view_detail', array(
+                            'model' => $model,
+                        ));
+                } else {
+                        $this->redirect(array('site/Error'));
+                }
+        }
+
+        public function actionUserOrderDetail($id) {
+
+                $model = OrderProducts::model()->findByPk($id);
+//                $model = OrderProducts::model()->findByAttributes(array('order_id' => $id));
+                if (!empty($model)) {
+                        $this->render('user_order_detail', array(
                             'model' => $model,
                         ));
                 } else {

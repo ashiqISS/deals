@@ -26,6 +26,8 @@
                 $active11 = 'active';
         } else if ($active_menu == 'myaccount/message') {
                 $active12 = 'active';
+        } else if ($active_menu == 'Myaccount/UpgradePlan') {
+                $active14 = 'active';
         }
 //    else if ($active_menu == 'myaccount/message') {
 //            $active12 = 'active';
@@ -50,7 +52,7 @@
         <?php } ?>
         <li class="<?= $active2; ?>"><?php echo CHtml::link('Reset Password', array('Myaccount/ResetPassword')); ?></li>
         <?php if (Yii::app()->session['merchant']) { ?>
-                                                                                                                                                   <!--<li class="<?//= $active5; ?>"><?php //echo CHtml::link('Add Products', array('Products/AddProducts'));                                                       ?></li>-->
+                                                                                                                                                                                                           <!--<li class="<?//= $active5; ?>"><?php //echo CHtml::link('Add Products', array('Products/AddProducts'));                                                             ?></li>-->
                 <li class="<?= $active6; ?>"><?php echo CHtml::link('Products', array('Products/MyProducts')); ?></li>
 
         <?php } ?>
@@ -83,7 +85,8 @@
 
                 <li><a href="#"> Transaction</a></li>
                 <li><a href="#"> Payment/Payout</a></li>
-                <li><a href="#"> Plans</a></li>
+                <!--<li><a href="#"> Plans</a></li>-->
+                <li class="<?= $active14; ?>"><?php echo CHtml::link('Plans', array('Myaccount/UpgradePlan')); ?></li>
         <?php } ?>
         <!--<li><a href="#"> Affiliate commission</a></li>-->
         <?php if (Yii::app()->session['user']) { ?>

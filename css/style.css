@@ -540,10 +540,12 @@ span.dat {
         margin-top: 8px;
         text-transform: uppercase;
         font-size: 12px;
+
 }
 .comm {
         float: left;
         margin-bottom: 30px;
+        width: 100%;
 }
 .commission-1 {
         float: left;
@@ -588,6 +590,14 @@ span.dat {
         float: left;
         width: 13%;
 }
+.head-3 {
+        float: left;
+        width: 20%;
+}
+.head-4 {
+        float: left;
+        width: 8%;
+}
 img.maxs {
         max-width: 60px;
 }
@@ -600,6 +610,7 @@ img.maxs {
         padding-bottom: 30px;
         border: 1px solid #ccc;
         float: left;
+        width: 100%;
 }
 .float-left {
         float: left;
@@ -2087,7 +2098,7 @@ i.fa.rupee.fa-rupee {
         margin-bottom: 10px;
 }
 .shoppingcart h4 {
-        font-size: 21px;
+        font-size: 16px;
         font-weight: 600;
         font-family: 'Lato', sans-serif;
         text-align: center;

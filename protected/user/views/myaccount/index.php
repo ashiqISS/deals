@@ -160,116 +160,68 @@
                                         <?php if (Yii::app()->session['user']) { ?>
                                                 <span class="recentorders"> Recent Orders</span>
 
-                                                <div class="panel-group his" id="accordion">
-                                                        <?php if (!empty($order)) { ?>
-                                                                <?php
-                                                                $i = 1;
-                                                                foreach ($order as $myorder) {
-                                                                        ?>
-                                                                        <div class="panel panel-default">
-                                                                                <div class="panel-heading c1">
+                                                <div class="col-xs-12">
+                                                        <?php if (!empty($models)) { ?>
+                                                                <div class="comm">
 
-                                                                                        <a class="accordion-toggle min collapsed" data-toggle="collapse" data-parent="#accordion" href="#n<?php echo $i; ?>" aria-expanded="false"><h4 class="panel-title">
-                                                                                                        <i class="fa dow fa-angle-right"></i>
+                                                                        <div class="commission-1">
+                                                                                <div class="head-4"><h2>Order ID</h2></div>
+                                                                                <div class="head-1"><h2>Product Name</h2></div>
+                                                                                <div class="head-4"><h2>Quantity</h2></div>
+                                                                                <div class="head-1"><h2>Amount</h2></div>
+                                                                                <div class="head-1"><h2>Date </h2></div>
+                                                                                <!--<div class="head-1"><h2>Name</h2></div>-->
+                                                                                <div class="head-1"><h2>Status</h2></div>
 
-                                                                                                        <ul>
-                                                                                                                <li>Order ID: <?= $myorder->id; ?></li>
-                                                                                                                <?php
-                                                                                                                $order_produtcs = OrderProducts::model()->findAllByAttributes(array('order_id' => $myorder->id));
-                                                                                                                ?>
-                                                                                                                <li class="hidden-xs"><?= $products->product_name; ?></li>
-                                                                                                                <li><?php
-                                                                                                                        if ($myorder->status == 0) {
-                                                                                                                                echo 'Not Placed';
-                                                                                                                        } elseif ($myorder->status == 1) {
-                                                                                                                                echo 'Order Processing';
-                                                                                                                        } elseif ($myorder->status == 2) {
-                                                                                                                                echo 'Order Successfully Completed';
-                                                                                                                        } elseif ($myorder->status == 3) {
-                                                                                                                                echo 'Order Failed';
-                                                                                                                        } else {
-                                                                                                                                echo 'Error';
-                                                                                                                        }
-                                                                                                                        ?>
-                                                                                                                </li>
-                                                                                                        </ul>
-
-
-
-                                                                                                </h4>
-                                                                                        </a>
-
-                                                                                </div>
-                                                                                <div id="n<?php echo $i; ?>" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-                                                                                        <div class="panel-body wall">
-
-                                                                                                <div class="div-main hidden-xs">
-                                                                                                        <div class="div-11">
-                                                                                                                <h3>Product Name</h3>
-                                                                                                        </div>
-                                                                                                        <div class="div-2">
-                                                                                                                <h3>Date</h3>
-                                                                                                        </div>
-                                                                                                        <div class="div-3">
-                                                                                                                <h3>Status</h3>
-                                                                                                        </div>
-                                                                                                </div>
-                                                                                                <?php
-                                                                                                foreach ($order_produtcs as $order_produtc) {
-                                                                                                        $products = Products::model()->findByPk($order_produtc->product_id);
-                                                                                                        ?>
-                                                                                                        <div class = "div-main">
-                                                                                                                <div class = "div-4">
-                                                                                                                        <div class = "part-11">
-                                                                                                                                <h2><?php echo $products->product_name; ?></h2>
-                                                                                                                                <?php if (!empty($products)) { ?>
-                                                                                                                                        <?php $folder = Yii::app()->Upload->folderName(0, 1000, $products->id); ?>
-
-                                                                                                                                        <img class="catz" src="<?php echo Yii::app()->baseUrl . '/uploads/products/' . $folder . '/' . $products->id . '/main.' . $products->main_image ?>">
-                                                                                                                                <?php } ?>
-                                                                                                                        </div>
-                                                                                                                        <div class="part-22">
-                                                                                                                                <form class="form-inline" role="form">
-                                                                                                                                        <label class="weight">Quantity</label>
-                                                                                                                                        <h6><span class="unit"><?php echo $order_produtc->quantity; ?></span></h6>
-
-
-
-                                                                                                                                </form>
-                                                                                                                                <h6>Unit Price <span class="unit"><?php echo Yii::app()->Currency->convert($products->price); ?></span></h6>
-
-                                                                                                                        </div>
-                                                                                                                </div>
-                                                                                                                <div class="div-5">
-                                                                                                                        <h3> <?php echo date(" F j, Y", strtotime(date($myorder->order_date))); ?></h3>
-                                                                                                                </div>
-                                                                                                                <div class="div-6">
-                                                                                                                        <h3><?php
-                                                                                                                                if ($myorder->status == 0) {
-                                                                                                                                        echo 'Not Placed';
-                                                                                                                                } elseif ($myorder->status == 1) {
-                                                                                                                                        echo 'Order Processing';
-                                                                                                                                } elseif ($myorder->status == 2) {
-                                                                                                                                        echo 'Order Successfully Completed';
-                                                                                                                                } elseif ($myorder->status == 3) {
-                                                                                                                                        echo 'Order Failed';
-                                                                                                                                } else {
-                                                                                                                                        echo 'Error';
-                                                                                                                                }
-                                                                                                                                ?></h3>
-                                                                                                                </div>
-                                                                                                        </div>
-
-                                                                                                <?php } ?>
-
-                                                                                        </div>
-                                                                                </div>
+                                                                                <div class="head-1"><h2></h2></div>
                                                                         </div>
                                                                         <?php
-                                                                        $i++;
-                                                                }
-                                                                ?>
-                                                        <?php } ?>
+                                                                        foreach ($models as $model) {
+                                                                                $orders = OrderProducts::model()->findAllByAttributes(array('order_id' => $model->id));
+                                                                                $user = BuyerDetails::model()->findByPk($model->user_id);
+//                                                        $order_produ = OrderProducts::model()->findByAttributes(array('order_id' => $order->id));
+
+                                                                                foreach ($orders as $order) {
+                                                                                        $order_products = Products::model()->findByPk($order->product_id);
+                                                                                        ?>
+                                                                                        <div class="commission-2">
+                                                                                                <div class="head-4"><h2>#<?= $order->order_id; ?></h2></div>
+                                                                                                <div class="head-1"><h2><?= $order_products->product_name; ?></h2></div>
+                                                                                                <div class="head-4"><h2><?= $order_products->quantity; ?></h2></div>
+                                                                                                <div class="head-1"><h2><?= Yii::app()->Currency->convert($model->total_amount); ?></h2></div>
+                                                                                                <div class="head-1"><h2><?= date('d-m-Y', strtotime($order->DOC)); ?></h2></div>
+                                                                                                <!--<div class="head-1"><h2><?= $user->first_name; ?>  <?= $user->last_name; ?></h2></div>-->
+                                                                                                <div class="head-1"><h2><?php
+                                                                                                                if ($order->status == 0) {
+                                                                                                                        echo 'Not Placed';
+                                                                                                                } elseif ($order->status == 1) {
+                                                                                                                        echo 'Order Processing';
+                                                                                                                } elseif ($order->status == 2) {
+                                                                                                                        echo 'Order Canceled';
+                                                                                                                } else {
+                                                                                                                        echo 'Order Returned';
+                                                                                                                }
+                                                                                                                ?></h2></div>
+
+                                                                                                <div class="head-1"><h2><?php echo CHtml::link('<i class="fa fa-eye"  style="max-width:15%; font-size:22px; color:#333"></i>', array('Myaccount/UserOrderDetail', 'id' => CHtml::encode($order->id))); ?></h2></div>
+
+
+                                                                                        </div>
+                                                                                        <?php
+                                                                                }
+                                                                        }
+                                                                        ?>
+                                                                </div>
+                                                                <div class="btn-place-1">
+
+
+                                                                        <a href="#" class="reward hvr-shutter-in-horizontal left-btns">Back</a>
+                                                                </div>
+                                                                <?php
+                                                        } else {
+                                                                echo 'No Orders Found';
+                                                        }
+                                                        ?>
                                                 </div>
                                         <?php } ?>
                                         <div class="clearfix"></div>

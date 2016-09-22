@@ -94,7 +94,7 @@
                                                                 </td>
 
                                                                 <td>
-                                                                        Invoice #:<?php echo $productOrder->id; ?><br>
+                                                                        Invoice #:<?php echo $productOrder->order_id; ?><br>
                                                                         Order Date:<?php
                                                                         echo
                                                                         date("d/m/Y", strtotime($productOrder->DOC));

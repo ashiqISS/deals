@@ -95,7 +95,7 @@
                                         <!--</form>-->
                                 </div>
                                 <div class="btn-place-1">
-                                        <?php echo CHtml::link('Back', array('Myaccount/VendorSettings'), array('class' => 'reward hvr-shutter-in-horizontal left-btns')); ?>
+                                        <?php echo CHtml::link('Back', array('Myaccount/index/type/vendor'), array('class' => 'reward hvr-shutter-in-horizontal left-btns')); ?>
                                 </div>
                                 <!--</div>-->
                                 <?php
