@@ -52,7 +52,7 @@
         <?php } ?>
         <li class="<?= $active2; ?>"><?php echo CHtml::link('Reset Password', array('Myaccount/ResetPassword')); ?></li>
         <?php if (Yii::app()->session['merchant']) { ?>
-                                                                                                                                                                                                           <!--<li class="<?//= $active5; ?>"><?php //echo CHtml::link('Add Products', array('Products/AddProducts'));                                                             ?></li>-->
+                                                                                                                                                                                                                           <!--<li class="<?//= $active5; ?>"><?php //echo CHtml::link('Add Products', array('Products/AddProducts'));                                                               ?></li>-->
                 <li class="<?= $active6; ?>"><?php echo CHtml::link('Products', array('Products/MyProducts')); ?></li>
 
         <?php } ?>
@@ -96,6 +96,7 @@
         <!--<li><a href="#">Used and refurbished (Return products)</a></li>-->
         <?php if (Yii::app()->session['merchant']) { ?>
                 <li class="<?= $active11; ?>"><?php echo CHtml::link('Advertisements', array('Myaccount/paidAd')); ?></li>
+                <li class="<?= $active11; ?>"><?php echo CHtml::link('Tax Classes', array('Myaccount/TaxClasses')); ?></li>
         <?php } ?>
         <!--<li><a href="#"> Bargain zone</a></li>-->
 </ul>

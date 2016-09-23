@@ -57,162 +57,107 @@
 
 
                         <div class="col-lg-9 col-md-8">
-                                <div class="accountsettings">
-                                        <?php if (Yii::app()->user->hasFlash('success')): ?>
+                                <?php if (Yii::app()->user->hasFlash('success')): ?>
+                                        <div class="accountsettings">
                                                 <div class="alert alert-success">
                                                         <a href="#" class="close" data-dismiss="alert">&times;</a>
                                                         <strong>Success!</strong> <?php echo Yii::app()->user->getFlash('success'); ?>
                                                 </div>
-                                        <?php endif; ?>
-                                        <?php if (Yii::app()->user->hasFlash('error')): ?>
+                                        </div>
+                                <?php endif; ?>
+
+
+                                <?php if (Yii::app()->user->hasFlash('error')): ?>
+                                        <div class="accountsettings">
                                                 <div class="alert alert-danger">
                                                         <a href="#" class="close" data-dismiss="alert">&times;</a>
                                                         <strong>Sorry!</strong> <?php echo Yii::app()->user->getFlash('error'); ?>
                                                 </div>
-                                        <?php endif; ?>
-                                        <?php
-                                        $form = $this->beginWidget('CActiveForm', array(
-                                            'id' => 'merchant-plans-form',
-                                            // Please note: When you enable ajax validation, make sure the corresponding
-                                            // controller action is handling ajax validation correctly.
-                                            // See class documentation of CActiveForm for details on this,
-                                            // you need to use the performAjaxValidation()-method described there.
-                                            'enableAjaxValidation' => false,
-                                        ));
-                                        ?>
-                        <!--<form role="form" action="<?= Yii::app()->baseUrl ?>/index.php/Myaccount/UpgradePlan" method="post">-->
-                                        <div class="ui-set">
-                                                <div class="settings1">
-                                                        <div class="form-group">
-                                                                <label class="set">Plan Name</label>
-
-                                                        </div>
-                                                </div>
-
-                                                <div class="settings2">
-                                                        <span>:</span>
-                                                </div>
-
-                                                <div class="settings3">
-                                                        <div class="form-group">
-                                                                <!--<select class="form-select" id="sel1">-->
-                                                                <?php echo CHtml::activeDropDownList($model, 'plan_name', CHtml::listData(PlanDetails::model()->findAll(), 'id', 'plan_name'), array('empty' => '--Select--', 'class' => 'form-select plan_id', 'id' => 'dropDownId')); ?>
-                                                                <!--</select>-->
-                                                        </div>
-                                                </div>
                                         </div>
+                                <?php endif; ?>
 
 
-                                        <div class="ui-set">
-                                                <div class="settings1">
-                                                        <div class="form-group">
-                                                                <label class="set">Plan Duration<span class="dates">Start Date</span></label>
+                                <?php if (Yii::app()->session['merchant']) { ?>
+                                        <?php if (!empty($yourplans)) { ?>
+
+                                                <span class="recentorders">Your Plans</span>
+                                                <div class="comm">
+
+                                                        <div class="commission-1">
+                                                                <div class="head-2"><h2>Plan Name</h2></div>
+                                                                <div class="head-2"><h2>Amount</h2></div>
+                                                                <div class="head-2"><h2>Plan Start Date</h2></div>
+                                                                <div class="head-2"><h2>Plan Expiry Date</h2></div>
+                                                                <div class="head-2"><h2>Products Left</h2></div>
+                                                                <div class="head-2"><h2>Ads Left</h2></div>
+                                                                <div class="head-2"><h2>View</h2></div>
 
                                                         </div>
-                                                </div>
-
-                                                <div class="settings2">
-                                                        <span>:</span>
-                                                </div>
-
-                                                <div class="settings3">
-                                                        <div class="form-group plan_date">
-                                                                <?php
-                                                                $from = date('Y') - 2;
-                                                                $to = date('Y') + 20;
-                                                                $this->widget('zii.widgets.jui.CJuiDatePicker', array(
-                                                                    'model' => $model,
-                                                                    'attribute' => 'date_of_creation',
-                                                                    'value' => 'date_of_creation',
-                                                                    'options' => array(
-                                                                        'minDate' => '0', // this will disable previous dates from datepicker
-                                                                        'dateFormat' => 'dd-mm-yy',
-                                                                        'changeYear' => true, // can change year
-                                                                        'changeMonth' => true, // can change month
-                                                                        'yearRange' => $from . ':' . $to, // range of year
-                                                                        'showButtonPanel' => true, // show button panel
-                                                                    ),
-                                                                    'htmlOptions' => array(
-                                                                        'size' => '10', // textField size
-                                                                        'maxlength' => '10', // textField maxlength
-                                                                        'class' => 'form-set',
-                                                                        'placeholder' => 'Date From',
-                                                                    ),
-                                                                ));
+                                                        <?php
+                                                        foreach ($yourplans as $yourplan) {
                                                                 ?>
-                                                        </div>
+                                                                <div class="commission-2">
+                                                                        <div class="head-2"><h2><?= PlanDetails::model()->findByPk($yourplan->plan_id)->plan_name; ?></h2></div>
+                                                                        <div class="head-2"><h2><?= Yii::app()->Currency->convert($yourplan->amount); ?></h2></div>
+                                                                        <div class="head-2"><h2><?= date('d-M-Y', strtotime($yourplan->doc)); ?></h2></div>
+                                                                        <div class="head-2"><h2><?php
+                                                                                        $date = date('Y-m-d', strtotime($yourplan->doc));
+                                                                                        echo date("d-M-Y", strtotime($date . " +  $yourplan->no_of_days days"));
+                                                                                        ?></h2></div>
+                                                                        <div class="head-2"><h2><?= $yourplan->no_of_product_left; ?></h2></div>
+                                                                        <div class="head-2"><h2><?= $yourplan->no_of_ads_left; ?></h2></div>
+
+                                                                        <div class="head-2"><h2><?php echo CHtml::link('<i class="fa fa-eye"  style="max-width:15%;font-size: 24px;
+    color: #000;"></i>', array('Myaccount/MerchantPlanDetail', 'plan' => CHtml::encode($yourplan->id)), array('data-toggle' => 'tooltip', 'title' => 'View Plans Details')); ?></h2></div>
+
+                                                                </div>
+                                                        <?php }
+                                                        ?>
                                                 </div>
-                                        </div>
-
-                                        <div class="ui-set">
-                                                <div class="settings1">
-                                                        <div class="form-group">
-                                                                <label class="set">Plan Duration<span class="dates">End Date</span></label>
-
-                                                        </div>
-                                                </div>
-
-                                                <div class="settings2">
-                                                        <span>:</span>
-                                                </div>
-
-                                                <div class="settings3">
-                                                        <div class="form-group">
-                                                                <input type="text" class="form-set" id="plan_product_date" value="" >
-                                                        </div>
-                                                </div>
-                                        </div>
+                                        <?php }
+                                        ?>
 
 
+                                <?php } ?>
+                                <?php if (Yii::app()->session['merchant']) { ?>
+                                        <?php if (!empty($allplans)) { ?>
 
-                                        <div class="ui-set">
-                                                <div class="settings1">
-                                                        <div class="form-group">
-                                                                <label class="set">Plan Amount</label>
+                                                <span class="recentorders">Available plans</span>
+                                                <div class="comm">
 
-                                                        </div>
-                                                </div>
+                                                        <div class="commission-1">
+                                                                <div class="head-1"><h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2></div>
+                                                                <div class="head-1"><h2>Plan Name</h2></div>
+                                                                <div class="head-1"><h2>Amount</h2></div>
+                                                                <div class="head-1"><h2>Duration</h2></div>
+                                                                <div class="head-1"><h2>Product Limit</h2></div>
+                                                                <!--<div class="head-1"><h2>Quantity</h2></div>-->
 
-                                                <div class="settings2">
-                                                        <span>:</span>
-                                                </div>
-
-                                                <div class="settings3">
-                                                        <div class="form-group">
-
-                                                                <input type="text" name="plan_amount" class="form-set" id="plan_amount" value="">
-                                                        </div>
-                                                </div>
-                                        </div>
-
-                                        <div class="ui-set">
-                                                <div class="settings1">
-                                                        <div class="form-group">
-                                                                <label class="set">Plan Featured</label>
+                                                                <div class="head-1"><h2>Upgrade</h2></div>
 
                                                         </div>
+                                                        <?php
+                                                        foreach ($allplans as $allplan) {
+                                                                ?>
+                                                                <div class="commission-2">
+                                                                        <div class="head-1"><img src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/plan/<?php echo $allplan->id; ?>/plan.<?php echo $allplan->image; ?>" /></div>
+                                                                        <div class="head-1"><h2><?= $allplan->plan_name; ?></h2></div>
+                                                                        <div class="head-1"><h2><?= Yii::app()->Currency->convert($allplan->amount); ?></h2></div>
+                                                                        <div class="head-1"><h2><?= $allplan->no_of_days; ?></h2></div>
+                                                                        <div class="head-1"><h2><?= $allplan->no_of_products; ?></h2></div>
+                                                                        <div class="head-1"><h2><?php echo CHtml::link('<i class="fa fa-cart-plus"  style="max-width:15%;font-size: 24px;
+    color: #000;"></i>', array('Myaccount/PlanDetail', 'plan' => CHtml::encode($allplan->id)), array('data-toggle' => 'tooltip', 'title' => 'Upgrade Plan')); ?></h2></div>
+
+                                                                </div>
+                                                        <?php }
+                                                        ?>
                                                 </div>
+                                        <?php }
+                                        ?>
 
-                                                <div class="settings2">
-                                                        <span>:</span>
-                                                </div>
 
-                                                <div class="settings3">
-                                                        <div class="form-group">
+                                <?php } ?>
 
-                                                                <input type="text" class="form-set" id="plan_featured">
-                                                                <input type="hidden" class="form-set" id="plan_duration">
-                                                                <input type="hidden" class="form-set" id="plan_product">
-                                                                <input type="hidden" name="plan_id" class="form-set" id="plan_id">
-                                                                <!--<input type="hidden" class="form-set" id="plan_product_date">-->
-                                                        </div>
-
-                                                </div>
-                                        </div>
-                                        <button type="submit" name="plan_submit" class="hvr-shutter-in-horizontals request-btn">Upgrade</button>
-                                        <!--<a href="#" class=" hvr-shutter-in-horizontals request-btn">Upgrade</a>-->
-                                        <?php $this->endWidget(); ?>
-                                </div>
                         </div>
 
                         <div class="col-lg-3 col-md-4 mbb hidden-xs hidden-sm">

@@ -1,34 +1,31 @@
 <?php
 
 /**
- * This is the model class for table "merchant_plans".
+ * This is the model class for table "merchant_plans_history".
  *
- * The followings are the available columns in table 'merchant_plans':
+ * The followings are the available columns in table 'merchant_plans_history':
  * @property integer $id
  * @property integer $plan_id
  * @property string $user_id
  * @property string $plan_name
  * @property string $amount
- * @property string $date_of_creation
+ * @property integer $featured
  * @property string $no_of_product
- * @property string $no_of_product_left
  * @property string $no_of_ads
- * @property string $no_of_ads_left
  * @property string $no_of_days
- * @property string $no_of_days_left
  * @property integer $status
  * @property integer $cb
  * @property string $doc
  * @property integer $ub
  * @property string $dou
  */
-class MerchantPlans extends CActiveRecord {
+class MerchantPlansHistory extends CActiveRecord {
 
         /**
          * @return string the associated database table name
          */
         public function tableName() {
-                return 'merchant_plans';
+                return 'merchant_plans_history';
         }
 
         /**
@@ -38,14 +35,14 @@ class MerchantPlans extends CActiveRecord {
                 // NOTE: you should only define rules for those attributes that
                 // will receive user inputs.
                 return array(
-                    array('plan_id, user_id, plan_name, amount', 'required'),
-                    array('plan_id, status, cb, ub', 'numerical', 'integerOnly' => true),
-                    array('user_id, amount, no_of_product, no_of_product_left, no_of_ads, no_of_ads_left, no_of_days, no_of_days_left', 'length', 'max' => 200),
+//			array('id, plan_id, user_id, plan_name, amount, featured, no_of_product, no_of_ads, no_of_days, status, cb, doc, ub', 'required'),
+                    array('id, plan_id, featured, status, cb, ub', 'numerical', 'integerOnly' => true),
+                    array('user_id, amount, no_of_product, no_of_ads, no_of_days', 'length', 'max' => 200),
                     array('plan_name', 'length', 'max' => 250),
                     array('dou', 'safe'),
                     // The following rule is used by search().
                     // @todo Please remove those attributes that should not be searched.
-                    array('id, plan_id, user_id, plan_name, amount, no_of_product, no_of_product_left, no_of_ads, no_of_ads_left, no_of_days, no_of_days_left, status, cb, doc, ub, dou', 'safe', 'on' => 'search'),
+                    array('id, plan_id, user_id, plan_name, amount, featured, no_of_product, no_of_ads, no_of_days, status, cb, doc, ub, dou', 'safe', 'on' => 'search'),
                 );
         }
 
@@ -69,12 +66,10 @@ class MerchantPlans extends CActiveRecord {
                     'user_id' => 'User',
                     'plan_name' => 'Plan Name',
                     'amount' => 'Amount',
+                    'featured' => 'Featured',
                     'no_of_product' => 'No Of Product',
-                    'no_of_product_left' => 'No Of Product Left',
                     'no_of_ads' => 'No Of Ads',
-                    'no_of_ads_left' => 'No Of Ads Left',
                     'no_of_days' => 'No Of Days',
-                    'no_of_days_left' => 'No Of Days Left',
                     'status' => 'Status',
                     'cb' => 'Cb',
                     'doc' => 'Doc',
@@ -105,12 +100,10 @@ class MerchantPlans extends CActiveRecord {
                 $criteria->compare('user_id', $this->user_id, true);
                 $criteria->compare('plan_name', $this->plan_name, true);
                 $criteria->compare('amount', $this->amount, true);
+                $criteria->compare('featured', $this->featured);
                 $criteria->compare('no_of_product', $this->no_of_product, true);
-                $criteria->compare('no_of_product_left', $this->no_of_product_left, true);
                 $criteria->compare('no_of_ads', $this->no_of_ads, true);
-                $criteria->compare('no_of_ads_left', $this->no_of_ads_left, true);
                 $criteria->compare('no_of_days', $this->no_of_days, true);
-                $criteria->compare('no_of_days_left', $this->no_of_days_left, true);
                 $criteria->compare('status', $this->status);
                 $criteria->compare('cb', $this->cb);
                 $criteria->compare('doc', $this->doc, true);
@@ -126,7 +119,7 @@ class MerchantPlans extends CActiveRecord {
          * Returns the static model of the specified AR class.
          * Please note that you should have this exact method in all your CActiveRecord descendants!
          * @param string $className active record class name.
-         * @return MerchantPlans the static model class
+         * @return MerchantPlansHistory the static model class
          */
         public static function model($className = __CLASS__) {
                 return parent::model($className);

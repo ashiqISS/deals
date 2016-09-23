@@ -786,8 +786,7 @@ if (!$model->isNewRecord) {
                                                         </div>
                                                         <div class="settings3">
                                                                 <div class="form-group">
-
-                                                                        <?php echo $form->textField($model, 'tax', array('class' => 'form-set', 'placeholder' => 'Tax')); ?>
+                                                                        <?php echo CHtml::activeDropDownList($model, 'tax', CHtml::listData(MasterTaxClass::model()->findAll(array('condition' => 'status = 1')), 'id', 'tax_class_name'), array('empty' => '--Select--', 'class' => 'form-select')); ?>
                                                                         <?php echo $form->error($model, 'tax', array('class' => 'red')); ?>
                                                                 </div>
                                                         </div>
@@ -1018,9 +1017,10 @@ if (!$model->isNewRecord) {
                                         <!-- form -->
                                         <?php $this->endWidget(); ?>
                                 </div>
-                                <div class="col-lg-3 col-md-4 mbb hidden-xs hidden-sm">
-                                        <?php echo $this->renderPartial('_rightMenu'); ?>
-                                </div>
+
+                        </div>
+                        <div class="col-lg-3 col-md-4 mbb hidden-xs hidden-sm">
+                                <?php echo $this->renderPartial('//myaccount/_rightMenu'); ?>
                         </div>
                 </div>
 </section>

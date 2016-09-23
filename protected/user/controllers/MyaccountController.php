@@ -578,31 +578,195 @@ class MyaccountController extends Controller {
                 }
         }
 
-        public function actionUpgradePlan() {
-                $model = new MerchantPlans;
-                if (isset($_POST['plan_submit'])) {
-                        $model->plan_id = $_POST['plan_id'];
-                        $plan = PlanDetails::model()->findByPk($model->plan_id);
-                        $model->user_id = Yii::app()->session['merchant']['id'];
-                        $model->plan_name = $_POST['MerchantPlans']['plan_name'];
-                        $model->amount = $_POST['plan_amount'];
-                        $model->date_of_creation = $_POST['MerchantPlans']['date_of_creation'];
-                        $model->no_of_product = $plan->no_of_products;
-                        $model->no_of_product_left = $plan->no_of_products;
-                        $model->no_of_ads = $plan->no_of_ads;
-                        $model->no_of_ads_left = $plan->no_of_ads;
-                        $model->no_of_days = $plan->no_of_days;
-                        $model->no_of_days_left = $plan->no_of_days;
-                        $model->status = 1;
+        public function actionMerchantPlanDetail($plan) {
+                $model = MerchantPlans::model()->findByPk($plan);
+
+                $this->render('merchant_plans_details', array('model' => $model));
+        }
+
+        public function actionPlanDetail($plan) {
+                $model = PlanDetails::model()->findByPk($plan);
+
+                $this->render('plan_details', array('model' => $model));
+        }
+
+        public function actionTaxClasses() {
+                $model = MasterTaxClass::model()->findAll(array('condition' => 'cb = 10 OR cb =' . Yii::app()->session['merchant']['id']));
+                $this->render('taxclasses', array('models' => $model));
+        }
+
+        public function actionNewTaxClasses() {
+                $model = new MasterTaxClass;
+                if (isset($_POST['MasterTaxClass'])) {
+
+                        $model->attributes = $_POST['MasterTaxClass'];
+
+                        $model->tax_rate = implode(',', $_POST['MasterTaxClass']['tax_rate']);
+                        $model->doc = date('Y-m-d H:i:s');
+                        $model->cb = Yii::app()->session['merchant']['id'];
+                        $model->ub = Yii::app()->session['merchant']['id'];
+                        $model->cb_type = 2;
                         if ($model->save()) {
-                                Yii::app()->user->setFlash('success', "Your Plan Upgrade Successfully!!!!");
-                                $this->redirect(array('Myaccount/UpgradePlan'));
-                        } else {
-                                Yii::app()->user->setFlash('Error', "Error Occured!!!!");
-                                $this->redirect(array('Myaccount/UpgradePlan'));
+                                Yii::app()->user->setFlash('taxsuccess', "Your Tax Clas Succesfully Created!!!!");
+                                $this->redirect(array('TaxClasses'));
                         }
                 }
-                $this->render('merchant_plans', array('model' => $model, 'plan' => $plan));
+                $this->render('newtaxclasses', array('model' => $model));
+        }
+
+        public function actionUpdateTaxClasses($tax) {
+                $model = MasterTaxClass::model()->findByPk($tax);
+                if (isset($_POST['MasterTaxClass'])) {
+                        $exist = MasterTaxClass::model()->findByAttributes(array('cb_type' => 2, 'cb' => Yii::app()->session['merchant']['id'], 'id' => $tax));
+                        if (!empty($exist)) {
+                                $model->attributes = $_POST['MasterTaxClass'];
+
+                                $model->tax_rate = implode(', ', $_POST['MasterTaxClass']['tax_rate']);
+                                $model->cb = Yii::app()->session['merchant']['id'];
+                                $model->ub = Yii::app()->session['merchant']['id'];
+                                $model->cb_type = 2;
+                                if ($model->save()) {
+                                        Yii::app()->user->setFlash('taxsuccess', "Your Tax Clas Succesfully updated!!!!");
+                                        $this->redirect(array('TaxClasses'));
+                                }
+                        } else {
+                                Yii::app()->user->setFlash('error', "Invalid Attemp!!!!");
+                                $this->redirect(array('TaxClasses'));
+                        }
+                }
+                $this->render('newtaxclasses', array('model' => $model));
+        }
+
+        public function actionDeleteTaxClasses($tax) {
+                $model = MasterTaxClass::model()->findByPk($tax);
+                $exist = MasterTaxClass::model()->findByAttributes(array('cb_type' => 2, 'cb' => Yii::app()->session['merchant']['id'], 'id' => $tax));
+
+                if (!empty($exist)) {
+                        if ($model->delete()) {
+                                Yii::app()->user->setFlash('taxsuccess', "Your Tax Clas Succesfully Deleted!!!!");
+                                $this->redirect(array('TaxClasses'));
+                        }
+                } else {
+                        Yii::app()->user->setFlash('error', "Invalid Attemp!!!!");
+                        $this->redirect(array('TaxClasses'));
+                }
+                $this->render('newtaxclasses', array('model' => $model));
+        }
+
+        public function MerchantPlanHistory($data) {
+                $model = new MerchantPlansHistory;
+                $model->plan_id = $data;
+                $plan = PlanDetails::model()->findByPk($model->plan_id);
+                $model->user_id = Yii::app()->session['merchant']['id'];
+                $model->plan_name = $plan->plan_name;
+                $model->amount = $plan->amount;
+                $model->featured = $plan->featured;
+                $model->no_of_product = $plan->no_of_products;
+                $model->no_of_ads = $plan->no_of_ads;
+                $model->no_of_days = $plan->no_of_days;
+                $model->doc = date('Y-m-d H:i:s');
+                $model->dou = date('Y-m-d H:i:s');
+                $model->status = 1;
+                if ($model->save(false)) {
+                        return true;
+                }
+        }
+
+        public function actionUpgradePlan() {
+                $model = new MerchantPlans;
+
+                if (isset($_POST['PlanDetails'])) {
+                        $plan_exist = MerchantPlans::model()->findByAttributes(array('user_id' => Yii::app()->session['merchant']['id']));
+                        if (!empty($plan_exist)) {
+                                $date = date('Y-m-d', strtotime($plan_exist->doc));
+                                $exp_date = date("Y-m-d", strtotime($date . " + $plan_exist->no_of_days days"));
+                                $today = date('Y-m-d');
+
+                                if ($today > $exp_date) {
+                                        $model->plan_id = $_POST['PlanDetails']['id'];
+                                        $plan = PlanDetails::model()->findByPk($model->plan_id);
+                                        $model->user_id = Yii::app()->session['merchant']['id'];
+                                        $model->plan_name = $plan->plan_name;
+                                        $model->amount = $plan->amount;
+                                        $model->featured = $plan->featured;
+                                        $model->featured_left = $plan->featured;
+                                        $model->no_of_product = $plan->no_of_products;
+                                        $model->no_of_product_left = $plan->no_of_products;
+                                        $model->no_of_ads = $plan->no_of_ads;
+                                        $model->no_of_ads_left = $plan->no_of_ads;
+                                        $model->no_of_days = $plan->no_of_days;
+                                        $model->no_of_days_left = $plan->no_of_days;
+                                        $model->doc = date('Y-m-d H:i:s');
+                                        $model->dou = date('Y-m-d H:i:s');
+                                        $model->status = 1;
+                                        if ($model->save(false)) {
+                                                $this->MerchantPlanHistory($_POST['PlanDetails']['id']);
+                                                $plan_exist->delete();
+                                                Yii::app()->user->setFlash('success', "Your Plan Upgrade Successfully!!!!");
+                                                $this->redirect(array('Myaccount/UpgradePlan'));
+                                        } else {
+                                                Yii::app()->user->setFlash('Error', "Error Occured!!!!");
+                                                $this->redirect(array('Myaccount/UpgradePlan'));
+                                        }
+                                } else {
+                                        $model->plan_id = $_POST['PlanDetails']['id'];
+                                        $plan = PlanDetails::model()->findByPk($model->plan_id);
+                                        $model->user_id = Yii::app()->session['merchant']['id'];
+                                        $model->plan_name = $plan->plan_name;
+                                        $model->amount = $plan->amount;
+                                        $model->featured = $plan->featured + $plan_exist->featured_left;
+                                        $model->featured_left = $plan->featured + $plan_exist->featured_left;
+                                        $model->no_of_product = $plan->no_of_products + $plan_exist->no_of_product_left;
+                                        $model->no_of_product_left = $plan->no_of_products + $plan_exist->no_of_product_left;
+                                        $model->no_of_ads = $plan->no_of_ads + $plan_exist->no_of_ads_left;
+                                        $model->no_of_ads_left = $plan->no_of_ads + $plan_exist->no_of_ads_left;
+                                        $model->no_of_days = $plan->no_of_days + $plan_exist->no_of_days_left;
+                                        $model->no_of_days_left = $plan->no_of_days + $plan_exist->no_of_days_left;
+                                        $model->doc = date('Y-m-d H:i:s');
+                                        $model->dou = date('Y-m-d H:i:s');
+                                        $model->status = 1;
+                                        if ($model->save(false)) {
+
+                                                $this->MerchantPlanHistory($_POST['PlanDetails']['id']);
+                                                $plan_exist->delete();
+                                                Yii::app()->user->setFlash('success', "Your Plan Upgrade Successfully!!!!");
+                                                $this->redirect(array('Myaccount/UpgradePlan'));
+                                        } else {
+                                                Yii::app()->user->setFlash('Error', "Error Occured!!!!");
+                                                $this->redirect(array('Myaccount/UpgradePlan'));
+                                        }
+                                }
+                        } else {
+                                $model->plan_id = $_POST['PlanDetails']['id'];
+                                $plan = PlanDetails::model()->findByPk($model->plan_id);
+                                $model->user_id = Yii::app()->session['merchant']['id'];
+                                $model->plan_name = $plan->plan_name;
+                                $model->amount = $plan->amount;
+                                $model->featured = $plan->featured;
+                                $model->featured_left = $plan->featured;
+                                $model->no_of_product = $plan->no_of_products;
+                                $model->no_of_product_left = $plan->no_of_products;
+                                $model->no_of_ads = $plan->no_of_ads;
+                                $model->no_of_ads_left = $plan->no_of_ads;
+                                $model->no_of_days = $plan->no_of_days;
+                                $model->no_of_days_left = $plan->no_of_days;
+                                $model->doc = date('Y-m-d H:i:s');
+                                $model->dou = date('Y-m-d H:i:s');
+                                $model->status = 1;
+                                if ($model->save(false)) {
+                                        $this->MerchantPlanHistory($_POST['PlanDetails']);
+                                        Yii::app()->user->setFlash('success', "Your Plan Upgrade Successfully!!!!");
+                                        $this->redirect(array('Myaccount/UpgradePlan'));
+                                } else {
+                                        Yii::app()->user->setFlash('Error', "Error Occured!!!!");
+                                        $this->redirect(array('Myaccount/UpgradePlan'));
+                                }
+                        }
+                }
+
+                $allplans = PlanDetails::model()->findAllByAttributes(array('status' => 1));
+                $yourplans = MerchantPlans::model()->findAllByAttributes(array('status' => 1, 'user_id' => Yii::app()->session['merchant']['id']));
+                $this->render('merchant_plans', array('model' => $model, 'plan' => $plan, 'allplans' => $allplans, 'yourplans' => $yourplans));
         }
 
         public function actionUpgradePlanProduct() {

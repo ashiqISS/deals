@@ -40,16 +40,6 @@
 
         <div class="form-group">
                 <div class="col-sm-2 control-label">
-                        <?php echo $form->labelEx($model, 'featured'); ?>
-                </div>
-                <div class="col-sm-10">
-                        <?php echo $form->dropDownList($model, 'featured', array('' => '--Select--', '0' => 'No', '1' => 'Yes'), array('class' => 'form-control')); ?>
-                        <?php echo $form->error($model, 'featured'); ?>
-                </div>
-        </div>
-
-        <div class="form-group">
-                <div class="col-sm-2 control-label">
                         <?php echo $form->labelEx($model, 'no_of_days'); ?>
                 </div>
                 <div class="col-sm-10">

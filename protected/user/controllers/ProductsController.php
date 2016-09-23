@@ -372,15 +372,24 @@ class ProductsController extends Controller {
                 $model = new Products('vendor_create');
                 $features = new ProductFeatures;
                 if (isset($_POST['Products'])) {
+                        $plandetails = MerchantPlans::model()->findByAttributes(array('user_id' => Yii::app()->session['merchant']['id']), array('condition' => 'no_of_days_left > 0'));
                         $model->attributes = $_POST['Products'];
                         $model->description = $_POST['Products']['description'];
                         $model->meta_description = $_POST['Products']['meta_description'];
                         $model->new_from = $_POST['Products']['new_from'];
                         $model->new_to = $_POST['Products']['new_to'];
-                        $model->sale_from = $_POST['Products']['sale_from'];
-                        $model->sale_to = $_POST['Products']['sale_to'];
                         $model->special_price_from = $_POST['Products']['special_price_from'];
                         $model->special_price_to = $_POST['Products']['special_price_to'];
+//                        $model->sale_from = $_POST['Products']['sale_from'];
+//                        $model->sale_to = $_POST['Products']['sale_to'];
+                        if (!empty($plandetails)) {
+                                $model->sale_from = date('Y-m-d', strtotime($plandetails->doc));
+
+                                $date = date('Y-m-d', strtotime($plandetails->doc));
+                                $exp_date = date("Y-m-d", strtotime($date . " + $plandetails->no_of_days days"));
+                                $model->sale_to = $exp_date;
+                        }
+
                         $model->DOC = date('Y-m-d');
 
                         $image = CUploadedFile::getInstance($model, 'main_image');
@@ -410,15 +419,14 @@ class ProductsController extends Controller {
                         else
                                 $model->new_to = '';
 
-                        if ($_POST['Products']['sale_from'] != "")
-                                $model->sale_from = date("Y-m-d", strtotime($_POST['Products']['sale_from']));
-                        else
-                                $model->sale_from = '';
-
-                        if ($_POST['Products']['sale_to'] != "")
-                                $model->sale_to = date("Y-m-d", strtotime($_POST['Products']['sale_to']));
-                        else
-                                $model->sale_to = '';
+//                        if ($_POST['Products']['sale_from'] != "")
+//                                $model->sale_from = date("Y-m-d", strtotime($_POST['Products']['sale_from']));
+//                        else
+//                                $model->sale_from = '';
+//                        if ($_POST['Products']['sale_to'] != "")
+//                                $model->sale_to = date("Y-m-d", strtotime($_POST['Products']['sale_to']));
+//                        else
+//                                $model->sale_to = '';
 
                         if ($_POST['Products']['special_price_from'] != "")
                                 $model->special_price_from = date("Y-m-d", strtotime($_POST['Products']['special_price_from']));
@@ -444,6 +452,8 @@ class ProductsController extends Controller {
 //                        if ($model->validate()) {
 
                         if ($model->save(false)) {
+                                $plandetails->no_of_product_left = $plandetails->no_of_product_left - 1;
+                                $plandetails->save(false);
                                 if (isset($_POST['ProductFeatures'])) {
                                         if (isset($_POST['ProductFeatures'])) {
                                                 $desc = $_POST['ProductFeatures']['feature_disc'];
@@ -548,8 +558,13 @@ class ProductsController extends Controller {
                 $model->DOC = date('Y-m-d H:i:s');
                 $model->status = 1;
                 $model->merchant_id = Yii::app()->session['merchant']['id'];
-
+                $plandetails = MerchantPlans::model()->findByAttributes(array('user_id' => Yii::app()->session['merchant']['id']), array('condition' => 'no_of_days_left > 0'));
                 if ($model->save(FALSE)) {
+                        if (!empty($plandetails)) {
+                                $plandetails->no_of_product_left = $plandetails->no_of_product_left - 1;
+                                $plandetails->save(false);
+                        }
+
                         $model->canonical_name = str_replace(" ", "-", $model->product_name) . '-' . $model->id;
                         $model->save();
                         $folder = Yii::app()->Upload->folderName(0, 1000, $model->id) . '/';
@@ -576,8 +591,8 @@ class ProductsController extends Controller {
                         $model->meta_description = $_POST['Products']['meta_description'];
                         $model->new_from = $_POST['Products']['new_from'];
                         $model->new_to = $_POST['Products']['new_to'];
-                        $model->sale_from = $_POST['Products']['sale_from'];
-                        $model->sale_to = $_POST['Products']['sale_to'];
+//                        $model->sale_from = $_POST['Products']['sale_from'];
+//                        $model->sale_to = $_POST['Products']['sale_to'];
                         $model->special_price_from = $_POST['Products']['special_price_from'];
                         $model->special_price_to = $_POST['Products']['special_price_to'];
                         $model->DOC = date('Y-m-d');
@@ -586,8 +601,14 @@ class ProductsController extends Controller {
                         $image = CUploadedFile::getInstance($model, 'main_image');
                         $hover_image = CUploadedFile::getInstance($model, 'hover_image');
                         $images = CUploadedFile::getInstancesByName('gallery_images');
-                        $model->main_image = $image->extensionName;
-                        $model->hover_image = $hover_image->extensionName;
+                        if (!empty($image)) {
+                                $model->main_image = $image->extensionName;
+                        } else {
+                                $model->main_image = $image1;
+                        }
+                        if (!empty($hover_image)) {
+                                $model->hover_image = $hover_image->extensionName;
+                        }
 
                         $model->merchant_id = Yii::app()->session['merchant']['id'];
                         $model->merchant_type = Yii::app()->session['user_type_usrid'];
@@ -608,15 +629,14 @@ class ProductsController extends Controller {
                         else
                                 $model->new_to = '';
 
-                        if ($_POST['Products']['sale_from'] != "")
-                                $model->sale_from = date("Y-m-d", strtotime($_POST['Products']['sale_from']));
-                        else
-                                $model->sale_from = '';
-
-                        if ($_POST['Products']['sale_to'] != "")
-                                $model->sale_to = date("Y-m-d", strtotime($_POST['Products']['sale_to']));
-                        else
-                                $model->sale_to = '';
+//                        if ($_POST['Products']['sale_from'] != "")
+//                                $model->sale_from = date("Y-m-d", strtotime($_POST['Products']['sale_from']));
+//                        else
+//                                $model->sale_from = '';
+//                        if ($_POST['Products']['sale_to'] != "")
+//                                $model->sale_to = date("Y-m-d", strtotime($_POST['Products']['sale_to']));
+//                        else
+//                                $model->sale_to = '';
 
                         if ($_POST['Products']['special_price_from'] != "")
                                 $model->special_price_from = date("Y-m-d", strtotime($_POST['Products']['special_price_from']));
@@ -813,7 +833,7 @@ class ProductsController extends Controller {
 
 //        print_r($_POST);
                 $min = 50;
-                $max = 50000;
+                $max = 20000;
                 $category = '';
                 $sort = '';
                 $criteria = new CDbCriteria;
@@ -890,6 +910,8 @@ class ProductsController extends Controller {
                 $pages->applyLimit($criteria);
 
                 $products = Products::model()->findAll($criteria);
+                $large = 0;
+                $small = 0;
 
 //
                 $this->render('products', array(
@@ -903,6 +925,8 @@ class ProductsController extends Controller {
                     'price' => $price,
                     'min' => $min,
                     'max' => $max,
+                    'minvalue' => $minvalue,
+                    'maxvalue' => $maxvalue,
 //            'searchterm' => $searchterm
                 ));
 //        $this->render('products');

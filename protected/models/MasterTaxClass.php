@@ -30,7 +30,7 @@ class MasterTaxClass extends CActiveRecord {
                 // will receive user inputs.
                 return array(
                     array('tax_class_name, tax_rate,status', 'required'),
-                    array('cb, ub, status', 'numerical', 'integerOnly' => true),
+                    array('cb, ub, status,cb_type', 'numerical', 'integerOnly' => true),
                     array('tax_class_name', 'length', 'max' => 250),
                     // The following rule is used by search().
                     // @todo Please remove those attributes that should not be searched.
@@ -60,6 +60,7 @@ class MasterTaxClass extends CActiveRecord {
                     'dou' => 'Dou',
                     'cb' => 'Cb',
                     'ub' => 'Ub',
+                    'cb_type' => 'created by type',
                     'status' => 'Status',
                 );
         }
@@ -88,6 +89,7 @@ class MasterTaxClass extends CActiveRecord {
                 $criteria->compare('dou', $this->dou, true);
                 $criteria->compare('cb', $this->cb);
                 $criteria->compare('ub', $this->ub);
+                $criteria->compare('cb_type', $this->cb_type);
                 $criteria->compare('status', $this->status);
 
                 return new CActiveDataProvider($this, array(

@@ -562,8 +562,6 @@ class CartController extends Controller {
                                 if (!empty($cart)) {
 
                                         $order_id1 = $this->addOrder1($cart);
-                                        echo 1;
-                                        exit;
 //                                $select_coupon = Yii::app()->session['coupen_id'];
 //                                $this->addcoupens();
                                         $order_id = Yii::app()->session['orderid'];

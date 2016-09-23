@@ -68,9 +68,11 @@
                                                                 <div class="head-1"><h2><?= $product->product_name; ?></h2></div>
                                                                 <div class="head-1"><h2><i class="fa rup fa-rupee"></i><?= $product->price; ?></h2></div>
                                                                 <div class="head-2"><h2><?= $product->description; ?></h2></div>
-                                                                <div class="head-2"><?php echo CHtml::link('clone', array('Products/CloneProduct', 'id' => $product->id), array('class' => 'outs-3 hvr-radial-out')); ?></div>
                                                                 <div class="head-2"><?php echo CHtml::link('edit', array('Products/EditProduct', 'id' => $product->id), array('class' => 'outs-3 hvr-radial-out')); ?></div>
+                                                                <div class="head-2"><?php echo CHtml::link('clone', array('Products/CloneProduct', 'id' => $product->id), array('class' => 'outs-3 hvr-radial-out')); ?></div>
+
                                                                 <div class="head-2"><?php echo CHtml::link('delete', array('Products/DeleteProduct', 'id' => $product->id), array('class' => 'outs-3 hvr-radial-out delete_product')); ?></div>
+
                                                         </div>
                                                 <?php } ?>
                                         </div>

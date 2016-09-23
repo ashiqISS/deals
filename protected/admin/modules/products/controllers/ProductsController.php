@@ -351,11 +351,12 @@ class ProductsController extends Controller {
                         $image = CUploadedFile::getInstance($model, 'main_image');
                         $hover_image = CUploadedFile::getInstance($model, 'hover_image');
                         $images = CUploadedFile::getInstancesByName('gallery_images');
-                        if (!empty($images)) {
+                        if (!empty($image)) {
                                 $model->main_image = $image->extensionName;
                         } else {
                                 $model->main_image = $image1;
                         }
+
                         $model->hover_image = $hover_image->extensionName;
 
 

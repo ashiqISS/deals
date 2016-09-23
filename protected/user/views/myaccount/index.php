@@ -228,7 +228,7 @@
                                         <?php if (Yii::app()->session['merchant']) { ?>
                                                 <?php if (!empty($sale)) { ?>
 
-                                                        <span class="recentorders">Recent sale report</span>
+                                                        <span class="recentorders">Recent Orders</span>
                                                         <div class="comm">
 
                                                                 <div class="commission-1">

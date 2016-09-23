@@ -66,6 +66,18 @@ if (Yii::app()->controller->action->id == 'index') {
 } else if (Yii::app()->controller->action->id == 'UserOrderDetail') {
         $name = 'Order Details';
         $action = 'Myaccount/UserOrderDetail';
+} else if (Yii::app()->controller->action->id == 'MerchantPlanDetail') {
+        $name = 'Your Plan Details';
+        $action = 'Myaccount/MerchantPlanDetail';
+} else if (Yii::app()->controller->action->id == 'PlanDetail') {
+        $name = 'Plan In Details';
+        $action = 'Myaccount/PlanDetail';
+} else if (Yii::app()->controller->action->id == 'TaxClasses') {
+        $name = 'Tax Classes';
+        $action = 'Myaccount/TaxClasses';
+} else if (Yii::app()->controller->action->id == 'NewTaxClasses') {
+        $name = 'Add New Tax Classes';
+        $action = 'Myaccount/NewTaxClasses';
 }
 ?>
 <section class="title">
@@ -94,9 +106,9 @@ if (Yii::app()->controller->action->id == 'index') {
                                 <?php } ?>
                                 <h4 style="margin: 0px; font-size: 14px;" class="pull-right"><?php
                                         if (isset(Yii::app()->session['merchant'])) {
-                                                echo 'You Are logged in as Merchant';
+                                                echo 'You Are logged in as <strong>Merchant</strong>' . Yii::app()->session['merchant']['id'];
                                         } else if (isset(Yii::app()->session['user'])) {
-                                                echo 'You Are logged in as User';
+                                                echo 'You Are logged in as <strong>User</strong>';
                                         }
                                         ?></h4>
                         </ul>
