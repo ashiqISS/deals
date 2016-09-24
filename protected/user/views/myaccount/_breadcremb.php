@@ -78,6 +78,9 @@ if (Yii::app()->controller->action->id == 'index') {
 } else if (Yii::app()->controller->action->id == 'NewTaxClasses') {
         $name = 'Add New Tax Classes';
         $action = 'Myaccount/NewTaxClasses';
+} else if (Yii::app()->controller->action->id == 'MyRewards') {
+        $name = 'Reward Points';
+        $action = 'Myaccount/MyRewards';
 }
 ?>
 <section class="title">
@@ -96,21 +99,21 @@ if (Yii::app()->controller->action->id == 'index') {
                         <ul class="breadcrumb">
                                 <li><a href="javascript:void(0)"><i class="fa hom fa-home"></i></a></li>
                                 <li><?php
-                                        if (Yii::app()->session['user_type_usrid'] == 2)
-                                                echo CHtml::link('Dashboard', array('Myaccount/index/type/vendor'));
-                                        else
-                                                echo CHtml::link('Dashboard', array('Myaccount/index/type/user'));
-                                        ?></li>
-                                <?php if (Yii::app()->controller->action->id != 'index') { ?>
+if (Yii::app()->session['user_type_usrid'] == 2)
+        echo CHtml::link('Dashboard', array('Myaccount/index/type/vendor'));
+else
+        echo CHtml::link('Dashboard', array('Myaccount/index/type/user'));
+?></li>
+                                        <?php if (Yii::app()->controller->action->id != 'index') { ?>
                                         <li><span class="last">  <?php echo $name ?></span></li>
                                 <?php } ?>
                                 <h4 style="margin: 0px; font-size: 14px;" class="pull-right"><?php
-                                        if (isset(Yii::app()->session['merchant'])) {
-                                                echo 'You Are logged in as <strong>Merchant</strong>' . Yii::app()->session['merchant']['id'];
-                                        } else if (isset(Yii::app()->session['user'])) {
-                                                echo 'You Are logged in as <strong>User</strong>';
-                                        }
-                                        ?></h4>
+                                if (isset(Yii::app()->session['merchant'])) {
+                                        echo 'You Are logged in as <strong>Merchant</strong>' . Yii::app()->session['merchant']['id'];
+                                } else if (isset(Yii::app()->session['user'])) {
+                                        echo 'You Are logged in as <strong>User</strong>';
+                                }
+                                ?></h4>
                         </ul>
 
 

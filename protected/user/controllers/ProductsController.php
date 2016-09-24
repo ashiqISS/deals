@@ -665,16 +665,18 @@ class ProductsController extends Controller {
 
                         if ($model->save(false)) {
                                 if (isset($_POST['ProductFeatures'])) {
-                                        if (isset($_POST['ProductFeatures'])) {
-                                                $desc = $_POST['ProductFeatures']['feature_disc'];
-                                                $heading = $_POST['ProductFeatures']['feature_heading'];
-                                                for ($i = 0; $i < count($desc); $i++) {
-                                                        $features = new ProductFeatures;
-                                                        $features->product_id = $model->id;
-                                                        $features->feature_disc = $desc[$i];
-                                                        $features->feature_heading = $heading[$i];
-                                                        $features->save(false);
-                                                }
+                                        $desc = $_POST['ProductFeatures']['feature_disc'];
+                                        $heading = $_POST['ProductFeatures']['feature_heading'];
+                                        $exfeature = ProductFeatures::model()->findByAttributes(array('product_id' => $model->id));
+                                        if (!empty($exfeature)) {
+                                                $exfeature->deleteAll();
+                                        }
+                                        for ($i = 0; $i < count($desc); $i++) {
+                                                $features = new ProductFeatures;
+                                                $features->feature_disc = $desc[$i];
+                                                $features->product_id = $model->id;
+                                                $features->feature_heading = $heading[$i];
+                                                $features->save(false);
                                         }
                                 }
                                 if ($image != "") {
