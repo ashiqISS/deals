@@ -282,8 +282,6 @@ class CheckoutController extends Controller {
                                         $model = Order::model()->findByPk(Yii::app()->session['orderid']);
                                         $model->payment_mode = $_POST['payment_option'];
                                         if ($model->save(false)) {
-                                                $this->SuccessOrderMail($model);
-                                                $this->SuccessMailAdmin($model);
                                                 $this->redirect(array('Checkout/Confirm'));
                                         }
                                 }
@@ -332,45 +330,6 @@ class CheckoutController extends Controller {
                         }
                 } else {
                         $this->redirect(array('Cart/Mycart'));
-                }
-        }
-
-        public function SuccessOrderMail($model) {
-                $user = BuyerDetails::model()->findByPk(Yii::app()->session['user']['id']);
-                Yii::import('user.extensions.yii-mail.YiiMail');
-                $message = new YiiMailMessage;
-                $message->view = "_order_mail";
-                $params = array('model' => $model);
-                $message->subject = 'Welcome To Dealsonindia';
-                $message->setBody($params, 'text/html');
-                $message->addTo($user->email);
-//                $message->addTo($model->email);
-                $message->from = 'dealsonindia@intersmart.in';
-                if (Yii::app()->mail->send($message)) {
-//            echo 'message send';
-//            exit;
-                } else {
-                        echo 'message not send';
-                        exit;
-                }
-        }
-
-        public function SuccessMailAdmin($model) {
-                $email = AdminSettings::model()->findByAttributes(array('status' => 1), array('limit' => 1));
-                Yii::import('user.extensions.yii-mail.YiiMail');
-                $message = new YiiMailMessage;
-                $message->view = "_admin_order_mail";
-                $params = array('model' => $model);
-                $message->subject = 'Dealsonindia';
-                $message->setBody($params, 'text/html');
-                $message->addTo($email->email);
-                $message->from = 'dealsonindia@intersmart.in';
-                if (Yii::app()->mail->send($message)) {
-//            echo 'message send';
-//            exit;
-                } else {
-                        echo 'message not send';
-                        exit;
                 }
         }
 
@@ -431,6 +390,13 @@ class CheckoutController extends Controller {
         }
 
         public function actionSuccess() {
+                $model = Order::model()->findByPk(Yii::app()->session['orderid']);
+                $user = BuyerDetails::model()->findByPk($model->user_id);
+                $bill_address = AddressBook::model()->findByAttributes(array('id' => $model->bill_address_id, 'user_id' => $model->user_id));
+                $ship_address = AddressBook::model()->findByAttributes(array('id' => $model->ship_address_id, 'user_id' => $model->user_id));
+                $order_details = OrderProducts::model()->findAllByAttributes(array('order_id' => $model->id));
+                $this->SuccessOrderMail($model, $user, $bill_address, $ship_address, $order_details);
+                $this->SuccessMailAdmin($model, $user, $bill_address, $ship_address, $order_details);
                 $checkout_exist = Checkout::model()->findByAttributes(array('session_id' => Yii::app()->session['temp_user']));
                 $varification = BuyerDetails::model()->findByAttributes(array('id' => Yii::app()->session['user']['id']))->email_verification;
                 if ($varification != 1) {
@@ -460,6 +426,7 @@ class CheckoutController extends Controller {
 
 
                 if (isset(Yii::app()->session['orderid'])) {
+
                         Order::model()->updateAll(array("status" => 1, "payment_status" => 1, "DOC" => date('Y-m-d H:i:s')), 'id=' . Yii::app()->session['orderid']);
 
 
@@ -492,6 +459,45 @@ class CheckoutController extends Controller {
                         $this->render('success');
                 } else {
                         $this->redirect(array('Cart/Mycart'));
+                }
+        }
+
+        public function SuccessOrderMail($model, $user, $bill_address, $ship_address, $order_details) {
+//                $user = BuyerDetails::model()->findByPk(Yii::app()->session['user']['id']);
+                Yii::import('user.extensions.yii-mail.YiiMail');
+                $message = new YiiMailMessage;
+                $message->view = "_order_mail";
+                $params = array('model' => $model, 'userdetails' => $user, 'bill_address' => $bill_address, 'user_address' => $ship_address, 'order_details' => $order_details);
+                $message->subject = 'Welcome To Dealsonindia';
+                $message->setBody($params, 'text/html');
+//                $message->addTo($user->email);
+                $message->addTo('siyad@intersmart.in');
+                $message->from = 'dealsonindia@intersmart.in';
+                if (Yii::app()->mail->send($message)) {
+//            echo 'message send';
+//            exit;
+                } else {
+                        echo 'message not send';
+                        exit;
+                }
+        }
+
+        public function SuccessMailAdmin($model, $user, $bill_address, $ship_address, $order_details) {
+                $email = AdminSettings::model()->findByAttributes(array('status' => 1), array('limit' => 1));
+                Yii::import('user.extensions.yii-mail.YiiMail');
+                $message = new YiiMailMessage;
+                $message->view = "_admin_order_mail";
+                $params = array('model' => $model, 'userdetails' => $user, 'bill_address' => $bill_address, 'user_address' => $ship_address, 'order_details' => $order_details);
+                $message->subject = 'Dealsonindia';
+                $message->setBody($params, 'text/html');
+                $message->addTo($email->email);
+                $message->from = 'dealsonindia@intersmart.in';
+                if (Yii::app()->mail->send($message)) {
+//            echo 'message send';
+//            exit;
+                } else {
+                        echo 'message not send';
+                        exit;
                 }
         }
 

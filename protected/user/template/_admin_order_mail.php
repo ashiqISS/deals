@@ -11,38 +11,164 @@
                 <tr>
                     <td><a href="http://dealsonindia.com"><img src="<?php echo $this->siteURL(); ?>/images/admin-logo.png" width="776" height="102" alt=""></a></td>
                 </tr>
+
                 <tr>
-                    <td>
-                        <div style="padding: 2em">
-                            <br>
-                            Hi Admin<br><br>
-                            <?php $user = BuyerDetails::model()->findByPk($model->user_id); ?>
-                            The Order Details of <?php echo $user->first_name . ' ' . $user->last_name ?>, with Order Id : <?php echo $model->id ?> and Total Amount of : Rs:<?php echo $model->total_amount ?>
-
-                            <table  border="1">
-                                <tr>
-                                    <th>Product</th>
-                                    <th>Quantity</th>
-                                    <th>Amount</th>
-                                </tr>
-                                <tr>
-                                    <?php
-                                    $details = OrderProducts::model()->findAllByAttributes(array('order_id' => $model->id));
-                                    foreach ($details as $detail) {
-                                            $product = Products::model()->findByPk($detail->product_id);
-                                            ?>
-                                            <td><?php echo $product->product_name ?></td>
-                                            <td><?php echo $detail->quantity ?></td>
-                                            <td><?php echo $detail->amount ?></td>
-                                    <?php } ?>
-                                </tr>
-                            </table>
-
-
-                        </div>
+                    <td valign="top">
+                        <h1 style="font-size:22px;font-weight:normal;line-height:22px;margin:13px 0 12px 9px;text-align:left;">Hello, User
+                            <span style="float: right;font-size: 13px;padding: 10px;font-weight: bold; padding-top: 0px;">Order ID #<?php echo $model->id; ?></span>
+                        </h1>
+                        <p style="font-size:13px;line-height:16px;margin: 0px 12px 8px 9px;text-align:left;">
+                            A order from   <?php echo $userdetails->first_name; ?>   <?php echo $userdetails->last_name; ?>  <small>(placed on <?php
+                                echo
+                                date("F d , Y", strtotime($model->order_date));
+                                ?>)</small>
+                        </p>
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <table cellspacing="0" cellpadding="0" border="0" width="776" style="    font-family: 'Open Sans',arial, sans-serif;font-size: 13px;">
+                            <thead>
+                                <tr>
+                                    <th align="left" width="325" bgcolor="#EAEAEA" style="    font-family: 'Open Sans',arial, sans-serif;font-size:13px;padding:5px 9px 6px 9px;line-height:1em">Billing Information:</th>
+                                    <th width="10"></th>
+                                    <th align="left" width="325" bgcolor="#EAEAEA" style="font-family:'Open Sans',arial, sans-serif;font-size:13px;padding:5px 9px 6px 9px;line-height:1em">Payment Method:</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td valign="top" style="font-size:13px;padding:7px 9px 9px 9px;border-left:1px solid #eaeaea;border-bottom:1px solid #eaeaea;border-right:1px solid #eaeaea">
+                                        <?php echo $bill_address->name; ?>  <br>
 
+                                        <?php echo $bill_address->address_line_1; ?> <br>
+                                        <?php echo $bill_address->pincode; ?><br>
+
+
+                                        <?php echo $bill_address->state; ?><br>
+
+                                        <?php
+//                                        echo $shiping_charge->country;
+                                        ?>
+
+
+
+                                    </td>
+                                    <td>&nbsp;</td>
+                                    <td valign="top" style="font-family: 'Open Sans',arial, sans-serif;font-size:12px;padding:7px 9px 9px 9px;border-left:1px solid #eaeaea;border-bottom:1px solid #eaeaea;border-right:1px solid #eaeaea">
+                                        <p style="text-transform: uppercase;font-weight: bold;padding-top:20px;">pay via Cash On Delivery</p>
+
+
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br>
+
+                        <table cellspacing="0" cellpadding="0" border="0" width="776" style="    font-family: 'Open Sans',arial, sans-serif;font-size: 13px;">
+                            <thead>
+                                <tr>
+                                    <th align="left" width="364" bgcolor="#EAEAEA" style="font-family:'Open Sans',arial, sans-serif;font-size:13px;padding:5px 9px 6px 9px;line-height:1em">Shipping Information:</th>
+                                    <th width="10"></th>
+                                    <th align="left" width="364" bgcolor="#EAEAEA" style="font-family:'Open Sans',arial, sans-serif;font-size:13px;padding:5px 9px 6px 9px;line-height:1em">Shipping Rate:</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td valign="top" style="font-size:13px;padding:7px 9px 9px 9px;border-left:1px solid #eaeaea;border-bottom:1px solid #eaeaea;border-right:1px solid #eaeaea">
+                                        <?php echo $user_address->name; ?><br>
+
+                                        <?php echo $user_address->address_line_1; ?> <br>
+                                        <?php echo $user_address->pincode; ?><br>
+
+
+                                        <?php echo $user_address->state; ?> <br>
+
+
+
+                                        &nbsp;
+                                    </td>
+                                    <td>&nbsp;</td>
+                                    <td valign="top" style="font-size:13px;padding:7px 9px 9px 9px;border-left:1px solid #eaeaea;border-bottom:1px solid #eaeaea;border-right:1px solid #eaeaea">
+
+                                        Shipping Rate: 2.00 AED
+                                        &nbsp;
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                        <table cellspacing="0" cellpadding="0" border="0" width="776" style="border:1px solid #eaeaea;font-family: 'Open Sans',arial, sans-serif;">
+                            <thead>
+                                <tr>
+                                    <th align="left" bgcolor="#EAEAEA" style="font-size:13px;padding:3px 9px">Item</th>
+                                    <th align="left" bgcolor="#EAEAEA" style="font-size:13px;padding:3px 9px">Code</th>
+                                    <th align="center" bgcolor="#EAEAEA" style="font-size:13px;padding:3px 9px">Qty</th>
+                                    <th align="right" bgcolor="#EAEAEA" style="font-size:13px;padding:3px 9px">Subtotal</th>
+                                </tr>
+                            </thead>
+
+                            <tbody bgcolor="#F6F6F6">
+                                <?php
+                                foreach ($order_details as $orders) {
+                                        $product_names = Products::model()->findByAttributes(array('id' => $orders->product_id));
+                                        ?>
+                                        <tr>
+                                            <td align="left" valign="top" style="font-size:11px;padding:3px 9px;padding-top:10px; padding-bottom:10px;border-bottom:1px dotted #cccccc;">
+                                                <strong style="font-size:11px;text-transform: uppercase;"><?php echo $product_names->product_name; ?></strong>
+
+                                            </td>
+                                            <td align="left" valign="top" style="font-size:11px;padding:3px 9px;padding-top:10px;"><?php echo $product_names->product_code; ?></td>
+                                            <td align="center" valign="top" style="font-size:11px;padding:3px 9px;padding-top:10px;"><?php echo $orders->quantity; ?></td>
+                                            <td align="right" valign="top" style="font-size:11px;padding:3px 9px;padding-top:10px;">
+
+
+                                                <span><?php echo $orders->amount; ?> AED</span>                                        </td>
+                                        </tr>
+
+                                        <?php
+                                }
+                                ?>
+                                <tr>
+                                    <?php
+                                    foreach ($order_details as $total_order) {
+                                            $totorder += $total_order->amount;
+                                    }
+
+                                    foreach ($order_details as $giftoption) {
+                                            $totgift += $giftoption->rate;
+                                    }
+                                    $granttotal = $totgift + $totorder;
+                                    $total = $granttotal + 2.00;
+                                    ?>
+                                    <td colspan="3" align="right" style="padding:13px 9px 0 0;font-size:13px;">
+                                        Subtotal                    </td>
+                                    <td align="right" style="padding:13px 9px 0 0;font-size:13px;">
+                                        <span><?php echo $granttotal; ?> AED</span>                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" align="right" style="padding:3px 9px;font-size:13px;">
+                                        Shipping &amp; Handling                    </td>
+                                    <td align="right" style="padding:3px 9px;font-size:13px;">
+                                        <span><?php echo 2.00; ?> AED</span>                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" align="right" style="padding:3px 9px 13px 0;font-size:13px;">
+                                        <strong>Grand Total</strong>
+                                    </td>
+                                    <td align="right" style="padding:3px 9px 13px 0;font-size:13px;">
+                                        <strong><span><?php echo $total; ?> AED</span></strong>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <br>
+                        <p style="font-size:12px;margin:0 0 10px 0"></p>
+                    </td>
+                </tr>
+                <!--                            Thanks & Regards<br>
+                                            Dealsonindia Team-->
                 <tr>
                     <td style="padding:20px;  border:solid 1px #d7d7d7;"><table width="100%" border="0" cellspacing="0" cellpadding="0">
                             <tbody>
