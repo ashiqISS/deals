@@ -182,6 +182,7 @@ class Products extends CActiveRecord {
                     'UB' => 'Ub',
                     'DOC' => 'Doc',
                     'DOU' => 'Dou',
+                    'wholesale_quantity' => 'Wholesale Quantity',
                 );
         }
 
@@ -238,6 +239,7 @@ class Products extends CActiveRecord {
                 $criteria->compare('discount_rate', $this->discount_rate);
                 $criteria->compare('deal_price', $this->deal_price);
                 $criteria->compare('quantity', $this->quantity);
+                $criteria->compare('wholesale_quantity', $this->wholesale_quantity);
                 $criteria->compare('requires_shipping', $this->requires_shipping);
                 $criteria->compare('shipping_rate', $this->shipping_rate);
                 $criteria->compare('enquiry_sale', $this->enquiry_sale);

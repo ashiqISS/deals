@@ -148,6 +148,7 @@ class ProductsController extends Controller {
                         $model->special_price_from = $_POST['Products']['special_price_from'];
                         $model->special_price_to = $_POST['Products']['special_price_to'];
                         $model->deal_location = $_POST['Products']['deal_location'];
+                        $model->wholesale_quantity = $_POST['Products']['wholesale_quantity'];
                         $model->DOC = $_POST['Products']['DOC'];
                         $model->DOU = $_POST['Products']['DOU'];
                         $model->DOC = date('Y-m-d H:i:s');
@@ -346,6 +347,7 @@ class ProductsController extends Controller {
                         $model->deal_location = $_POST['Products']['deal_location'];
                         $model->special_price_from = $_POST['Products']['special_price_from'];
                         $model->special_price_to = $_POST['Products']['special_price_to'];
+                        $model->wholesale_quantity = $_POST['Products']['wholesale_quantity'];
                         $model->DOC = $doc;
 
                         $image = CUploadedFile::getInstance($model, 'main_image');

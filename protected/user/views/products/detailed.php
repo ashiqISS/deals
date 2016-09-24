@@ -265,7 +265,7 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
                                         </div>
 
                                         <div class="detail">
-                                                <div class="detail-1">
+                                                <div class="detail-4">
                                                         <span class="sans"><?php if ($products->merchant_id != 0) { ?>
                                                                         Soled By <strong><a href="<?php echo yii::app()->request->baseUrl; ?>/index.php/Products/Seller/id/<?php echo $products->merchant_id; ?>"><?php echo Merchant::model()->findByPk($products->merchant_id)->shop_name; ?></a></strong>
                                                                 <?php } else {
@@ -348,7 +348,14 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
                                                         for ($i = 1; $i <= $k; $i++) {
                                                                 ?>
                                                                 <li><i class="fa stars fa-star-o"></i></li>
-                                                        <?php } ?>
+                                                        <?php }
+                                                        ?>
+                                                        <?php
+                                                        if ($total_rating == 0) {
+                                                                echo '(Not Yet Rated)';
+                                                        }
+                                                        ?>
+
                                                 </ul>
                                         </div>
                                         <?php if (Yii::app()->session['user']['id'] != '') { ?>
@@ -384,24 +391,24 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
                         </div>
                 </div>
 
-
-                <div class="row">
-                        <div class="col-xs-12">
-                                <h1>Technical Details</h1>
-                        </div>
-                        <?php foreach ($product_features as $product_feature) { ?>
-                                <div class="col-xs-12 col-sm-6">
-                                        <div class="ink">
-                                                <div class="ins1"><?php echo $product_feature->feature_heading; ?></div>
-                                                <div class="ins2"><?php echo $product_feature->feature_disc; ?></div>
-                                        </div>
+                <?php if (!empty($product_features)) { ?>
+                        <div class="row">
+                                <div class="col-xs-12">
+                                        <h1>Product Features</h1>
                                 </div>
-                        <?php } ?>
+                                <?php foreach ($product_features as $product_feature) { ?>
+                                        <div class="col-xs-12 col-sm-6">
+                                                <div class="ink">
+                                                        <div class="ins1"><?php echo $product_feature->feature_heading; ?></div>
+                                                        <div class="ins2"><?php echo $product_feature->feature_disc; ?></div>
+                                                </div>
+                                        </div>
+                                <?php } ?>
 
 
-                </div>
+                        </div>
 
-
+                <?php } ?>
 
 
 

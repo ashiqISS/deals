@@ -10,7 +10,35 @@ class DiscountPrice extends CApplicationComponent {
                         $value = $this->DiscountType($model);
                         return Yii::app()->Currency->convert($value);
                 } else {
-                        return Yii::app()->Currency->convert($model->price);
+                        $value = $this->WithoutDiscountType($model);
+                        return Yii::app()->Currency->convert($value);
+                }
+        }
+
+        public function DiscountCartUnit($model, $qty) {
+
+                //discount rate value not equal to null//
+
+                if ($model->is_discount_available == 1) {
+                        $value = $this->DiscountType($model);
+                        return Yii::app()->Currency->convert($value);
+                } else {
+                        if ($model->wholesale_quantity != 0) {
+                                if ($qty >= $model->wholesale_quantity) {
+                                        $tax_only = Yii::app()->Discount->Taxonly($model, $model->wholesale_price);
+                                        $totalprice = $tax_only + $model->wholesale_price;
+
+                                        return Yii::app()->Currency->convert($totalprice);
+                                } else {
+                                        $tax_only = Yii::app()->Discount->Taxonly($model, $model->price);
+                                        $totalprice = $tax_only + $model->price;
+                                        return Yii::app()->Currency->convert($totalprice);
+                                }
+                        } else {
+                                $tax_only = Yii::app()->Discount->Taxonly($model, $model->price);
+                                $totalprice = $tax_only + $model->price;
+                                return Yii::app()->Currency->convert($totalprice);
+                        }
                 }
         }
 
@@ -22,6 +50,7 @@ class DiscountPrice extends CApplicationComponent {
                         $value = $this->DiscountExtax($model);
                         return Yii::app()->Currency->convert($value);
                 } else {
+
                         return Yii::app()->Currency->convert($model->price);
                 }
         }
@@ -35,8 +64,25 @@ class DiscountPrice extends CApplicationComponent {
                         $newvalue = $value * $qty;
                         return Yii::app()->Currency->convert($newvalue);
                 } else {
-                        $newvalue = $model->price * $qty;
-                        return Yii::app()->Currency->convert($model->price);
+                        if ($model->wholesale_quantity != 0) {
+                                if ($qty >= $model->wholesale_quantity) {
+                                        $tax_only = Yii::app()->Discount->Taxonly($model, $model->wholesale_price);
+                                        $totalprice = $tax_only + $model->wholesale_price;
+                                        $newvalue = $totalprice * $qty;
+
+                                        return Yii::app()->Currency->convert($newvalue);
+                                } else {
+                                        $tax_only = Yii::app()->Discount->Taxonly($model, $model->price);
+                                        $totalprice = $tax_only + $model->price;
+                                        $newvalue = $totalprice * $qty;
+                                        return Yii::app()->Currency->convert($newvalue);
+                                }
+                        } else {
+                                $tax_only = Yii::app()->Discount->Taxonly($model, $model->price);
+                                $totalprice = $tax_only + $model->price;
+                                $newvalue = $totalprice * $qty;
+                                return Yii::app()->Currency->convert($newvalue);
+                        }
                 }
         }
 
@@ -49,6 +95,85 @@ class DiscountPrice extends CApplicationComponent {
                 } else {
                         return $model->price;
                 }
+        }
+
+        public function Granttotal() {
+                if (isset(Yii::app()->session['user']['id'])) {
+                        $cart_items = cart::model()->findAllByAttributes(array('user_id' => Yii::app()->session['user']['id']));
+                        $user_id = Yii::app()->session['user']['id'];
+                        if (isset(Yii::app()->session['temp_user'])) {
+                                $condition = "user_id = " . $user_id . " AND session_id = " . Yii::app()->session['temp_user'];
+                        } else {
+                                Yii::app()->session['temp_user'] = microtime(true);
+                                $condition = "user_id = " . $user_id . " AND session_id = " . Yii::app()->session['temp_user'];
+                        }
+                } else if (isset(Yii::app()->session['temp_user'])) {
+                        $cart_items = cart::model()->findAllByAttributes(array('session_id' => Yii::app()->session['temp_user']));
+                        $user_id = Yii::app()->session['temp_user'];
+                        $condition = "session_id = " . $user_id;
+                }
+                $coupon = CouponHistory::model()->find(array('condition' => $condition));
+                if (!empty($coupon)) {
+                        $coupen_details = Coupons::model()->findByPk($coupon->coupon_id);
+                        $coupon_amount = Coupons::model()->findByPk($coupon->coupon_id)->discount;
+                } else {
+                        $coupen_details = NULL;
+                        $coupon_amount = 0;
+                }
+
+                foreach ($cart_items as $cart_item) {
+                        $product = Products::model()->findByPk($cart_item->product_id);
+                        if ($product->is_discount_available == 1) {
+                                $price = Yii::app()->Discount->DiscountType($product);
+                                $subtotal += ($price * $cart_item->quantity);
+                        } else {
+                                if ($product->wholesale_quantity != 0) {
+                                        if ($cart_item->quantity >= $product->wholesale_quantity) {
+                                                $tax_only += Yii::app()->Discount->Taxonly($product, $product->wholesale_price);
+                                                $totalprice = $tax_only + $product->wholesale_price;
+                                                $subtotal += ($totalprice * $cart_item->quantity);
+                                        } else {
+                                                $tax_only += Yii::app()->Discount->Taxonly($product, $product->price);
+                                                $totalprice = $tax_only + $product->price;
+                                                $subtotal += ($totalprice * $cart_item->quantity);
+                                        }
+                                } else {
+                                        $tax_only += Yii::app()->Discount->Taxonly($product, $product->price);
+                                        $totalprice = $tax_only + $product->price;
+                                        $subtotal += ($totalprice * $cart_item->quantity);
+                                }
+                        }
+                }
+                return $subtotal - $coupon_amount + Yii::app()->Shipping->Calculate();
+        }
+
+        public function Subtotal() {
+                if (isset(Yii::app()->session['user']['id'])) {
+                        $cart = cart::model()->findAllByAttributes(array('user_id' => Yii::app()->session['user']['id']));
+                } else {
+                        $cart = cart::model()->findAllByAttributes(array('session_id' => Yii::app()->session['temp_user']));
+                }
+                foreach ($cart as $cart_item) {
+                        $product = Products::model()->findByPk($cart_item->product_id);
+                        if ($product->is_discount_available == 1) {
+                                $price = Yii::app()->Discount->DiscountExtax($product);
+                                $subtotal += ($price * $cart_item->quantity);
+                        } else {
+                                if ($product->wholesale_quantity != 0) {
+                                        if ($cart_item->quantity >= $product->wholesale_quantity) {
+                                                $price = $product->wholesale_price;
+                                                $subtotal += ($price * $cart_item->quantity);
+                                        } else {
+                                                $price = $product->price;
+                                                $subtotal += ($price * $cart_item->quantity);
+                                        }
+                                } else {
+                                        $price = $product->price;
+                                        $subtotal += ($price * $cart_item->quantity);
+                                }
+                        }
+                }
+                return $subtotal;
         }
 
         public function DiscountExtax($data) {
@@ -84,7 +209,24 @@ class DiscountPrice extends CApplicationComponent {
                         $product = Products::model()->findByPk($cart_item->product_id);
                         $tax_class = $product->tax;
                         $tax_details = explode(',', MasterTaxClass::model()->findByPk($tax_class)->tax_rate);
-                        $price = Yii::app()->Discount->DiscountExtax($product);
+
+
+                        if ($product->is_discount_available == 1) {
+                                $price = Yii::app()->Discount->DiscountExtax($product);
+                        } else {
+                                if ($product->wholesale_quantity != 0) {
+                                        if ($cart_item->quantity >= $product->wholesale_quantity) {
+                                                $price = $product->wholesale_price;
+                                        } else {
+                                                $price = $product->price;
+                                        }
+                                } else {
+                                        $price = $product->price;
+                                }
+                        }
+//
+//
+//                        $price = Yii::app()->Discount->WithoutDiscountType($product);
                         $subtotal += ($price * $cart_item->quantity);
                         foreach ($tax_details as $key => $val) {
                                 $taxcalc = MaterTaxRates::model()->findByPk($val);
@@ -152,6 +294,46 @@ class DiscountPrice extends CApplicationComponent {
                         }
                 }
                 return $discountRate;
+        }
+
+        public function Taxonly($data, $price) {
+
+                if ($data->tax != 0) {
+
+                        $tax_exist = MasterTaxClass::model()->findByPk($data->tax);
+                        if (!empty($tax_exist)) {
+
+//                                $tax_rates = $tax_exist->tax_rate;
+                                $tax_rates = MaterTaxRates::model()->findAll(array("condition" => "id IN($tax_exist->tax_rate)"));
+                                if (!empty($tax_rates)) {
+
+                                        foreach ($tax_rates as $tax_rate) {
+                                                if ($tax_rate->type == 1) {
+                                                        $total_per += $tax_rate->tax_rate;
+                                                } else if ($tax_rate->type == 2) {
+                                                        $total_fixed += $tax_rate->tax_rate;
+                                                }
+                                        }
+
+                                        $total_per_tax = ($total_per * $price ) / 100;
+                                        $final_tax = $total_per_tax + $total_fixed;
+                                } else {
+                                        $final_tax = 0;
+                                }
+                        }
+                } else {
+                        $final_tax = 0;
+                }
+                return $final_tax;
+        }
+
+        public function WithoutDiscountType($data) {
+                date_default_timezone_set('Asia/Kolkata');
+                $date = date('Y-m-d');
+                $discountRate = $data->price;
+                $total_tax_amount = Yii::app()->Discount->Taxonly($data, $data->price);
+                $total_amount = $discountRate + $total_tax_amount;
+                return $total_amount;
         }
 
         public function checks($model) {

@@ -477,13 +477,22 @@ if (!$model->isNewRecord) {
                         <?php echo $form->error($model, 'wholesale_price'); ?>
                 </div>
         </div>
+        <div class="form-group">
+                <div class="col-sm-2 control-label">
+                        <?php echo $form->labelEx($model, 'wholesale_quantity'); ?>
+                </div>
+                <div class="col-sm-10">
+                        <?php echo $form->textField($model, 'wholesale_quantity', array('class' => 'form-control')); ?>
+                        <?php echo $form->error($model, 'wholesale_quantity'); ?>
+                </div>
+        </div>-
 
         <div class="form-group">
                 <div class="col-sm-2 control-label">
                         <?php echo $form->labelEx($model, 'is_discount_available'); ?>
                 </div>
                 <div class="col-sm-10">
-                        <?php echo $form->dropDownList($model, 'is_discount_available', array('1' => "Yes", '0' => "No"), array('class' => 'form-control')); ?>
+                        <?php echo $form->dropDownList($model, 'is_discount_available', array('0' => "No", '1' => "Yes"), array('class' => 'form-control')); ?>
                         <?php echo $form->error($model, 'is_discount_available'); ?>
                 </div>
         </div>
@@ -508,25 +517,25 @@ if (!$model->isNewRecord) {
                 </div>
         </div>
 
-        <div class="form-group">
+        <!--<div class="form-group">
                 <div class="col-sm-2 control-label">
-                        <?php echo $form->labelEx($model, 'discount_rate'); ?>
+        <?php echo $form->labelEx($model, 'discount_rate'); ?>
                 </div>
                 <div class="col-sm-10">
-                        <?php echo $form->textField($model, 'discount_rate', array('class' => 'form-control')); ?>
-                        <?php echo $form->error($model, 'discount_rate'); ?>
+        <?php echo $form->textField($model, 'discount_rate', array('class' => 'form-control')); ?>
+        <?php echo $form->error($model, 'discount_rate'); ?>
                 </div>
-        </div>
+        </div>-->
 
-        <div class="form-group">
-                <div class="col-sm-2 control-label">
-                        <?php echo $form->labelEx($model, 'deal_price'); ?>
-                </div>
-                <div class="col-sm-10">
-                        <?php echo $form->textField($model, 'deal_price', array('class' => 'form-control')); ?>
-                        <?php echo $form->error($model, 'deal_price'); ?>
-                </div>
-        </div>
+        <!-- <div class="form-group">
+                 <div class="col-sm-2 control-label">
+        <?php echo $form->labelEx($model, 'Admin Deal Price'); ?>
+                 </div>
+                 <div class="col-sm-10">
+        <?php echo $form->textField($model, 'deal_price', array('class' => 'form-control')); ?>
+        <?php echo $form->error($model, 'deal_price'); ?>
+                 </div>
+         </div>-->
 
         <div class="form-group">
                 <div class="col-sm-2 control-label">
@@ -558,15 +567,15 @@ if (!$model->isNewRecord) {
                 </div>
         </div>
 
-        <div class="form-group">
-                <div class="col-sm-2 control-label">
-                        <?php echo $form->labelEx($model, 'enquiry_sale'); ?>
-                </div>
-                <div class="col-sm-10">
-                        <?php echo $form->textField($model, 'enquiry_sale', array('class' => 'form-control')); ?>
-                        <?php echo $form->error($model, 'enquiry_sale'); ?>
-                </div>
-        </div>
+        <!--   <div class="form-group">
+                   <div class="col-sm-2 control-label">
+        <?php echo $form->labelEx($model, 'enquiry_sale'); ?>
+                   </div>
+                   <div class="col-sm-10">
+        <?php echo $form->textField($model, 'enquiry_sale', array('class' => 'form-control')); ?>
+        <?php echo $form->error($model, 'enquiry_sale'); ?>
+                   </div>
+           </div>-->
 
         <div class="form-group">
                 <div class="col-sm-2 control-label">
@@ -758,15 +767,15 @@ if (!$model->isNewRecord) {
                 </div>
         </div>
 
-        <div class="form-group">
-                <div class="col-sm-2 control-label">
-                        <?php echo $form->labelEx($model, 'gift_option'); ?>
-                </div>
-                <div class="col-sm-10">
-                        <?php echo $form->dropDownList($model, 'gift_option', array('1' => "Yes", '0' => "No"), array('class' => 'form-control')); ?>
-                        <?php echo $form->error($model, 'gift_option'); ?>
-                </div>
-        </div>
+        <!-- <div class="form-group">
+                 <div class="col-sm-2 control-label">
+        <?php echo $form->labelEx($model, 'gift_option'); ?>
+                 </div>
+                 <div class="col-sm-10">
+        <?php echo $form->dropDownList($model, 'gift_option', array('1' => "Yes", '0' => "No"), array('class' => 'form-control')); ?>
+        <?php echo $form->error($model, 'gift_option'); ?>
+                 </div>
+         </div>-->
 
         <div class="form-group">
                 <div class="col-sm-2 control-label">
@@ -778,25 +787,25 @@ if (!$model->isNewRecord) {
                 </div>
         </div>
 
-        <div class="form-group">
-                <div class="col-sm-2 control-label">
-                        <?php echo $form->labelEx($model, 'video_link'); ?>
-                </div>
-                <div class="col-sm-10">
-                        <?php echo $form->textField($model, 'video_link', array('size' => 60, 'maxlength' => 225, 'class' => 'form-control')); ?>
-                        <?php echo $form->error($model, 'video_link'); ?>
-                </div>
-        </div>
+        <!-- <div class="form-group">
+                 <div class="col-sm-2 control-label">
+        <?php echo $form->labelEx($model, 'video_link'); ?>
+                 </div>
+                 <div class="col-sm-10">
+        <?php echo $form->textField($model, 'video_link', array('size' => 60, 'maxlength' => 225, 'class' => 'form-control')); ?>
+        <?php echo $form->error($model, 'video_link'); ?>
+                 </div>
+         </div>
 
-        <div class="form-group">
-                <div class="col-sm-2 control-label">
-                        <?php echo $form->labelEx($model, 'video'); ?>
-                </div>
-                <div class="col-sm-10">
-                        <?php echo $form->textField($model, 'video', array('size' => 60, 'maxlength' => 150, 'class' => 'form-control')); ?>
-                        <?php echo $form->error($model, 'video'); ?>
-                </div>
-        </div>
+         <div class="form-group">
+                 <div class="col-sm-2 control-label">
+        <?php echo $form->labelEx($model, 'video'); ?>
+                 </div>
+                 <div class="col-sm-10">
+        <?php echo $form->textField($model, 'video', array('size' => 60, 'maxlength' => 150, 'class' => 'form-control')); ?>
+        <?php echo $form->error($model, 'video'); ?>
+                 </div>
+         </div>-->
 
         <div class="form-group">
                 <div class="col-sm-2 control-label">

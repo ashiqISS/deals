@@ -14,7 +14,6 @@ class CartController extends Controller {
                 $car_quantity = $_POST['car_quantity'];
                 $cart_id = $_POST['cart_id'];
                 if (Yii::app()->session['user'] != '' && Yii::app()->session['user'] != NULL) {
-
                         $user_id = Yii::app()->session['user']['id'];
                         if (isset(Yii::app()->session['temp_user'])) {
                                 $condition = "user_id = " . $user_id . " AND session_id = " . Yii::app()->session['temp_user'];
@@ -23,16 +22,14 @@ class CartController extends Controller {
                                 $condition = "user_id = " . $user_id . " AND session_id = " . Yii::app()->session['temp_user'];
                         }
                 } else {
-
                         $user_id = Yii::app()->session['temp_user'];
                         $condition = "session_id = " . $user_id;
                 }
                 $cou_used = CouponHistory::model()->find(array('condition' => $condition));
-
                 $model = Cart::model()->findByPk($cart_id);
                 $model->quantity = $car_quantity;
                 if ($model->save()) {
-                        $total_amount = $this->subtotalamount();
+                        $total_amount = Yii::app()->Discount->Subtotal();
                         $coupon_validation = Coupons::model()->findByPk($cou_used->coupon_id);
                         if ($coupon_validation->cash_limit != 0) {
                                 if ($total_amount <= $coupon_validation->cash_limit) {
@@ -157,8 +154,20 @@ class CartController extends Controller {
                 }
 
                 $model = Cart::model()->findByPk($cartid);
+                $cou_used = CouponHistory::model()->find(array('condition' => $condition));
 
                 if ($model->delete()) {
+                        $total_amount = $this->subtotalamount();
+                        $coupon_validation = Coupons::model()->findByPk($cou_used->coupon_id);
+                        if ($coupon_validation->cash_limit != 0) {
+                                if ($total_amount <= $coupon_validation->cash_limit) {
+                                        $cou_used->deleteAll();
+                                }
+                        } else {
+                                if ($total_amount < $coupon_validation->discount) {
+                                        $cou_used->deleteAll();
+                                }
+                        }
                         $cart_contents = Cart::model()->findAllByAttributes(array(), array('condition' => ($condition)));
                         if (!empty($cart_contents)) {
                                 $subtotoal = 0;
@@ -488,8 +497,8 @@ class CartController extends Controller {
                         $coupen_details = NULL;
                         $coupon_amount = 0;
                 }
-                $subtotal = $this->subtotal();
-                $granttotal = $this->granttotal();
+                $subtotal = Yii::app()->Discount->Subtotal();
+                $granttotal = Yii::app()->Discount->Granttotal();
                 if (!empty($cart_items)) {
 // $this->render('new_buynow');
                         $this->render('buynow', array('carts' => $cart_items, 'regform' => $model, 'loginform' => $model1, 'gift_user' => $gift_user, 'gift_options' => $gift_options, 'coupen_details' => $coupen_details, 'subtotal' => $subtotal, 'coupon_amount' => $coupon_amount, 'granttotal' => $granttotal));
