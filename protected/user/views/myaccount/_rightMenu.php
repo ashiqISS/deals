@@ -28,6 +28,8 @@
                 $active12 = 'active';
         } else if ($active_menu == 'Myaccount/UpgradePlan') {
                 $active14 = 'active';
+        } else if ($active_menu == 'Myaccount/UpgradePlan') {
+                $active14 = 'active';
         }
 //    else if ($active_menu == 'myaccount/message') {
 //            $active12 = 'active';
@@ -52,7 +54,7 @@
         <?php } ?>
         <li class="<?= $active2; ?>"><?php echo CHtml::link('Reset Password', array('Myaccount/ResetPassword')); ?></li>
         <?php if (Yii::app()->session['merchant']) { ?>
-                                                                                                                                                                                                                           <!--<li class="<?//= $active5; ?>"><?php //echo CHtml::link('Add Products', array('Products/AddProducts'));                                                               ?></li>-->
+                                                                                                                                                                                                                                                                   <!--<li class="<?//= $active5; ?>"><?php //echo CHtml::link('Add Products', array('Products/AddProducts'));                                                                   ?></li>-->
                 <li class="<?= $active6; ?>"><?php echo CHtml::link('Products', array('Products/MyProducts')); ?></li>
 
         <?php } ?>
@@ -94,6 +96,10 @@
                 <li class="<?= $active10; ?>"><?php echo CHtml::link('Reward points', array('Myaccount/MyRewards')); ?></li>
         <?php } ?>
         <!--<li><a href="#">Used and refurbished (Return products)</a></li>-->
+        <?php if (Yii::app()->session['merchant']) { ?>
+                <li class="<?= $active11; ?>"><?php echo CHtml::link('Payment/Payout', array('Myaccount/paymentRequest')); ?></li>
+                <li class="<?= $active11; ?>"><?php echo CHtml::link('Banking Details', array('Myaccount/bankDetails')); ?></li>
+        <?php } ?>
         <?php if (Yii::app()->session['merchant']) { ?>
                 <li class="<?= $active11; ?>"><?php echo CHtml::link('Advertisements', array('Myaccount/paidAd')); ?></li>
                 <li class="<?= $active11; ?>"><?php echo CHtml::link('Tax Classes', array('Myaccount/TaxClasses')); ?></li>
