@@ -392,11 +392,21 @@ class CheckoutController extends Controller {
         public function actionSuccess() {
                 $model = Order::model()->findByPk(Yii::app()->session['orderid']);
                 $user = BuyerDetails::model()->findByPk($model->user_id);
+
+                $condition = $model->user_id;
+                $cart_exist = Cart::model()->findAll(array('condition' => $condition));
+                if (!empty($cart_exist)) {
+                        foreach ($cart_exist as $cart) {
+                                $product_details = Products::model()->findByPk($cart->product_id);
+                                $shipping_charge += ($product_details->shipping_rate * $cart->quantity);
+                        }
+                }
+
                 $bill_address = AddressBook::model()->findByAttributes(array('id' => $model->bill_address_id, 'user_id' => $model->user_id));
                 $ship_address = AddressBook::model()->findByAttributes(array('id' => $model->ship_address_id, 'user_id' => $model->user_id));
                 $order_details = OrderProducts::model()->findAllByAttributes(array('order_id' => $model->id));
-                $this->SuccessOrderMail($model, $user, $bill_address, $ship_address, $order_details);
-                $this->SuccessMailAdmin($model, $user, $bill_address, $ship_address, $order_details);
+//                $this->SuccessOrderMail($model, $user, $bill_address, $ship_address, $order_details, $shipping_charge);
+                $this->SuccessMailAdmin($model, $user, $bill_address, $ship_address, $order_details, $shipping_charge);
                 $checkout_exist = Checkout::model()->findByAttributes(array('session_id' => Yii::app()->session['temp_user']));
                 $varification = BuyerDetails::model()->findByAttributes(array('id' => Yii::app()->session['user']['id']))->email_verification;
                 if ($varification != 1) {
@@ -462,16 +472,16 @@ class CheckoutController extends Controller {
                 }
         }
 
-        public function SuccessOrderMail($model, $user, $bill_address, $ship_address, $order_details) {
-//                $user = BuyerDetails::model()->findByPk(Yii::app()->session['user']['id']);
+        public function SuccessOrderMail($model, $user, $bill_address, $ship_address, $order_details, $shipping_charge) {
+//                $users = BuyerDetails::model()->findByPk(Yii::app()->session['user']['id']);
                 Yii::import('user.extensions.yii-mail.YiiMail');
                 $message = new YiiMailMessage;
                 $message->view = "_order_mail";
-                $params = array('model' => $model, 'userdetails' => $user, 'bill_address' => $bill_address, 'user_address' => $ship_address, 'order_details' => $order_details);
+                $params = array('order' => $model, 'userdetails' => $user, 'bill_address' => $bill_address, 'user_address' => $ship_address, 'order_details' => $order_details, 'shipping_charge' => $shipping_charge);
                 $message->subject = 'Welcome To Dealsonindia';
                 $message->setBody($params, 'text/html');
-//                $message->addTo($user->email);
-                $message->addTo('siyad@intersmart.in');
+                $message->addTo($user->email);
+//                $message->addTo('siyad@intersmart.in');
                 $message->from = 'dealsonindia@intersmart.in';
                 if (Yii::app()->mail->send($message)) {
 //            echo 'message send';
@@ -482,15 +492,16 @@ class CheckoutController extends Controller {
                 }
         }
 
-        public function SuccessMailAdmin($model, $user, $bill_address, $ship_address, $order_details) {
+        public function SuccessMailAdmin($model, $user, $bill_address, $ship_address, $order_details, $shipping_charge) {
                 $email = AdminSettings::model()->findByAttributes(array('status' => 1), array('limit' => 1));
                 Yii::import('user.extensions.yii-mail.YiiMail');
                 $message = new YiiMailMessage;
                 $message->view = "_admin_order_mail";
-                $params = array('model' => $model, 'userdetails' => $user, 'bill_address' => $bill_address, 'user_address' => $ship_address, 'order_details' => $order_details);
+                $params = array('order' => $model, 'userdetails' => $user, 'bill_address' => $bill_address, 'user_address' => $ship_address, 'order_details' => $order_details, 'shipping_charge' => $shipping_charge);
                 $message->subject = 'Dealsonindia';
                 $message->setBody($params, 'text/html');
                 $message->addTo($email->email);
+//                $message->addTo('siyad@intersmart.in');
                 $message->from = 'dealsonindia@intersmart.in';
                 if (Yii::app()->mail->send($message)) {
 //            echo 'message send';
