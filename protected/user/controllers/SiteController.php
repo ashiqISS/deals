@@ -645,8 +645,7 @@ class SiteController extends Controller {
                 $params = array('vendor' => $newsletter);
                 $message->subject = 'Welcome To Dealsonindia';
                 $message->setBody($params, 'text/html');
-                $message->addTo('siyad@intersmart.in');
-//                $message->addTo($email->email);
+                $message->addTo($email->email);
                 $message->from = 'dealsonindia@intersmart.in';
                 if (Yii::app()->mail->send($message)) {
 //            echo 'message send';
