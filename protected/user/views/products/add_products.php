@@ -218,6 +218,21 @@
                                         <div class="ui-set">
                                                 <div class="settings1">
                                                         <div class="form-group">
+                                                                <label class="set"> <?php echo $form->labelEx($model, 'wholesale_quantity'); ?></label>
+                                                        </div>
+                                                </div>
+                                                <div class="settings2">
+                                                        <span>:</span>
+                                                </div>
+                                                <div class="settings3">
+                                                        <div class="form-group">
+                                                                <?php echo $form->textField($model, 'wholesale_quantity', array('class' => 'form-set')); ?>
+                                                                <?php echo $form->error($model, 'wholesale_quantity', array('class' => 'red')); ?>                                                        </div>
+                                                </div>
+                                        </div>
+                                        <div class="ui-set">
+                                                <div class="settings1">
+                                                        <div class="form-group">
                                                                 <label class="set"> <?php echo $form->labelEx($model, 'description'); ?></label>
                                                         </div>
                                                 </div>
@@ -792,23 +807,23 @@ if (!$model->isNewRecord) {
                                                         </div>
                                                 </div>
 
-                                                <div class="ui-set">
-                                                        <div class="settings1">
-                                                                <div class="form-group">
-                                                                        <label class="set"> <?php echo $form->labelEx($model, 'gift_option'); ?></label>
-                                                                </div>
-                                                        </div>
-                                                        <div class="settings2">
-                                                                <span>:</span>
-                                                        </div>
-                                                        <div class="settings3">
-                                                                <div class="form-group">
+                                                <!-- <div class="ui-set">
+                                                         <div class="settings1">
+                                                                 <div class="form-group">
+                                                                         <label class="set"> <?php echo $form->labelEx($model, 'gift_option'); ?></label>
+                                                                 </div>
+                                                         </div>
+                                                         <div class="settings2">
+                                                                 <span>:</span>
+                                                         </div>
+                                                         <div class="settings3">
+                                                                 <div class="form-group">
 
-                                                                        <?php echo $form->dropDownList($model, 'gift_option', array('0' => "No", '1' => "Yes"), array('class' => 'form-select', 'placeholder' => 'Gift Option', 'empty' => '--Gift Option--')); ?>
-                                                                        <?php echo $form->error($model, 'gift_option', array('class' => 'red')); ?>
-                                                                </div>
-                                                        </div>
-                                                </div>
+                                                <?php echo $form->dropDownList($model, 'gift_option', array('0' => "No", '1' => "Yes"), array('class' => 'form-select', 'placeholder' => 'Gift Option', 'empty' => '--Gift Option--')); ?>
+                                                <?php echo $form->error($model, 'gift_option', array('class' => 'red')); ?>
+                                                                 </div>
+                                                         </div>
+                                                 </div>-->
 
                                                 <div class="ui-set">
                                                         <div class="settings1">
@@ -829,43 +844,43 @@ if (!$model->isNewRecord) {
                                                         </div>
                                                 </div>
 
-                                                <div class="ui-set">
-                                                        <div class="settings1">
-                                                                <div class="form-group">
-                                                                        <label class="set"> <?php echo $form->labelEx($model, 'video_link'); ?></label>
-                                                                </div>
-                                                        </div>
-                                                        <div class="settings2">
-                                                                <span>:</span>
-                                                        </div>
-                                                        <div class="settings3">
-                                                                <div class="form-group">
+                                                <!--     <div class="ui-set">
+                                                             <div class="settings1">
+                                                                     <div class="form-group">
+                                                                             <label class="set"> <?php echo $form->labelEx($model, 'video_link'); ?></label>
+                                                                     </div>
+                                                             </div>
+                                                             <div class="settings2">
+                                                                     <span>:</span>
+                                                             </div>
+                                                             <div class="settings3">
+                                                                     <div class="form-group">
 
-                                                                        <?php echo $form->textField($model, 'video_link', array('size' => 60, 'maxlength' => 225, 'class' => 'form-set', 'placeholder' => 'Video Link')); ?>
-                                                                        <?php echo $form->error($model, 'video_link', array('class' => 'red')); ?>
+                                                <?php echo $form->textField($model, 'video_link', array('size' => 60, 'maxlength' => 225, 'class' => 'form-set', 'placeholder' => 'Video Link')); ?>
+                                                <?php echo $form->error($model, 'video_link', array('class' => 'red')); ?>
 
-                                                                </div>
-                                                        </div>
-                                                </div>
+                                                                     </div>
+                                                             </div>
+                                                     </div>
 
-                                                <div class="ui-set">
-                                                        <div class="settings1">
-                                                                <div class="form-group">
-                                                                        <label class="set"> <?php echo $form->labelEx($model, 'exchange'); ?></label>
-                                                                </div>
-                                                        </div>
-                                                        <div class="settings2">
-                                                                <span>:</span>
-                                                        </div>
-                                                        <div class="settings3">
-                                                                <div class="form-group">
+                                                     <div class="ui-set">
+                                                             <div class="settings1">
+                                                                     <div class="form-group">
+                                                                             <label class="set"> <?php echo $form->labelEx($model, 'exchange'); ?></label>
+                                                                     </div>
+                                                             </div>
+                                                             <div class="settings2">
+                                                                     <span>:</span>
+                                                             </div>
+                                                             <div class="settings3">
+                                                                     <div class="form-group">
 
-                                                                        <?php echo $form->dropDownList($model, 'exchange', array('0' => "No", '1' => "Yes"), array('class' => 'form-select', 'empty' => 'Exchange')); ?>
-                                                                        <?php echo $form->error($model, 'exchange', array('class' => 'red')); ?>
+                                                <?php echo $form->dropDownList($model, 'exchange', array('0' => "No", '1' => "Yes"), array('class' => 'form-select', 'empty' => 'Exchange')); ?>
+                                                <?php echo $form->error($model, 'exchange', array('class' => 'red')); ?>
 
-                                                                </div>
-                                                        </div>
-                                                </div>
+                                                                     </div>
+                                                             </div>
+                                                     </div>-->
 
                                                 <div class="ui-set">
                                                         <div class="settings1">

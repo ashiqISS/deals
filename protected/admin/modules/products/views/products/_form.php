@@ -139,7 +139,7 @@
                         <?php echo $form->labelEx($model, 'merchant'); ?>
                 </div>
                 <div class="col-sm-10">
-                        <?php echo CHtml::activeDropDownList($model, 'merchant', CHtml::listData(Merchant::model()->findAll(), 'id', 'first_name'), array('empty' => 'Admin', 'class' => 'form-control')); ?>
+                        <?php echo CHtml::activeDropDownList($model, 'merchant', CHtml::listData(Merchant::model()->findAll(), 'id', 'first_name'), array('empty' => 'Admin', 'class' => 'form-control', 'options' => array('id' => array('selected' => 'selected')))); ?>
                         <?php echo $form->error($model, 'merchant'); ?>
                 </div>
         </div>

@@ -177,7 +177,7 @@ class ProductsController extends Controller {
                 } else {
                         $criteria->order = 'id desc';
                 }
-                $criteria->addCondition("status = 1 AND is_admin_approved = 1 AND merchant_id = $id AND   wholesale_price != 0 AND  ( '" . $date . "' >= sale_from AND  '" . $date . "' <= sale_to) ");
+                $criteria->addCondition("status = 1 AND is_admin_approved = 1 AND merchant_id = $id AND    ( '" . $date . "' >= sale_from AND  '" . $date . "' <= sale_to) ");
                 $products = Products::model()->findAll($criteria);
 
                 $this->render('deals', array(

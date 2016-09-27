@@ -21,27 +21,33 @@
         } else if ($active_menu == 'myaccount/UserOrderHistory' || $active_menu == 'myaccount/VendorOrderHistory') {
                 $active9 = 'active';
         } else if ($active_menu == 'myaccount/MySalesReport') {
-                $active10 = 'active';
+                $active15 = 'active';
         } else if ($active_menu == 'myaccount/paidAd') {
                 $active11 = 'active';
         } else if ($active_menu == 'myaccount/message') {
                 $active12 = 'active';
-        } else if ($active_menu == 'Myaccount/UpgradePlan') {
+        } else if ($active_menu == 'myaccount/UpgradePlan') {
                 $active14 = 'active';
-        } else if ($active_menu == 'Myaccount/UpgradePlan') {
+        } else if ($active_menu == 'myaccount/UpgradePlan') {
                 $active14 = 'active';
+        } else if ($active_menu == 'myaccount/Reports') {
+                $active15 = 'active';
+        } else if ($active_menu == 'myaccount/MostViewProducts') {
+                $active15 = 'active';
+        } else if ($active_menu == 'myaccount/CustomerReport') {
+                $active15 = 'active';
         }
 //    else if ($active_menu == 'myaccount/message') {
 //            $active12 = 'active';
 //    }
         ?>
         <li class="<?= $active1; ?>"><?php
-                if (Yii::app()->session['user_type_usrid'] == 2)
-                        echo CHtml::link('Dashboard', array('Myaccount/index/type/vendor'));
-                else
-                        echo CHtml::link('Dashboard', array('Myaccount/index/type/user'));
-                ?></li>
-        <?php if (Yii::app()->session['merchant']) { ?>
+        if (Yii::app()->session['user_type_usrid'] == 2)
+                echo CHtml::link('Dashboard', array('Myaccount/index/type/vendor'));
+        else
+                echo CHtml::link('Dashboard', array('Myaccount/index/type/user'));
+        ?></li>
+                <?php if (Yii::app()->session['merchant']) { ?>
                 <li class="<?= $active12; ?>"><?php echo CHtml::link('Messages', array('myaccount/message')); ?></li>
 
         <?php } ?>
@@ -54,7 +60,7 @@
         <?php } ?>
         <li class="<?= $active2; ?>"><?php echo CHtml::link('Reset Password', array('Myaccount/ResetPassword')); ?></li>
         <?php if (Yii::app()->session['merchant']) { ?>
-                                                                                                                                                                                                                                                                   <!--<li class="<?//= $active5; ?>"><?php //echo CHtml::link('Add Products', array('Products/AddProducts'));                                                                   ?></li>-->
+                                                                                                                                                                                                                                                                                                                                                                                                           <!--<li class="<?//= $active5; ?>"><?php //echo CHtml::link('Add Products', array('Products/AddProducts'));                                                                                 ?></li>-->
                 <li class="<?= $active6; ?>"><?php echo CHtml::link('Products', array('Products/MyProducts')); ?></li>
 
         <?php } ?>
@@ -82,11 +88,8 @@
                 <li class="<?= $active8; ?>"><?php echo CHtml::link('Newsletter Subscription', array('Myaccount/Newsletter')); ?></li>
         <?php } ?>
         <?php if (Yii::app()->session['merchant']) { ?>
-                <li class="<?= $active10; ?>"><?php echo CHtml::link('Sales Report', array('Myaccount/MySalesReport')); ?></li>
-
-
-                <li><a href="#"> Transaction</a></li>
-                <li><a href="#"> Payment/Payout</a></li>
+             <!--   <li class="<?= $active10; ?>"><?php echo CHtml::link('Sales Report', array('Myaccount/MySalesReport')); ?></li>-->
+                <li class="<?= $active15; ?>"><?php echo CHtml::link('Reports', array('Myaccount/Reports')); ?></li>
                 <!--<li><a href="#"> Plans</a></li>-->
                 <li class="<?= $active14; ?>"><?php echo CHtml::link('Plans', array('Myaccount/UpgradePlan')); ?></li>
         <?php } ?>

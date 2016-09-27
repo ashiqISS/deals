@@ -90,6 +90,15 @@ if (Yii::app()->controller->action->id == 'index') {
 } else if (Yii::app()->controller->action->id == 'PaymentRequest') {
         $name = 'Payment Request';
         $action = 'Myaccount/PaymentRequest';
+} else if (Yii::app()->controller->action->id == 'Reports') {
+        $name = 'Reports';
+        $action = 'Myaccount/Reports';
+} else if (Yii::app()->controller->action->id == 'MostViewProducts') {
+        $name = 'Most View Products';
+        $action = 'Myaccount/MostViewProducts';
+} else if (Yii::app()->controller->action->id == 'CustomerReport') {
+        $name = 'Customer Report';
+        $action = 'Myaccount/CustomerReport';
 }
 ?>
 <section class="title">

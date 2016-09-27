@@ -439,6 +439,44 @@ class MyaccountController extends Controller {
                 $this->render('sales_report', array('model' => $model));
         }
 
+        public function actionCustomerReport() {
+                if (!isset(Yii::app()->session['user']) && !isset(Yii::app()->session['merchant'])) {
+                        $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/Userlogin');
+                } else {
+                        if (Yii::app()->session['merchant']) {
+                                $model = OrderProducts::model()->findAllByAttributes(array('merchant_id' => Yii::app()->session['merchant']['id']));
+                        }
+                }
+                $this->render('customer_report', array('model' => $model));
+        }
+
+        public function actionMostViewProducts() {
+                if (!isset(Yii::app()->session['user']) && !isset(Yii::app()->session['merchant'])) {
+                        $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/Userlogin');
+                } else {
+                        if (Yii::app()->session['merchant']) {
+                                $products = Products::model()->findAllByAttributes(array('merchant_id' => Yii::app()->session['merchant']['id']));
+                                foreach ($products as $product) {
+                                        $result .= $product->id . ',';
+                                }
+                                $result = rtrim($result, ',');
+                                $model = ProductViewed::model()->findAll(array('select' => 't.product_id', 'distinct' => true, 'condition' => "product_id IN($result)"));
+                        }
+                }
+                $this->render('most_viewed', array('model' => $model));
+        }
+
+        public function actionReports() {
+                if (!isset(Yii::app()->session['user']) && !isset(Yii::app()->session['merchant'])) {
+                        $this->redirect(Yii::app()->request->baseUrl . '/index.php/site/Userlogin');
+                } else {
+                        if (Yii::app()->session['merchant']) {
+                                $model = OrderProducts::model()->findAllByAttributes(array('merchant_id' => Yii::app()->session['merchant']['id']));
+                        }
+                }
+                $this->render('reports', array('model' => $model));
+        }
+
         public function actionSelectPlan($plan) {
                 $model = new MerchantPlans;
                 if (Yii::app()->session['merchant']) {

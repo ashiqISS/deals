@@ -25,7 +25,7 @@
                             'dataProvider' => $model->search(),
                             'filter' => $model,
                             'columns' => array(
-//            		'id',
+//            		'product_id',
                                 array(
                                     'name' => 'product_id',
                                     'value' => function($data) {
