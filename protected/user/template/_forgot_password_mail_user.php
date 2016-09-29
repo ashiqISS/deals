@@ -8,7 +8,7 @@
                 <div style="margin:auto; width:776px; border:solid 2px #404241; margin-top:40px; margin-bottom:40px;">
                         <table id="Table_01" width="776" border="0" cellpadding="0" cellspacing="0" align="center">
                                 <tr>
-                                        <td><a href="http://dealsonindia.com"><img src="<?php echo $this->siteURL(); ?>/images/admin-logo.png" width="776" height="102" alt=""></a></td>
+                                        <td><a href="http://dealsonindia.com"><img src="<?php echo $this->siteURL(); ?>/images/emailer_logo.jpg" width="776" height="102" alt=""></a></td>
                                 </tr>
                                 <tr>
                                         <td style="padding:40px 20px; font-family:'Open Sans',arial, sans-serif; font-size:13px"><p style="font-size:14px; font-weight:bold;">Reset Your Password</p>
