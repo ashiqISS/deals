@@ -143,7 +143,8 @@ class ProductCategory extends CActiveRecord {
         $categories = ProductCategory::model()->findAll($mainCat);
         foreach ($categories as $category) {
             $can_name = $category->canonical_name;
-            $returnhtml .= "<li><a tabindex='-1' href='" . Yii::app()->request->baseUrl . "/index.php/product/category/name/" . $can_name . "'>" . $category->category_name . "</a>";
+           
+            $returnhtml .= "<li><a tabindex='-1' href='" . Yii::app()->request->baseUrl . "/index.php/products/list?category=" . $can_name . "'>" . $category->category_name . "</a>";
             $childCat = new CDbCriteria();
             $childCat->select = array('id', 'parent', 'category_name', 'canonical_name');
             $childCat->addCondition('parent=' . $category->id);
@@ -152,7 +153,7 @@ class ProductCategory extends CActiveRecord {
             if (count($childs) > 0) {
                 $returnhtml .= '<ul>';
                 for ($j = 0; $j < count($childs); $j++) {
-                    $returnhtml .="<li><a tabindex='-1' href='" . Yii::app()->request->baseUrl . "/index.php/product/category/name/" . $childs[$j]["canonical_name"] . "'>" . $childs[$j]["category_name"] . "</a>";
+                    $returnhtml .="<li><a tabindex='-1' href='" . Yii::app()->request->baseUrl . "/index.php/products/list?category=" . $childs[$j]["canonical_name"] . "'>" . $childs[$j]["category_name"] . "</a>";
                     $returnhtml .=$this->listCategory($childs[$j]["id"]);
                 }
                 $returnhtml .= '</li></ul></li>';
@@ -172,7 +173,7 @@ class ProductCategory extends CActiveRecord {
         if (count($subcats) > 0) {
             $html = "<ul>";
             foreach ($subcats as $subcategory) {
-                $html .="<li><a tabindex='-1' href='" . Yii::app()->request->baseUrl . "/index.php/product/category/name/" . $subcategory->canonical_name . "'>" . $subcategory->category_name . '</a>';
+                $html .="<li><a tabindex='-1' href='" . Yii::app()->request->baseUrl . "/index.php/products/list?category=" . $subcategory->canonical_name . "'>" . $subcategory->category_name . '</a>';
                 $html .=$this->listCategory($subcategory->id);
             }
             $html .= "</li></ul>";
