@@ -16,6 +16,7 @@
         <link rel="stylesheet" type="text/css" href="<?= Yii::app()->baseUrl ?>/css/slick.css">
         <link rel="stylesheet" type="text/css" href="<?= Yii::app()->baseUrl ?>/css/slick-theme.css">
         <link rel="stylesheet" type="text/css" href="<?= Yii::app()->baseUrl ?>/css/animate.min.css">
+        <link href="<?= Yii::app()->request->baseUrl; ?>/css/menu.css" rel="stylesheet">
 
         <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
         <link href='https://fonts.googleapis.com/css?family=Lato:400,100,300,400italic,700,100italic,300italic,700italic,900' rel='stylesheet' type='text/css'>
@@ -62,7 +63,7 @@
             </div>
 
             <div class="has-sec">
-
+                
                 <div class="panel-group mob-nav" id="accordion">
                     <h1>All Categories</h1>
                     <div class="panel panel-default">
@@ -172,7 +173,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
             </div>
 
         </div>
@@ -321,149 +322,17 @@
         <section class="main-menu">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-2 col-sm-12 hidden-sm hidden-xs">
-                        <div class="dropdown searches">
+                    
+                                <div class="col-md-2 col-sm-12 hidden-sm hidden-xs">
+                                                         <div class="dropdown searches">
                             <a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary new-btn" data-target="#">
                                 <i class="fa fa-navicon"></i> ALL CATEGORIES
                             </a>
-                            <!--<ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">-->
-                            <!--                                    <li><a href="#">Some action</a></li>-->
-                            <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-
-                                <?php
-                                $e = Utilities::Categories();
-//                                print_r($e);
-                                foreach ($e as $key => $value) {
-                                        ?>
-                                        <li class="dropdown-submenu">
-                                            <!--<a tabindex="-1" href="#">-->
-                                            <?php // echo $key; ?>
-                                            <?php echo CHtml::link($key, array('products/list', 'category' => $key)); ?>
-                                            <!--</a>-->
-                                            <?php if (!empty($value)) { ?>
-                                                    <ul class="dropdown-menu menu-2">
-                                                        <li>
-                                                            <?php
-                                                            foreach ($value as $key1 => $value1) {
-                                                                    ?>
-                                                                    <?php echo CHtml::link($value1, array('products/list', 'category' => $value1)); ?>
-                                                                    <?php
-                                                            }
-                                                            ?>
-                                                        </li>
-                                                        <!--                                            <li class="dropdown-submenu menu-3">
-                                                                                                        <a href="#">Even More..</a>
-                                                                                                        <ul class="dropdown-menu levels">
-                                                                                                            <li><a href="#">3rd level</a></li>
-                                                                                                            <li><a href="#">3rd level</a></li>
-                                                                                                        </ul>
-                                                                                                    </li>
-                                                                                                    <li><a href="#">Second level</a></li>
-                                                                                                    <li><a href="#">Second level</a></li>-->
-                                                    </ul>
-                                            <?php } ?>
-                                        </li>
-
-
-
-                                        <?php
-                                }
-                                ?>
-
-                                <!--
-                                                                                                <li class="dropdown-submenu">
-                                                                                                        <a tabindex="-1" href="#">Baby Products</a>
-                                                                                                        <ul class="dropdown-menu menu-2">
-                                                                                                                <li><a tabindex="-1" href="#">Second level</a></li>
-                                                                                                                <li class="dropdown-submenu menu-3">
-                                                                                                                        <a href="#">Even More..</a>
-                                                                                                                        <ul class="dropdown-menu levels">
-                                                                                                                                <li><a href="#">3rd level</a></li>
-                                                                                                                                <li><a href="#">3rd level</a></li>
-                                                                                                                        </ul>
-                                                                                                                </li>
-                                                                                                                <li><a href="#">Second level</a></li>
-                                                                                                                <li><a href="#">Second level</a></li>
-                                                                                                        </ul>
-                                                                                                </li>
-
-
-                                                                                                <li class="dropdown-submenu">
-                                                                                                        <a tabindex="-1" href="#">Baby Products</a>
-                                                                                                        <ul class="dropdown-menu menu-2">
-                                                                                                                <li><a tabindex="-1" href="#">Second level</a></li>
-                                                                                                                <li class="dropdown-submenu menu-3">
-                                                                                                                        <a href="#">Even More..</a>
-                                                                                                                        <ul class="dropdown-menu levels">
-                                                                                                                                <li><a href="#">3rd level</a></li>
-                                                                                                                                <li><a href="#">3rd level</a></li>
-                                                                                                                        </ul>
-                                                                                                                </li>
-                                                                                                                <li><a href="#">Second level</a></li>
-                                                                                                                <li><a href="#">Second level</a></li>
-                                                                                                        </ul>
-                                                                                                </li>
-
-
-
-                                                                                                <li class="dropdown-submenu">
-                                                                                                        <a tabindex="-1" href="#">Baby Products</a>
-                                                                                                        <ul class="dropdown-menu menu-2">
-                                                                                                                <li><a tabindex="-1" href="#">Second level</a></li>
-                                                                                                                <li class="dropdown-submenu menu-3">
-                                                                                                                        <a href="#">Even More..</a>
-                                                                                                                        <ul class="dropdown-menu levels">
-                                                                                                                                <li><a href="#">3rd level</a></li>
-                                                                                                                                <li><a href="#">3rd level</a></li>
-                                                                                                                        </ul>
-                                                                                                                </li>
-                                                                                                                <li><a href="#">Second level</a></li>
-                                                                                                                <li><a href="#">Second level</a></li>
-                                                                                                        </ul>
-                                                                                                </li>
-
-
-
-                                                                                                <li class="dropdown-submenu">
-                                                                                                        <a tabindex="-1" href="#">Baby Products</a>
-                                                                                                        <ul class="dropdown-menu menu-2">
-                                                                                                                <li><a tabindex="-1" href="#">Second level</a></li>
-                                                                                                                <li class="dropdown-submenu menu-3">
-                                                                                                                        <a href="#">Even More..</a>
-                                                                                                                        <ul class="dropdown-menu levels">
-                                                                                                                                <li><a href="#">3rd level</a></li>
-                                                                                                                                <li><a href="#">3rd level</a></li>
-                                                                                                                        </ul>
-                                                                                                                </li>
-                                                                                                                <li><a href="#">Second level</a></li>
-                                                                                                                <li><a href="#">Second level</a></li>
-                                                                                                        </ul>
-                                                                                                </li>
-
-
-                                                                                                <li class="dropdown-submenu">
-                                                                                                        <a tabindex="-1" href="#">Baby Products</a>
-                                                                                                        <ul class="dropdown-menu menu-2">
-                                                                                                                <li><a tabindex="-1" href="#">Second level</a></li>
-                                                                                                                <li class="dropdown-submenu menu-3">
-                                                                                                                        <a href="#">Even More..</a>
-                                                                                                                        <ul class="dropdown-menu levels">
-                                                                                                                                <li><a href="#">3rd level</a></li>
-                                                                                                                                <li><a href="#">3rd level</a></li>
-                                                                                                                        </ul>
-                                                                                                                </li>
-                                                                                                                <li><a href="#">Second level</a></li>
-                                                                                                                <li><a href="#">Second level</a></li>
-                                                                                                        </ul>
-                                                                                                </li>
-                                -->
-
-
-
-                            </ul>
+                              <?php echo ProductCategory::model()->loadCategory();?>
                         </div>
 
-                    </div>
+                                </div>
+
                     <div class="col-md-10 col-sm-12 nop  hidden-xs">
                         <nav class="navbar navbar-inverse">
 
@@ -792,6 +661,13 @@
             }
 
     </script>
+            <script>
+            // product category dropdown
+            $(document).ready(function () {
+                $('.loadcat li:has(> ul)').addClass('dropdown-submenu');
+                $('.loadcat li ul').addClass('dropdown-menu ss menu-2');
+            });
+        </script>
 
 </body>
 </html>
