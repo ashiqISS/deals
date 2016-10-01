@@ -325,7 +325,8 @@
                     
                                 <div class="col-md-2 col-sm-12 hidden-sm hidden-xs">
                                                          <div class="dropdown searches">
-                            <a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary new-btn" data-target="#">
+                                                             <!--<a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary new-btn" style="background-color: #1a1a1a ! important;" data-target="#">-->
+                                                             <a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-primary new-btn" data-target="#">
                                 <i class="fa fa-navicon"></i> ALL CATEGORIES
                             </a>
                               <?php echo ProductCategory::model()->loadCategory();?>
