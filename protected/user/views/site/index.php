@@ -12,14 +12,14 @@
                         <div class="col-xs-12">
                                 <div class="over">
                                         <h1>Find your best deal</h1>
-                                        <form role="form">
+                                        <form role="form" action="<?php echo Yii::app()->request->baseUrl; ?>/index.php/searching/SearchList" method="post">
                                                 <div class="form-group">
 
-                                                        <input type="email" class="form-deals" id="email" placeholder="What are you looking for">
+                                                        <input type="text" name="Keyword" class="form-deals" id="email" placeholder="What are you looking for">
                                                 </div>
                                                 <div class="form-group">
 
-                                                        <input type="password" class="form-deals" id="pwd" placeholder="Enter Your Location">
+                                                        <input type="password"  name="location" class="form-deals" id="pwd" placeholder="Enter Your Location">
 
                                                 </div>
 
