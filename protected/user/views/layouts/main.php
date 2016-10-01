@@ -66,113 +66,11 @@
 
                                 <div class="panel-group mob-nav" id="accordion">
                                         <h1>All Categories</h1>
-                                        <div class="panel panel-default">
-                                                <div class="panel-heading c1">
-                                                        <div class="cir"></div>
-                                                        <h4 class="panel-title">
-                                                                <a class="accordion-toggle plus collapsed" data-toggle="collapse" data-parent="#accordion" href="#panel1" aria-expanded="false"><i class="glyphicon glyphicon-plus"></i>Lorem Lispum</a>
-                                                        </h4>
-
-                                                </div>
-                                                <div id="panel1" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-                                                        <div class="panel-body">
-                                                                <ul>
-                                                                        <li>
-                                                                                <a href="#">Lorem Lispum</a>
-                                                                                <ul>
-                                                                                        <li><a href="">Lorem Lispum</a></li>
-                                                                                        <li><a href="">Lorem Lispum</a></li>
-                                                                                        <li><a href="">Lorem Lispum</a></li>
-                                                                                </ul>
-                                                                        </li>
-                                                                        <li><a href="#">Lorem Lispum</a>
-
-                                                                        </li>
-                                                                        <li><a href="#">Lorem Lispum</a></li>
-                                                                        <li><a href="#">Lorem Lispum</a></li>
-                                                                        <li><a href="#">Lorem Lispum</a></li>
-                                                                </ul>
-                                                        </div>
-                                                </div>
-                                        </div>
-                                        <div class="panel panel-default">
-                                                <div class="panel-heading c2">
-                                                        <div class="cir"></div>
-                                                        <h4 class="panel-title">
-                                                                <a class="accordion-toggle plus collapsed" data-toggle="collapse" data-parent="#accordion" href="#panel2" aria-expanded="false"><i class="glyphicon glyphicon-plus"></i>Lorem Lispum</a>
-                                                        </h4>
-
-                                                </div>
-                                                <div id="panel2" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-                                                        <div class="panel-body">
-                                                                <ul>
-
-                                                                        <li><a href="#">Lorem Lispum</a></li>
-                                                                        <li><a href="#">Lorem Lispum</a></li>
-                                                                        <li><a href="#">Lorem Lispum</a></li>
-                                                                </ul>
-                                                        </div>
-                                                </div>
-                                        </div>
-
-
-                                        <div class="panel panel-default">
-                                                <div class="panel-heading c3">
-                                                        <div class="cir"></div>
-                                                        <h4 class="panel-title">
-                                                                <a class="accordion-toggle plus collapsed" data-toggle="collapse" data-parent="#accordion" href="#panel3" aria-expanded="false"><i class="glyphicon glyphicon-plus"></i>Lorem Lispum</a>
-                                                        </h4>
-
-                                                </div>
-                                                <div id="panel3" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-                                                        <div class="panel-body">
-                                                                <ul>
-                                                                        <li><a href="#">Lorem Lispum</a></li>
-                                                                        <li><a href="#">Lorem Lispum</a></li>
-                                                                        <li><a href="#">Lorem Lispum</a></li>
-                                                                </ul>
-                                                        </div>
-                                                </div>
-                                        </div>
-
-
-                                        <div class="panel panel-default">
-                                                <div class="panel-heading c4">
-                                                        <div class="cir"></div>
-                                                        <h4 class="panel-title">
-                                                                <a class="accordion-toggle plus collapsed" data-toggle="collapse" data-parent="#accordion" href="#panel4" aria-expanded="false"><i class="glyphicon glyphicon-plus"></i>Lorem Lispum</a>
-                                                        </h4>
-
-                                                </div>
-                                                <div id="panel4" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-                                                        <div class="panel-body">
-                                                                <ul>
-                                                                        <li><a href="#">Lorem Lispum</a></li>
-                                                                        <li><a href="#">Lorem Lispum</a></li>
-                                                                        <li><a href="#">Lorem Lispum</a></li>
-                                                                </ul>
-                                                        </div>
-                                                </div>
-                                        </div>
-
-                                        <div class="panel panel-default">
-                                                <div class="panel-heading c5">
-                                                        <div class="cir"></div>
-                                                        <h4 class="panel-title">
-                                                                <a class="accordion-toggle plus collapsed" data-toggle="collapse" data-parent="#accordion" href="#panel5" aria-expanded="false"><i class="glyphicon glyphicon-plus"></i>Lorem Lispum</a>
-                                                        </h4>
-
-                                                </div>
-                                                <div id="panel5" class="panel-collapse collapse" aria-expanded="false">
-                                                        <div class="panel-body">
-                                                                <ul>
-                                                                        <li><a href="#">Lorem Lispum</a></li>
-                                                                        <li><a href="#">Lorem Lispum</a></li>
-                                                                        <li><a href="#">Lorem Lispum</a></li>
-                                                                </ul>
-                                                        </div>
-                                                </div>
-                                        </div>
+                                        <?php
+                                        
+                                        CategoryMobileMenu::load();
+                                        ?>
+                                        
                                 </div>
                         </div>
 
