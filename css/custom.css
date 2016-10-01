@@ -45,3 +45,16 @@ div.newsletter_msg{
         width: 10%;
         padding-right: inherit;
 }
+ul.list-unstyled.abt {
+        position: absolute;
+        left:45px;
+}
+@media (max-width:767px)
+{
+        ul.list-unstyled.abt {
+                position: absolute;
+                left: 38%;
+                right: 0;
+                top: -34px;
+        }
+}
