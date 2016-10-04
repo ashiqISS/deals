@@ -152,7 +152,7 @@
                                                         </div>
                                                 </div>
                                                 <div class="btn-place-1">
-                                                        <a href="#" class="reward hvr-shutter-in-horizontal left-btns">Back</a>
+                                                        <?php echo CHtml::link('Back', array('Myaccount/index/type/user'), array('class' => 'reward hvr-shutter-in-horizontal left-btns')); ?>
                                                 </div>
                                                 <div class="btn-place-2">
                                                         <button type="submit"  name="btn_submit" class="reward hvr-shutter-in-horizontal3 right-btn">Continue</button>

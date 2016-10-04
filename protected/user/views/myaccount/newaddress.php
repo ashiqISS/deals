@@ -79,7 +79,7 @@
                                                 <div class="settings3">
                                                         <div class="form-group">
                                                                 <?php echo $form->textField($model, 'name', array('class' => 'form-set')); ?>
-                                                                <?php echo $form->error($model, 'name'); ?>
+                                                                <?php echo $form->error($model, 'name', array('class' => 'red')); ?>
                                                         </div>
                                                 </div>
                                         </div>
@@ -97,7 +97,7 @@
                                                 <div class="settings3">
                                                         <div class="form-group">
                                                                 <?php echo $form->textField($model, 'email', array('class' => 'form-set')); ?>
-                                                                <?php echo $form->error($model, 'email'); ?>
+                                                                <?php echo $form->error($model, 'email', array('class' => 'red')); ?>
                                                         </div>
                                                 </div>
 
@@ -116,7 +116,7 @@
                                                 <div class="settings3">
                                                         <div class="form-group">
                                                                 <?php echo $form->textField($model, 'phone', array('class' => 'form-set')); ?>
-                                                                <?php echo $form->error($model, 'phone'); ?>
+                                                                <?php echo $form->error($model, 'phone', array('class' => 'red')); ?>
                                                         </div>
                                                 </div>
 
@@ -133,7 +133,7 @@
                                                 <div class="settings3">
                                                         <div class="form-group">
                                                                 <?php echo $form->textArea($model, 'address_line_1', array('class' => 'form-acc')); ?>
-                                                                <?php echo $form->error($model, 'address_line_1'); ?>
+                                                                <?php echo $form->error($model, 'address_line_1', array('class' => 'red')); ?>
                                                         </div>
                                                 </div>
 
@@ -150,7 +150,7 @@
                                                 <div class="settings3">
                                                         <div class="form-group">
                                                                 <?php echo $form->textArea($model, 'address_line_2', array('class' => 'form-acc')); ?>
-                                                                <?php echo $form->error($model, 'address_line_2'); ?>
+                                                                <?php echo $form->error($model, 'address_line_2', array('class' => 'red')); ?>
                                                         </div>
                                                 </div>
 
@@ -167,7 +167,7 @@
                                                 <div class="settings3">
                                                         <div class="form-group">
                                                                 <?php echo CHtml::activeDropDownList($model, 'country', CHtml::listData(Countries::model()->findAll(), 'id', 'country_name'), array('empty' => '--Please select--', 'class' => 'form-select', 'options' => array('id' => array('selected' => 'selected')))); ?>
-                                                                <?php echo $form->error($model, 'country'); ?>
+                                                                <?php echo $form->error($model, 'country', array('class' => 'red')); ?>
                                                         </div>
                                                 </div>
 
@@ -184,7 +184,7 @@
                                                 <div class="settings3">
                                                         <div class="form-group">
                                                                 <?php echo $form->textField($model, 'state', array('class' => 'form-set')); ?>
-                                                                <?php echo $form->error($model, 'state'); ?>
+                                                                <?php echo $form->error($model, 'state', array('class' => 'red')); ?>
                                                         </div>
                                                 </div>
 
@@ -201,7 +201,7 @@
                                                 <div class="settings3">
                                                         <div class="form-group">
                                                                 <?php echo $form->textField($model, 'city', array('class' => 'form-set')); ?>
-                                                                <?php echo $form->error($model, 'city'); ?>
+                                                                <?php echo $form->error($model, 'city', array('class' => 'red')); ?>
                                                         </div>
                                                 </div>
 
@@ -218,7 +218,7 @@
                                                 <div class="settings3">
                                                         <div class="form-group">
                                                                 <?php echo $form->textField($model, 'pincode', array('class' => 'form-set')); ?>
-                                                                <?php echo $form->error($model, 'pincode'); ?>
+                                                                <?php echo $form->error($model, 'pincode', array('class' => 'red')); ?>
                                                         </div>
                                                 </div>
 
@@ -236,7 +236,7 @@
                                                 <div class="settings3">
                                                         <div class="form-group">
                                                                 <?php echo $form->dropDownList($model, 'default_billing_address', array('' => "Default Billing Address", '1' => "Yes", '0' => "No"), array('class' => 'form-select')); ?>
-                                                                <?php echo $form->error($model, 'default_billing_address'); ?>
+                                                                <?php echo $form->error($model, 'default_billing_address', array('class' => 'red')); ?>
                                                         </div>
                                                 </div>
 
@@ -253,14 +253,14 @@
                                                 <div class="settings3">
                                                         <div class="form-group">
                                                                 <?php echo $form->dropDownList($model, 'default_shipping_address', array('' => "Default Shipping Address", '1' => "Yes", '0' => "No"), array('class' => 'form-select')); ?>
-                                                                <?php echo $form->error($model, 'default_shipping_address'); ?>
+                                                                <?php echo $form->error($model, 'default_shipping_address', array('class' => 'red')); ?>
                                                         </div>
                                                 </div>
 
                                         </div>
                                 </div>
                                 <div class="btn-place-1">
-                                        <a href="#" class="reward hvr-shutter-in-horizontal left-btns">Back</a>
+                                        <?php echo CHtml::link('Back', array('Myaccount/index/type/user'), array('class' => 'reward hvr-shutter-in-horizontal left-btns')); ?>
                                 </div>
                                 <!--                                <div class="btn-place-2">
                                 <?php //echo CHtml::submitButton('Continue', array('class' => 'reward hvr-shutter-in-horizontal3 right-btn')); ?>

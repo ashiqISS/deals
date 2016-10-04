@@ -73,14 +73,15 @@ class MyaccountController extends Controller {
                                 $model = BuyerDetails::model()->findByPk(Yii::app()->session['user']['id']);
                                 if (isset($_POST['password1'])) {
                                         if ($_POST['password1'] != '' || $_POST['password1'] != NULL) {
+                                                echo 'hii';
                                                 $model->password = $_POST['password1'];
-
-                                                if ($model->save()) {
+                                                if ($model->save(FALSE)) {
                                                         Yii::app()->user->setFlash('success', "Your password changed successfully. ");
                                                 } else {
                                                         Yii::app()->user->setFlash('error', "Inavlid user,..");
                                                 }
                                         } else {
+                                                echo 'hlooo';
                                                 Yii::app()->user->setFlash('empty', "Internal Error Occured. ");
                                         }
                                 }

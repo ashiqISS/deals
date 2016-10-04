@@ -75,7 +75,7 @@
 
 
                                 <div class="btn-place-1">
-                                        <a href="#" class="reward hvr-shutter-in-horizontal left-btns">Back</a>
+                                        <?php echo CHtml::link('Back', array('Myaccount/index/type/user'), array('class' => 'reward hvr-shutter-in-horizontal left-btns')); ?>
                                 </div>
                                 <?php echo CHtml::link('New Address', array('Myaccount/NewAddressBook'), array('class' => 'newaddress-btn')); ?>
                         </div>

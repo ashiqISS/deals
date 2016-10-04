@@ -156,7 +156,7 @@
 
                                                         <div class="checkbox checkbox2">
                                                                 <label>
-                                                                        <?php echo $form->checkBox($model, 'terms'); ?>
+                                                                        <?php echo $form->checkBox($model, 'terms', array('required' => 'true')); ?>
                                                                         I agree to the <span>Privacy Policy</span> and <span>T&C</span></label>
                                                                 <?php echo $form->error($model, 'terms', array('class' => 'red')); ?>
                                                         </div>
