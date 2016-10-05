@@ -251,7 +251,7 @@ class SiteController extends Controller {
                                                         CouponHistory::model()->updateAll(array("user_id" => $user->id), 'session_id=' . Yii::app()->session['temp_user']);
                                                         Order::model()->updateAll(array("user_id" => $user->id), 'session_id=' . Yii::app()->session['temp_user']);
                                                 }
-                                                $this->redirect(array('site/VendorLogin'));
+                                                $this->redirect(array('Myaccount/index/type/vendor'));
                                         }
                                 } else {
                                         Yii::app()->user->setFlash('login_error', "dealsonindia email or password invalid.Try again");

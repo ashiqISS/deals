@@ -119,7 +119,7 @@
                                                         </div>
                                                         <div class="settings3">
                                                                 <div class="form-group">
-                                                                        <?php echo $form1->textField($vendor, 'email', array('class' => 'form-set')); ?>
+                                                                        <?php echo $form1->textField($vendor, 'email', array('class' => 'form-set', 'readonly' => 'true')); ?>
                                                                 </div>
                                                                 <?php echo $form1->error($vendor, 'email', array('class' => 'red')); ?>
                                                         </div>

@@ -53,6 +53,12 @@
                                                         <strong>Sorry!</strong> <?php echo Yii::app()->user->getFlash('error'); ?>
                                                 </div>
                                         <?php endif; ?>
+                                        <?php if (Yii::app()->user->hasFlash('plan_error')): ?>
+                                                <div class="alert alert-danger">
+                                                        <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                                        <strong>Sorry!</strong> <?php echo Yii::app()->user->getFlash('plan_error'); ?>
+                                                </div>
+                                        <?php endif; ?>
                                         <div class="ui-set">
                                                 <div class="settings1">
                                                         <div class="form-group">

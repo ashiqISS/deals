@@ -46,11 +46,9 @@ class BuyerDetails extends CActiveRecord {
                 // will receive user inputs.
                 return array(
                     array('first_name, last_name, email, password,confirm, phone_number', 'required', 'on' => 'create'),
-                    array('newsletter, CB, UB, status, terms', 'numerical', 'integerOnly' => true),
+//                    array('newsletter, CB, UB, status, terms', 'numerical', 'integerOnly' => true),
                     array('email', 'email', 'on' => 'create'),
-                    array('email', 'unique', 'on' => 'create'),
-                    array('email', 'unique', 'on' => 'create'),
-                    array('phone_number', 'unique', 'on' => 'create'),
+                    array('email, phone_number', 'unique', 'on' => 'create'),
                     array('confirm', 'compare', 'compareAttribute' => 'password'),
 //                    array('password', 'legth', 'min' => 5, 'on' => 'create'),
 //                    array('password', 'legth', 'max' => 15, 'on' => 'create'),

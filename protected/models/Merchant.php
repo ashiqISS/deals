@@ -62,6 +62,7 @@ class Merchant extends CActiveRecord {
 //                    array('product_categories, shop_name, shop_logo, shop_banner', 'length', 'max' => 250),
                     // email and phone number is unique
                     array('email, phone_number', 'unique', 'on' => 'create'),
+                    array('pincode, phone_number', 'numerical', 'on' => 'create'),
                     // check for email format
                     array('email', 'email', 'on' => 'create'),
                     array('email', 'email', 'on' => 'settings'),

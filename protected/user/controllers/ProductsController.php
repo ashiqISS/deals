@@ -384,10 +384,12 @@ class ProductsController extends Controller {
 //                        $model->sale_to = $_POST['Products']['sale_to'];
                         if (!empty($plandetails)) {
                                 $model->sale_from = date('Y-m-d', strtotime($plandetails->doc));
-
                                 $date = date('Y-m-d', strtotime($plandetails->doc));
                                 $exp_date = date("Y-m-d", strtotime($date . " + $plandetails->no_of_days days"));
                                 $model->sale_to = $exp_date;
+                        } else {
+                                Yii::app()->user->setFlash('plan_error', "Select A plan");
+                                $this->redirect(array('products/AddProducts'));
                         }
 
                         $model->DOC = date('Y-m-d');

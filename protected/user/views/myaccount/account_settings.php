@@ -106,7 +106,7 @@
 
                                                                 <div class="settings3">
                                                                         <div class="form-group">
-                                                                                <input type="email" class="form-set" id="email" name="email" value="<?php echo $model->email; ?>">
+                                                                                <input type="email" class="form-set" id="email" name="email" readonly="true" value="<?php echo $model->email; ?>">
                                                                         </div>
                                                                 </div>
                                                         </div>
