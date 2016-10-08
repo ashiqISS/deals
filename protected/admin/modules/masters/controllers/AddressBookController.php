@@ -1,18 +1,12 @@
 <?php
 
-class StatesController extends Controller {
+class AddressBookController extends Controller {
 
         /**
          * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
          * using two-column layout. See 'protected/views/layouts/column2.php'.
          */
         public $layout = '//layouts/column2';
-
-        public function init() {
-                if (!isset(Yii::app()->session['admin']) || Yii::app()->session['post']['masters'] != 1) {
-                        $this->redirect(Yii::app()->request->baseUrl . '/admin.php/site/logOut');
-                }
-        }
 
         /**
          * @return array action filters
@@ -64,15 +58,15 @@ class StatesController extends Controller {
          * If creation is successful, the browser will be redirected to the 'view' page.
          */
         public function actionCreate() {
-                $model = new MasterState;
+                $model = new AddressBook;
 
-                // Uncomment the following line if AJAX validation is needed
-                // $this->performAjaxValidation($model);
+// Uncomment the following line if AJAX validation is needed
+// $this->performAjaxValidation($model);
 
-                if (isset($_POST['MasterState'])) {
-                        $model->attributes = $_POST['MasterState'];
+                if (isset($_POST['AddressBook'])) {
+                        $model->attributes = $_POST['AddressBook'];
                         if ($model->save())
-                                $this->redirect(array('admin', 'id' => $model->Id));
+                                $this->redirect(array('admin'));
                 }
 
                 $this->render('create', array(
@@ -88,13 +82,13 @@ class StatesController extends Controller {
         public function actionUpdate($id) {
                 $model = $this->loadModel($id);
 
-                // Uncomment the following line if AJAX validation is needed
-                // $this->performAjaxValidation($model);
+// Uncomment the following line if AJAX validation is needed
+// $this->performAjaxValidation($model);
 
-                if (isset($_POST['MasterState'])) {
-                        $model->attributes = $_POST['MasterState'];
+                if (isset($_POST['AddressBook'])) {
+                        $model->attributes = $_POST['AddressBook'];
                         if ($model->save())
-                                $this->redirect(array('admin', 'id' => $model->Id));
+                                $this->redirect(array('admin', 'id' => $model->id));
                 }
 
                 $this->render('update', array(
@@ -110,7 +104,7 @@ class StatesController extends Controller {
         public function actionDelete($id) {
                 $this->loadModel($id)->delete();
 
-                // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
                 if (!isset($_GET['ajax']))
                         $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
         }
@@ -119,7 +113,7 @@ class StatesController extends Controller {
          * Lists all models.
          */
         public function actionIndex() {
-                $dataProvider = new CActiveDataProvider('MasterState');
+                $dataProvider = new CActiveDataProvider('AddressBook');
                 $this->render('index', array(
                     'dataProvider' => $dataProvider,
                 ));
@@ -129,10 +123,10 @@ class StatesController extends Controller {
          * Manages all models.
          */
         public function actionAdmin() {
-                $model = new MasterState('search');
+                $model = new AddressBook('search');
                 $model->unsetAttributes();  // clear any default values
-                if (isset($_GET['MasterState']))
-                        $model->attributes = $_GET['MasterState'];
+                if (isset($_GET['AddressBook']))
+                        $model->attributes = $_GET['AddressBook'];
 
                 $this->render('admin', array(
                     'model' => $model,
@@ -143,11 +137,11 @@ class StatesController extends Controller {
          * Returns the data model based on the primary key given in the GET variable.
          * If the data model is not found, an HTTP exception will be raised.
          * @param integer $id the ID of the model to be loaded
-         * @return States the loaded model
+         * @return AddressBook the loaded model
          * @throws CHttpException
          */
         public function loadModel($id) {
-                $model = MasterState::model()->findByPk($id);
+                $model = AddressBook::model()->findByPk($id);
                 if ($model === null)
                         throw new CHttpException(404, 'The requested page does not exist.');
                 return $model;
@@ -155,13 +149,15 @@ class StatesController extends Controller {
 
         /**
          * Performs the AJAX validation.
-         * @param States $model the model to be validated
+         * @param AddressBook $model the model to be validated
          */
         protected function performAjaxValidation($model) {
-                if (isset($_POST['ajax']) && $_POST['ajax'] === 'master-states-form') {
+                if (isset($_POST['ajax']) && $_POST['ajax'] === 'address-book-form') {
                         echo CActiveForm::validate($model);
                         Yii::app()->end();
                 }
         }
 
 }
+
+?>

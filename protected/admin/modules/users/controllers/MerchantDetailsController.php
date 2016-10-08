@@ -49,8 +49,8 @@ class MerchantDetailsController extends Controller {
          */
         public function actionView($id) {
                 $model = $this->loadModel($id);
-                $user_id = $model->user_id;
-                $user_model = $this->loadUserModel($user_id);
+//                $user_id = $model->user_id;
+//                $user_model = $this->loadUserModel($user_id);
                 $this->render('view', array(
                     'model' => $this->loadModel($id),
                 ));

@@ -10,7 +10,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <meta http-equiv="X-UA-Compatible" content="IE=edge">
                 <title><?php echo Yii::app()->name; ?></title>
                 <!-- Tell the browser to be responsive to screen width -->
-                <!--<link rel="stylesheet" href="<?php // echo Yii::app()->baseUrl;                                                            ?>/css/admin.css">-->
+                <!--<link rel="stylesheet" href="<?php // echo Yii::app()->baseUrl;                                                                 ?>/css/admin.css">-->
                 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
                 <!-- Bootstrap 3.3.5 -->
 
@@ -285,11 +285,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                                         <li class="<?php echo $action8 ?> treeview"><a href="<?php echo Yii::app()->baseUrl ?>/admin.php/masters/MasterShippingTypes/admin"><i class="fa fa-circle-o"></i>Shipping Types</a></li>
                                                                         <li class="<?php echo $action9 ?> treeview"><a href="<?php echo Yii::app()->baseUrl ?>/admin.php/masters/shippingCharges/admin"><i class="fa fa-circle-o"></i>Shipping Charges</a></li>
                                                                         <li class="<?php echo $action10 ?> treeview"><a href="<?php echo Yii::app()->baseUrl ?>/admin.php/masters/WeightClass/admin"><i class="fa fa-circle-o"></i> Weight Class</a></li>
-                                                                        <li class="<?php echo $action11 ?> treeview"><a href="<?php echo Yii::app()->baseUrl ?>/admin.php/users/UserAddress/admin"><i class="fa fa-circle-o"></i> User Address</a></li>
+                                                                        <li class="<?php echo $action11 ?> treeview"><a href="<?php echo Yii::app()->baseUrl ?>/admin.php/masters/AddressBook/admin"><i class="fa fa-circle-o"></i> User Address</a></li>
                                                                         <li class="<?php echo $action12 ?> treeview"><a href="<?php echo Yii::app()->baseUrl ?>/admin.php/masters/Countries/admin"><i class="fa fa-circle-o"></i> Countries</a></li>
                                                                         <li class="<?php echo $action13 ?> treeview"><a href="<?php echo Yii::app()->baseUrl ?>/admin.php/masters/Districts/admin"><i class="fa fa-circle-o"></i> Districts</a></li>
                                                                         <li class="<?php echo $action13 ?> treeview"><a href="<?php echo Yii::app()->baseUrl ?>/admin.php/masters/MasterCity/admin"><i class="fa fa-circle-o"></i> City</a></li>
-                                                                        <li class="<?php echo $action14 ?> treeview"><a href="<?php echo Yii::app()->baseUrl ?>/admin.php/masters/States/admin"><i class="fa fa-circle-o"></i> States</a></li>
+                                                                        <li class="<?php echo $action14 ?> treeview"><a href="<?php echo Yii::app()->baseUrl ?>/admin.php/masters/MasterState/admin"><i class="fa fa-circle-o"></i> States</a></li>
                                                                         <li class="<?php echo $action19 ?> treeview"><a href="<?php echo Yii::app()->baseUrl ?>/admin.php/masters/MastersSize/admin"><i class="fa fa-circle-o"></i> Size</a></li>
                                                                         <li class="<?php echo $action20 ?> treeview"><a href="<?php echo Yii::app()->baseUrl ?>/admin.php/masters/MastersBrand/admin"><i class="fa fa-circle-o"></i> Brand</a></li>
                                                                         <li class="<?php echo $action20 ?> treeview"><a href="<?php echo Yii::app()->baseUrl ?>/admin.php/masters/materTaxRates/admin"><i class="fa fa-circle-o"></i> Tax Rates</a></li>

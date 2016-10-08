@@ -1,18 +1,12 @@
 <?php
 
-class StatesController extends Controller {
+class MasterStateController extends Controller {
 
         /**
          * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
          * using two-column layout. See 'protected/views/layouts/column2.php'.
          */
         public $layout = '//layouts/column2';
-
-        public function init() {
-                if (!isset(Yii::app()->session['admin']) || Yii::app()->session['post']['masters'] != 1) {
-                        $this->redirect(Yii::app()->request->baseUrl . '/admin.php/site/logOut');
-                }
-        }
 
         /**
          * @return array action filters
@@ -66,13 +60,13 @@ class StatesController extends Controller {
         public function actionCreate() {
                 $model = new MasterState;
 
-                // Uncomment the following line if AJAX validation is needed
-                // $this->performAjaxValidation($model);
+// Uncomment the following line if AJAX validation is needed
+// $this->performAjaxValidation($model);
 
                 if (isset($_POST['MasterState'])) {
                         $model->attributes = $_POST['MasterState'];
                         if ($model->save())
-                                $this->redirect(array('admin', 'id' => $model->Id));
+                                $this->redirect(array('admin'));
                 }
 
                 $this->render('create', array(
@@ -88,8 +82,8 @@ class StatesController extends Controller {
         public function actionUpdate($id) {
                 $model = $this->loadModel($id);
 
-                // Uncomment the following line if AJAX validation is needed
-                // $this->performAjaxValidation($model);
+// Uncomment the following line if AJAX validation is needed
+// $this->performAjaxValidation($model);
 
                 if (isset($_POST['MasterState'])) {
                         $model->attributes = $_POST['MasterState'];
@@ -110,7 +104,7 @@ class StatesController extends Controller {
         public function actionDelete($id) {
                 $this->loadModel($id)->delete();
 
-                // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
                 if (!isset($_GET['ajax']))
                         $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
         }
@@ -143,7 +137,7 @@ class StatesController extends Controller {
          * Returns the data model based on the primary key given in the GET variable.
          * If the data model is not found, an HTTP exception will be raised.
          * @param integer $id the ID of the model to be loaded
-         * @return States the loaded model
+         * @return MasterState the loaded model
          * @throws CHttpException
          */
         public function loadModel($id) {
@@ -155,13 +149,15 @@ class StatesController extends Controller {
 
         /**
          * Performs the AJAX validation.
-         * @param States $model the model to be validated
+         * @param MasterState $model the model to be validated
          */
         protected function performAjaxValidation($model) {
-                if (isset($_POST['ajax']) && $_POST['ajax'] === 'master-states-form') {
+                if (isset($_POST['ajax']) && $_POST['ajax'] === 'master-state-form') {
                         echo CActiveForm::validate($model);
                         Yii::app()->end();
                 }
         }
 
 }
+
+?>

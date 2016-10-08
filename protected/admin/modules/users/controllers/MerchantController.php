@@ -59,7 +59,6 @@ class MerchantController extends Controller {
          */
         public function actionCreate() {
                 $model = new Merchant('create');
-
 // Uncomment the following line if AJAX validation is needed
 // $this->performAjaxValidation($model);
 
@@ -67,6 +66,7 @@ class MerchantController extends Controller {
                         $logo = CUploadedFile::getInstance($model, 'shop_logo');
                         $banner = CUploadedFile::getInstance($model, 'shop_banner');
                         $model->attributes = $_POST['Merchant'];
+                        $model->last_name = $_POST['Merchant']['last_name'];
                         $model->product_categories = $_POST['Merchant']['product_categories'];
                         $model->merchant_point = $_POST['Merchant']['merchant_point'];
                         $model->merchant_rating = $_POST['Merchant']['merchant_rating'];
@@ -76,7 +76,6 @@ class MerchantController extends Controller {
 
                         $model->CB = Yii::app()->session['admin']['id'];
                         $model->DOC = date('Y-m-d');
-
                         if ($model->save()) {
                                 if ($logo != "") {
                                         $id = $model->id;
@@ -121,6 +120,8 @@ class MerchantController extends Controller {
                         $logo = CUploadedFile::getInstance($model, 'shop_logo');
                         $banner = CUploadedFile::getInstance($model, 'shop_banner');
                         $model->attributes = $_POST['Merchant'];
+                        $model->last_name = $_POST['Merchant']['last_name'];
+                        $model->pincode = $_POST['Merchant']['pincode'];
                         $model->product_categories = $_POST['Merchant']['product_categories'];
                         $model->shop_logo = $logo->extensionName;
                         $model->shop_banner = $banner->extensionName;

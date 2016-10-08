@@ -46,6 +46,7 @@ class BuyerDetails extends CActiveRecord {
                 // will receive user inputs.
                 return array(
                     array('first_name, last_name, email, password,confirm, phone_number', 'required', 'on' => 'create'),
+                    array('first_name, last_name, email, password,confirm, phone_number', 'required', 'on' => 'admin_create'),
 //                    array('newsletter, CB, UB, status, terms', 'numerical', 'integerOnly' => true),
                     array('email', 'email', 'on' => 'create'),
                     array('email, phone_number', 'unique', 'on' => 'create'),
@@ -56,6 +57,7 @@ class BuyerDetails extends CActiveRecord {
                     array('email', 'unique', 'on' => 'settings'),
                     array('email', 'email', 'on' => 'settings'),
                     array('verifyCode', 'captcha', 'allowEmpty' => !CCaptcha::checkRequirements(), 'on' => 'create'),
+                    array('verifyCode', 'captcha', 'allowEmpty' => CCaptcha::checkRequirements(), 'on' => 'admin_create'),
                     // The following rule is used by search().
                     // @todo Please remove those attributes that should not be searched.
                     array('first_name, last_name, email, password, dob, gender, phone_number, address, activation_link, email_verification, verification_code, newsletter, wallet_amt, user_status, CB, UB, DOC, DOU, status, terms', 'safe', 'on' => 'search'),

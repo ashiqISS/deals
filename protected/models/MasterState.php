@@ -41,6 +41,8 @@ class MasterState extends CActiveRecord {
                 // NOTE: you may need to adjust the relation name and the related
                 // class name for the relations automatically generated below.
                 return array(
+                    'masterCities' => array(self::HAS_MANY, 'MasterCity', 'state_id'),
+                    'country' => array(self::BELONGS_TO, 'MasterCountry', 'country_id'),
                 );
         }
 
