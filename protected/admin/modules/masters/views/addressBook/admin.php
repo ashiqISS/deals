@@ -28,7 +28,7 @@
                                 array(
                                     'name' => 'user_id',
                                     'header' => 'User',
-                                    'value' => '$data->user0->first_name',
+                                    'value' => '$data->user->first_name',
 //                                            'value' => function($data) {
 //
 //                                                    return $data->adminPost->post_name;
