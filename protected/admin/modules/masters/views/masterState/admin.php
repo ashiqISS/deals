@@ -14,7 +14,7 @@
 
 <!-- Main content -->
 <section class="content">
-        <a href="<?php echo Yii::app()->request->baseurl . '/master/masterState/create'; ?>" class='btn  btn-laksyah'>Add New MasterState</a>
+        <a href="<?php echo Yii::app()->request->baseurl . '/admin.php/masters/MasterState/create'; ?>" class='btn  btn-laksyah'>Add New MasterState</a>
         <div class="col-xs-12 form-page" style="margin-top: .5em;">
                 <div class="box">
 

@@ -265,7 +265,7 @@
                         <?php echo $form->labelEx($model, 'state'); ?>
                 </div>
                 <div class="col-sm-10">
-                        <?php echo CHtml::activeDropDownList($model, 'state', CHtml::listData(MasterState::model()->findAll(), 'Id', 'state_name'), array('empty' => '--Select--', 'class' => 'form-control')); ?>
+                        <?php echo CHtml::activeDropDownList($model, 'state', CHtml::listData(MasterState::model()->findAll(), 'Id', 'state'), array('empty' => '--Select--', 'class' => 'form-control')); ?>
                         <?php // echo $form->textField($model, 'state', array('size' => 60, 'maxlength' => 100, 'class' => 'form-control')); ?>
                         <?php echo $form->error($model, 'state'); ?>
                 </div>

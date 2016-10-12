@@ -5,10 +5,10 @@
 
 <section class="content-header">
         <h1>
-                AddressBook    </h1>
+                Address Book    </h1>
         <ol class="breadcrumb">
                 <li><a href="<?php echo Yii::app()->request->baseurl . '/site/home'; ?>"><i class="fa fa-dashboard"></i>Dashboard</a></li>
-                <li class="active">AddressBook</li>
+                <li class="active">Address Book</li>
         </ol>
 </section>
 

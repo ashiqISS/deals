@@ -107,8 +107,8 @@ class MerchantDetailsController extends Controller {
 //                    $extension = $logo->extensionName;
 //                    $this->Resize($file, 472, 339, $id, $path, $extension);
                                                 }
-                                                $this->redirect(array('admin'));
                                         }
+                                        $this->redirect(array('admin'));
                                 }
                         }
                 }

@@ -50,17 +50,8 @@ class Merchant extends CActiveRecord {
          * @return array validation rules for model attributes.
          */
         public function rules() {
-                // NOTE: you should only define rules for those attributes that
-                // will receive user inputs.
                 return array(
-//            array('first_name,last_name, email, phone_number, password, email_verification, product_categories, merchant_type, product_count, shop_name, address, pincode, city, locality, district, state, country, status, CB, DOC, is_payment_done', 'required'),
                     array('first_name, last_name, email, phone_number, password, confirm,  merchant_type,  address', 'required'),
-//                    array('merchant_type, product_count, pincode, district, state, country, bad_attempts, CB, UB, is_payment_done, merchant_point, merchant_badge, merchant_rating', 'numerical', 'integerOnly' => true),
-//                    array('first_name, email, phone_number, password, confirm, email_verification, city, locality, vat_tin, status', 'length', 'max' => 100),
-//                    array('last_name', 'length', 'max' => 200),
-//                    array('verification_code', 'length', 'max' => 50),
-//                    array('product_categories, shop_name, shop_logo, shop_banner', 'length', 'max' => 250),
-                    // email and phone number is unique
                     array('email, phone_number', 'unique', 'on' => 'create'),
                     array('pincode, phone_number', 'numerical', 'on' => 'create'),
                     // check for email format
