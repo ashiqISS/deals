@@ -31,7 +31,8 @@
                         'filter' => CHtml::listData(Merchant::model()->findAll(array()), 'id', 'first_name'),
                         'value' => function($data) {
                         $merchant = Merchant::model()->findByAttributes(array('id' => $data->merchant_id));
-                        return $merchant->first_name;
+                        $val = $merchant->first_name.' '.$merchant->last_name.' ('. $merchant->email .')';
+                        return $val;
                 },
                     ),
 //                    'merchant_id',

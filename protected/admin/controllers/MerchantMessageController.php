@@ -124,8 +124,8 @@ class MerchantMessageController extends Controller {
          */
         public function actionAdmin() {
                 $model = new MerchantMessage('search');
-                $model->viewed = 0;
-                $model->from_to = 1;
+              //  $model->viewed = 0;
+              //  $model->from_to = 1;
 //                $model->unsetAttributes();  // clear any default values
                 if (isset($_GET['MerchantMessage']))
                         $model->attributes = $_GET['MerchantMessage'];

@@ -75,7 +75,7 @@ return array(
         ),
         // database settings are configured in database.php
 //        'db' => require(dirname(__FILE__) . '/database.php'),
-        'db' => array(
+         'db' => array(
             'connectionString' => 'mysql:host=localhost;dbname=dealsonindia',
             'emulatePrepare' => true,
             'username' => 'root',

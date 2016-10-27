@@ -102,7 +102,7 @@
                         <?php echo $form->labelEx($model, 'product_type'); ?>
                 </div>
                 <div class="col-sm-10">
-                        <?php echo $form->dropDownList($model, 'product_type', array('' => "---Select Type---", '1' => "Deal Product", '2' => "Normal Product", '3' => "Coupon", '4' => "Bargain Product"), array('class' => 'form-control type_change')); ?>
+                        <?php echo $form->dropDownList($model, 'product_type', array('' => "---Select Type---", '1' => "Deal Product", '2' => "Normal Product", '3' => "Coupon", '4' => "Bargain Product", '5' => "Hot Deals"), array('class' => 'form-control type_change')); ?>
                         <?php echo $form->error($model, 'product_type'); ?>
                 </div>
         </div>
@@ -451,7 +451,28 @@ if (!$model->isNewRecord) {
                         <?php echo $form->labelEx($model, 'size'); ?>
                 </div>
                 <div class="col-sm-10">
-                        <?php echo CHtml::activeDropDownList($model, 'size', CHtml::listData(MastersSize::model()->findAll(), 'id', 'size'), array('empty' => '--Select--', 'class' => 'form-control')); ?>
+                     <?php
+                        if (!is_array($model->size)) {
+                                $myArray1 = explode(',', $model->size);
+                        } else {
+                                $myArray1 = $model->size;
+                        }
+
+
+                        $product_size = array();
+
+                        foreach ($myArray1 as $value) {
+                                $product_size[$value] = array('selected' => 'selected');
+                        }
+                        ?>
+
+                        <?php echo CHtml::activeDropDownList($model, 'size', CHtml::listData(MastersSize::model()->findAll(), 'id', 'size'), array('empty' => '-Select-', 'class' => 'form-control', 'multiple' => true, 'options' => $product_size));
+                        ?>
+                  
+                    
+                    
+                    
+                        <?php // echo CHtml::activeDropDownList($model, 'size', CHtml::listData(MastersSize::model()->findAll(), 'id', 'size'), array('empty' => '--Select--', 'class' => 'form-control')); ?>
                         <?php echo $form->error($model, 'size'); ?>
                 </div>
         </div>

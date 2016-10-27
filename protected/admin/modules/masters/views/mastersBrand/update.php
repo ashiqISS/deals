@@ -11,7 +11,7 @@
         <li class="active">Update MastersBrand</li>
     </ol>
 </section>
-&nbsp;&nbsp;&nbsp;&nbsp;<a href="<?php echo Yii::app()->request->baseurl.'/masters/mastersBrand/admin'; ?>" class='btn  btn-laksyah manage'>Manage Buyer</a>
+&nbsp;&nbsp;&nbsp;&nbsp;<a href="<?php echo Yii::app()->request->baseurl.'/admin.php/masters/mastersBrand/admin'; ?>" class='btn  btn-laksyah manage'>Manage Brands</a>
 <section class="content">
     <div class="box box-info">
 

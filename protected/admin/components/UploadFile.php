@@ -291,7 +291,7 @@ class UploadFile extends CApplicationComponent {
 
 
                 $resize = new EasyImage($file);
-                $resize->resize($width, $height, EasyImage::RESIZE_NONE);
+                $resize->resize($width, $height);
                 $resize->save($path . '/' . $name);
         }
 

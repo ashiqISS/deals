@@ -101,8 +101,7 @@ class MerchantPayoutHistoryController extends Controller {
 // $this->performAjaxValidation($model);
 
         if (isset($_POST['MerchantPayoutHistory'])) {
-            print_r($_POST);
-            $model->attributes = $_POST['MerchantPayoutHistory'];
+             $model->attributes = $_POST['MerchantPayoutHistory'];
             $model->transaction_reference = $_POST['MerchantPayoutHistory']['transaction_reference'];
             if ($model->status == 5) {
                 $model->validatorList->add(

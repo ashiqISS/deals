@@ -171,6 +171,11 @@ class ProductsController extends Controller {
                         } else {
                                 $model->related_products = "";
                         }
+                        if ($model->size != "") {
+                                $model->size = implode(",", $model->size);
+                        } else {
+                                $model->size = "";
+                        }
 
                         if ($_POST['Products']['new_from'] != "")
                                 $model->new_from = date("Y-m-d", strtotime($_POST['Products']['new_from']));
@@ -369,6 +374,11 @@ class ProductsController extends Controller {
                                 $model->related_products = implode(",", $model->related_products);
                         } else {
                                 $model->related_products = "";
+                        }
+                        if ($model->size != "") {
+                                $model->size = implode(",", $model->size);
+                        } else {
+                                $model->size = "";
                         }
 
                         if ($_POST['Products']['new_from'] != "")
