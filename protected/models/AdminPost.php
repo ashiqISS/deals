@@ -94,7 +94,7 @@ class AdminPost extends CActiveRecord {
                 // @todo Please modify the following code to remove attributes that should not be searched.
 
                 $criteria = new CDbCriteria;
-
+				$criteria->order = "id desc";
                 $criteria->compare('id', $this->id);
                 $criteria->compare('post_name', $this->post_name, true);
                 $criteria->compare('admin', $this->admin);

@@ -76,6 +76,7 @@ class MerchantMessage extends CActiveRecord {
                 // @todo Please modify the following code to remove attributes that should not be searched.
 
                 $criteria = new CDbCriteria;
+				$criteria->order = "id desc";
 
                 $criteria->compare('id', $this->id);
                 $criteria->compare('message', $this->message, true);
@@ -84,6 +85,7 @@ class MerchantMessage extends CActiveRecord {
                 $criteria->compare('viewed', $this->viewed);
                 $criteria->compare('doc', $this->doc);
                 $criteria->compare('status', $this->status);
+				$criteria->select = 'DISTINCT merchant_id';
 
                 return new CActiveDataProvider($this, array(
                     'criteria' => $criteria,

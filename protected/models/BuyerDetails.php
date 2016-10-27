@@ -121,6 +121,7 @@ class BuyerDetails extends CActiveRecord {
                 // @todo Please modify the following code to remove attributes that should not be searched.
 
                 $criteria = new CDbCriteria;
+				$criteria->order = "id desc";
 
                 $criteria->compare('id', $this->id);
                 $criteria->compare('first_name', $this->first_name, true);

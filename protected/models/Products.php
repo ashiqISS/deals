@@ -88,11 +88,12 @@ class Products extends CActiveRecord {
                 // will receive user inputs.
                 return array(
                     array('category_id, product_name, product_code, product_type, description, canonical_name,   price, is_discount_available, quantity, stock_availability, status,  is_cod_available, is_featured, is_admin_approved', 'required'),
-                    array('brand_id, merchant, merchant_type, vendor, header_visibility, sort_order,  brand, size, is_discount_available, quantity, requires_shipping, enquiry_sale, gift_option, stock_availability, weight_class, exchange, is_cod_available, is_available, is_featured, is_admin_approved, CB, UB', 'numerical', 'integerOnly' => true),
+                    array('brand_id, merchant, merchant_type, vendor, header_visibility, sort_order,  brand, is_discount_available, quantity, requires_shipping, enquiry_sale, gift_option, stock_availability, weight_class, exchange, is_cod_available, is_available, is_featured, is_admin_approved, CB, UB', 'numerical', 'integerOnly' => true),
                     array('price, wholesale_price,bargain_price,bidded_amount, admin_price,  discount, discount_rate, deal_price, shipping_rate, tax, weight', 'numerical'),
                     array('category_id, main_image, gallery_images, canonical_name', 'length', 'max' => 200),
-                    array('product_name, product_code, meta_title, meta_keywords, discount_type, video_link, status, search_tag, related_products', 'length', 'max' => 225),
+                    array('product_name, product_code, meta_title, meta_keywords, discount_type, video_link, status, search_tag, related_products, size', 'length', 'max' => 225),
                     array('product_type', 'length', 'max' => 50),
+//                    array('size', 'length', 'max' => 100),
                     array('hover_image,  video', 'length', 'max' => 150),
                     array('category_id, product_name, product_code, merchant_id, merchant_type, description, main_image, price, quantity, sale_from, sale_to', 'required', 'on' => 'user_create'),
                     array('quantity', 'numerical', 'on' => 'user_create'),
@@ -202,6 +203,7 @@ class Products extends CActiveRecord {
                 // @todo Please modify the following code to remove attributes that should not be searched.
 
                 $criteria = new CDbCriteria;
+                $criteria->order = "id desc";
 
                 $criteria->compare('id', $this->id);
                 $criteria->compare('category_id', $this->category_id, true);

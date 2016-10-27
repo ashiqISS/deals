@@ -74,6 +74,7 @@ class Districts extends CActiveRecord {
                 // @todo Please modify the following code to remove attributes that should not be searched.
 
                 $criteria = new CDbCriteria;
+				$criteria->order = "id desc";
 
                 $criteria->compare('Id', $this->Id);
                 $criteria->compare('country_id', $this->country_id);
