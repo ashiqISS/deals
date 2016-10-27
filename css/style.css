@@ -1,4 +1,3 @@
-
 @import url(https://fonts.googleapis.com/css?family=Lato:400,100,300,400italic,700,100italic,300italic,700italic,900);
 @import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
 
@@ -3927,7 +3926,7 @@ footer {
 }
 .foots ul li a {
         font-size: 13px;
-        font-weight: 300;
+          font-weight: normal;
         font-family: 'Lato', sans-serif;
         color: #666;
         text-decoration: none;
@@ -3961,7 +3960,7 @@ footer {
 }
 .foots-two ul li a {
         font-size: 13px;
-        font-weight: 300;
+        font-weight: normal;
         font-family: 'Lato', sans-serif;
         color: #666;
         text-decoration: none;
