@@ -47,5 +47,22 @@ class Utilities {
     public static function getPriceList() {
         return array('0 AND 1000' => '0 - 1000', '1001 AND 100000' => '10001 - 100000', '10001 AND 100000' => '10001 - 100000', '100001 AND 1000000' => '100001 - 1000000');
     }
+  public static function getStatusMerchantPayout($status) {
+//    1-requested, 2-hold, 3-processing, 4-paid, 5 -rejected
+       switch ($status) {
+           case 1: $state = 'Request Pending';
+               break;
+           case 2: $state = 'Request on Hold';
+               break;
+           case 3: $state = 'Request on Processing';
+               break;
+           case 4: $state = 'Paid';
+               break;
+           case 5: $state = 'Rejected';
+               break;
+           default : $state = 'Invalid';
+       }
+       return $state;
+   }
 
 }

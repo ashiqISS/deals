@@ -176,23 +176,27 @@ class DiscountPrice extends CApplicationComponent {
                 return $subtotal;
         }
 
-        public function DiscountExtax($data) {
+       public function DiscountExtax($data) {
                 date_default_timezone_set('Asia/Kolkata');
                 $date = date('Y-m-d');
                 if ($data->discount_type == 1) {     // type of discount wether its flat on percetange
                         if ($data->product_type == 4) {  // the value 4 is baragain products
                                 if (($date > $data->special_price_to)) {
-                                        $criteria = new CDbCriteria;
-                                        $criteria->select = '*,MAX(bidd_amount) ';
-                                        $bargained_rate = BargainDetails::model()->find($criteria);
-                                        if (!empty($bargained_rate)) {
-                                                Products::model()->updateAll(array("bidded_amount" => $bargained_rate->bidd_amount), 'id = ' . $data->id);
-                                                $discountRate = $bargained_rate->bidd_amount;
+                                        if (isset(Yii::app()->session['user'])) {
+                                                $criteria = new CDbCriteria;
+                                                $criteria->select = '*,MAX(bidd_amount) ';
+                                                $criteria->addCondition('product_id =' . $data->id);
+                                                $criteria->addCondition('user_id = ' . Yii::app()->session['user']['id']);
+                                                $bargained_rate = BargainDetails::model()->find($criteria);
+                                                if (!empty($bargained_rate)) {
+                                                        Products::model()->updateAll(array("bidded_amount" => $bargained_rate->bidd_amount), 'id = ' . $data->id);
+                                                        $discountRate = $bargained_rate->bidd_amount;
+                                                } else {
+                                                        $discountRate = $data->bargain_price;
+                                                }
                                         } else {
                                                 $discountRate = $data->bargain_price;
                                         }
-                                } else {
-                                        $discountRate = $data->bargain_price;
                                 }
                         } else {
                                 $discountRate = $data->price - $data->discount;
@@ -255,12 +259,18 @@ class DiscountPrice extends CApplicationComponent {
                 if ($data->discount_type == 1) {     // type of discount wether its flat on percetange
                         if ($data->product_type == 4) {  // the value 4 is baragain products
                                 if (($date > $data->special_price_to)) {
-                                        $criteria = new CDbCriteria;
-                                        $criteria->select = '*,MAX(bidd_amount) ';
-                                        $bargained_rate = BargainDetails::model()->find($criteria);
-                                        if (!empty($bargained_rate)) {
-                                                Products::model()->updateAll(array("bidded_amount" => $bargained_rate->bidd_amount), 'id = ' . $data->id);
-                                                $discountRate = $bargained_rate->bidd_amount;
+                                        if (isset(Yii::app()->session['user'])) {
+                                                $criteria = new CDbCriteria;
+                                                $criteria->select = '*,MAX(bidd_amount) ';
+                                                $criteria->addCondition('product_id =' . $data->id);
+                                                $criteria->addCondition('user_id = ' . Yii::app()->session['user']['id']);
+                                                $bargained_rate = BargainDetails::model()->find($criteria);
+                                                if (!empty($bargained_rate)) {
+                                                        Products::model()->updateAll(array("bidded_amount" => $bargained_rate->bidd_amount), 'id = ' . $data->id);
+                                                        $discountRate = $bargained_rate->bidd_amount;
+                                                } else {
+                                                        $discountRate = $data->bargain_price;
+                                                }
                                         } else {
                                                 $discountRate = $data->bargain_price;
                                         }
@@ -295,7 +305,6 @@ class DiscountPrice extends CApplicationComponent {
                 }
                 return $discountRate;
         }
-
         public function Taxonly($data, $price) {
 
                 if ($data->tax != 0) {

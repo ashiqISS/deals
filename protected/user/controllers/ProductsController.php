@@ -32,7 +32,7 @@ class ProductsController extends Controller {
                 } else {
                         $criteria->order = 'id desc';
                 }
-                $criteria->addCondition("status = 1 AND is_admin_approved = 1 AND '" . $date . "' >= special_price_from AND  '" . $date . "' <= special_price_to ");
+                $criteria->addCondition("product_type != 4 AND status = 1 AND is_admin_approved = 1 AND '" . $date . "' >= special_price_from AND  '" . $date . "' <= special_price_to ");
                 $products = Products::model()->findAll($criteria);
 
                 $this->render('deals', array(
@@ -106,7 +106,7 @@ class ProductsController extends Controller {
                 } else {
                         $criteria->order = 'id desc';
                 }
-                $criteria->addCondition("status = 1 AND is_admin_approved = 1 AND  product_type = 3 AND ( '" . $date . "' >= sale_from AND  '" . $date . "' <= sale_to) ");
+                $criteria->addCondition("product_type != 4 AND  status = 1 AND is_admin_approved = 1 AND  product_type = 3 AND ( '" . $date . "' >= sale_from AND  '" . $date . "' <= sale_to) ");
                 $products = Products::model()->findAll($criteria);
 
                 $this->render('deals', array(
@@ -142,7 +142,7 @@ class ProductsController extends Controller {
                 } else {
                         $criteria->order = 'id desc';
                 }
-                $criteria->addCondition("status = 1 AND is_admin_approved = 1 AND  wholesale_price != 0 AND  ( '" . $date . "' >= sale_from AND  '" . $date . "' <= sale_to) ");
+                $criteria->addCondition("product_type != 4 AND  status = 1 AND is_admin_approved = 1 AND  wholesale_price != 0 AND  ( '" . $date . "' >= sale_from AND  '" . $date . "' <= sale_to) ");
                 $products = Products::model()->findAll($criteria);
 
                 $this->render('deals', array(
@@ -188,7 +188,7 @@ class ProductsController extends Controller {
                 ));
         }
 
-        public function actionHot() {
+               public function actionHot() {
                 $criteria = new CDbCriteria;
                 $total = Products::model()->count();
 
@@ -213,7 +213,7 @@ class ProductsController extends Controller {
                 } else {
                         $criteria->order = 'id desc';
                 }
-                $criteria->addCondition("status = 1 AND is_admin_approved = 1 AND is_featured = 1 AND '" . $date . "' >= special_price_from AND  '" . $date . "' <= special_price_to ");
+                $criteria->addCondition("status = 1 AND is_admin_approved = 1 AND product_type = 5 AND '" . $date . "' >= special_price_from AND  '" . $date . "' <= special_price_to ");
                 $products = Products::model()->findAll($criteria);
 
                 $this->render('hot', array(
@@ -384,6 +384,7 @@ class ProductsController extends Controller {
 //                        $model->sale_to = $_POST['Products']['sale_to'];
                         if (!empty($plandetails)) {
                                 $model->sale_from = date('Y-m-d', strtotime($plandetails->doc));
+
                                 $date = date('Y-m-d', strtotime($plandetails->doc));
                                 $exp_date = date("Y-m-d", strtotime($date . " + $plandetails->no_of_days days"));
                                 $model->sale_to = $exp_date;

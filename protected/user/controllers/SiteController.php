@@ -176,7 +176,7 @@ class SiteController extends Controller {
                 $pages->pageSize = 8;
                 $pages->applyLimit($criteria);
                 $date = date('Y-m-d');
-                $criteria->addCondition("status = 1 AND is_admin_approved = 1 AND '" . $date . "' >= new_from AND  '" . $date . "' <= new_to AND ( '" . $date . "' >= sale_from AND  '" . $date . "' <= sale_to) ");
+                $criteria->addCondition("product_type != 4 AND status = 1 AND is_admin_approved = 1 AND '" . $date . "' >= new_from AND  '" . $date . "' <= new_to AND ( '" . $date . "' >= sale_from AND  '" . $date . "' <= sale_to) ");
                 $criteria->order = 'id DESC';
                 $products = Products::model()->findAll($criteria);
 

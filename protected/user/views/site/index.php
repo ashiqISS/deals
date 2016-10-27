@@ -122,7 +122,7 @@
                                                                         echo 'active';
                                                                 }
                                                                 ?>">
-                                                                        <img src="<?= Yii::app()->baseUrl . '/uploads/ads/' . $folder . '/' . $tp_left->id . '/big.' . $tp_left->image ?>">
+                                                                            <a href="<?= $tp_left->link ?>" target="_blank"><img src="<?= Yii::app()->baseUrl . '/uploads/ads/' . $folder . '/' . $tp_left->id . '/big.' . $tp_left->image ?>"></a>
 
                                                                 </div>
 

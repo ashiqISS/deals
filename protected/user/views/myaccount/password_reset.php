@@ -120,23 +120,21 @@
                                                         <div class="settings3">
                                                                 <div class="form-group">
                                                                         <input type="password" class="form-set" id="password2" name="password2" required="" >
-                                                                        <div id="password_error" style="color:red;"></div>
+<div id="password_error" style="color:red;"></div>
                                                                 </div>
                                                         </div>
-
+                                                       
                                                 </div>
 
                                         </div>
-
-                                        <div class="btn-place-1">
-
-                                                <?php if (Yii::app()->session['user']) { ?>
+  <div class="btn-place-1">
+                                        <?php if (Yii::app()->session['user']) { ?>
                                                         <?php echo CHtml::link('Back', array('Myaccount/index/type/user'), array('class' => 'reward hvr-shutter-in-horizontal left-btns')); ?>
                                                 <?php } if (Yii::app()->session['merchant']) { ?>
                                                         <?php echo CHtml::link('Back', array('Myaccount/index/type/vendor'), array('class' => 'reward hvr-shutter-in-horizontal left-btns')); ?>
 
                                                 <?php } ?>
-                                        </div>
+</div>
                                         <div class="btn-place-2">
                                                 <button type="submit"  name="btn_submit" class="reward hvr-shutter-in-horizontal3 right-btn">Continue</button>
                                         </div>

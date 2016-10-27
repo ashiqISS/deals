@@ -1,4 +1,3 @@
-
 <script type="text/javascript" src="<?= Yii::app()->baseUrl ?>/js/jquery.appear.js"></script>
 <script type="text/javascript" src="<?= Yii::app()->baseUrl ?>/js/count-to.js"></script>
 <script src="<?= Yii::app()->baseUrl ?>/js/classie.js"></script>
@@ -106,7 +105,7 @@
 
                                                                 <div class="settings3">
                                                                         <div class="form-group">
-                                                                                <input type="email" class="form-set" id="email" name="email" readonly="true" value="<?php echo $model->email; ?>">
+                                                                                <input type="email" class="form-set" id="email" name="email" value="<?php echo $model->email; ?>">
                                                                         </div>
                                                                 </div>
                                                         </div>
@@ -151,8 +150,10 @@
                                                                 </div>
                                                         </div>
                                                 </div>
-                                                <div class="btn-place-1">
-                                                        <?php echo CHtml::link('Back', array('Myaccount/index/type/user'), array('class' => 'reward hvr-shutter-in-horizontal left-btns')); ?>
+                                               <div class="btn-place-1">
+          <?php echo CHtml::link('Back', array('Myaccount/index/type/user'), array('class' => 'reward hvr-shutter-in-horizontal left-btns')); ?>
+                                               
+
                                                 </div>
                                                 <div class="btn-place-2">
                                                         <button type="submit"  name="btn_submit" class="reward hvr-shutter-in-horizontal3 right-btn">Continue</button>

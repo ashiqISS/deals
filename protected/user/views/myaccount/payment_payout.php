@@ -178,7 +178,7 @@
                                                                                 <th>Account Balance </th>
                                                                                 <th>Requested Amount</th>
                                                                                 <th>Balance Left </th>
-                                                                                <!--<th>Status </th>-->
+                                                                               <th>Status </th>
                                                                                 <th>Approval Date </th>
                                                                         </tr>
                                                                 </thead>
@@ -196,13 +196,13 @@
                                                                                         <td><?= Yii::app()->Currency->convert($payOut->available_balance); ?></td>
                                                                                         <td><?= Yii::app()->Currency->convert($payOut->requested_amount); ?></td>
                                                                                         <td><?= Yii::app()->Currency->convert($payOut->available_balance - $payOut->requested_amount); ?></td>
-                                                                                        <!--<td style="color: black"><? //= Utilities::getStatusMerchantPayout($payOut->status); ?></td>-->
+                                                                                        <td style="color: black"><?=  Utilities::getStatusMerchantPayout($payOut->status); ?></td>
                                                                                         <td>
                                                                                                 <?php
-                                                                                                if ($payOut->status == 5) {
+                                                                                                if ($payOut->status == 4) {
 
-                                                                                                        $dou = strtotime($payOut->DOU);
-                                                                                                        echo date('d/m/Y', $dou);
+                                                                                                        //$dou = strtotime($payOut->DOU);
+                                                                                                        echo date('d/m/Y', strtotime($payOut->DOU));
                                                                                                 } else {
                                                                                                         echo 'Nil';
                                                                                                 }

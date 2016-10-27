@@ -234,9 +234,9 @@
                                             <a href="mailto:intersmarthosting.in" style="border:none; color:#414042;">info@dealsonindia.com</a> <br>
                                             Mon to Sat 9.30am to 6.30pm IST</p></td>
                                     <td width="250" align="center"><h4 style=" font-family:'Open Sans',arial, sans-serif; font-size:16px; color:#414042; margin-bottom:10px;">Visit Us</h4>
-                                        <p style="font-family:'Open Sans',arial, sans-serif; font-size:13px;">The Design House,  C-3,<br>
-                                            GCDA House, Mavelipuram,<br>
-                                            Kakkanad, kochi </p></td>
+                                       <p style="font-family:'Open Sans',arial, sans-serif; font-size:13px;">Lorem Ipsum dolor,<br>
+                                            lorem Ipsum, dolar sit,<br>
+                                            Lorem, Ipsum </p></td>
                                 </tr>
                             </tbody>
                         </table></td>

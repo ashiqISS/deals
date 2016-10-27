@@ -67,10 +67,13 @@ class CartController extends Controller {
 
                                 $is_coupon_exist = CouponHistory::model()->findByAttributes(array('coupon_id' => $coupon_validation->id), array('condition' => $condition));
 
+
                                 if (empty($is_coupon_exist)) {
 
                                         $total_amount = $this->subtotalamount();
+
                                         if ($coupon_validation->cash_limit != 0) {
+
                                                 if ($total_amount > $coupon_validation->cash_limit) {
                                                         $new_coupen_value = new CouponHistory;
                                                         $new_coupen_value->coupon_id = $coupon_validation->id;
@@ -91,6 +94,7 @@ class CartController extends Controller {
                                                 }
                                         } else {
                                                 if ($total_amount > $coupon_validation->discount) {
+
                                                         $new_coupen_value = new CouponHistory;
                                                         $new_coupen_value->coupon_id = $coupon_validation->id;
                                                         $new_coupen_value->total_amount = $coupon_validation->discount;
@@ -314,7 +318,12 @@ class CartController extends Controller {
                 if (!empty($cart)) {
                         echo 8;  // Already Add this product to cart
                 } else {
-                        $check_bargain = BargainDetails::model()->findByAttributes(array('user_id' => Yii::app()->session['user']['id'], 'product_id' => $id, 'status' => 2));
+//                        $check_bargain = BargainDetails::model()->findByAttributes(array('user_id' => Yii::app()->session['user']['id'], 'product_id' => $id, 'status' => 2));
+                        $check_bargain = BargainDetails::model()->findByAttributes(array('user_id' => Yii::app()->session['user']['id'], 'product_id' => $id));
+
+
+
+
                         if (!empty($check_bargain)) {
                                 $products = Products::model()->findByAttributes(array('id' => $check_bargain->product_id), array('condition' => "'$date'  >= sale_from AND '$date' <= sale_to"));
                                 if (!empty($products)) {
@@ -433,13 +442,13 @@ class CartController extends Controller {
         }
 
         public function subtotalamount() {
-                if (isset(Yii::app()->session['user']['id'])) {
-                        $cart = cart::model()->findAllByAttributes(array('user_id' => Yii::app()->session['user']['id']));
-                } else {
-                        $cart = cart::model()->findAllByAttributes(array('session_id' => Yii::app()->session['temp_user']));
-                }
 
-                foreach ($cart as $cart_item) {
+                if (isset(Yii::app()->session['user']['id'])) {
+                        $cart = Cart::model()->findAllByAttributes(array('user_id' => Yii::app()->session['user']['id']));
+                } else {
+                        $cart = Cart::model()->findAllByAttributes(array('session_id' => Yii::app()->session['temp_user']));
+                }
+     foreach ($cart as $cart_item) {
                         $product = Products::model()->findByPk($cart_item->product_id);
                         $price = Yii::app()->Discount->DiscountExtax($product);
                         $subtotal += ($price * $cart_item->quantity);

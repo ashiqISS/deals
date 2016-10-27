@@ -168,7 +168,7 @@
                                                 </div>
                                                 <div class="settings3">
                                                         <div class="form-group">
-                                                                <?php echo $form->dropDownList($model, 'product_type', array('' => "---Select Type---", '1' => "Deal Product", '2' => "Normal Product", '3' => "Coupon", '4' => "Bargain Product"), array('class' => 'form-select type_change')); ?>
+                                                                  <?php echo $form->dropDownList($model, 'product_type', array('' => "---Select Type---", '1' => "Deal Product", '2' => "Normal Product", '3' => "Coupon", '4' => "Bargain Product", '5' => "Hot Deals"), array('class' => 'form-select type_change')); ?>
                                                                 <?php echo $form->error($model, 'product_type'); ?>
                                                         </div>
                                                 </div>

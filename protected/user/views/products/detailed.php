@@ -244,25 +244,91 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
 
                                         </div>
 
+                    <?php if ($products->is_discount_available != 0) {
+                        ?>
+                        <div class="detail">
+                            <div class="detail-1">
+                                <span class="sans">Price</span>
+                            </div>
 
-                                        <div class="detail">
-                                                <div class="detail-1">
-                                                        <span class="sans">Price</span>
-                                                </div>
+                            <div class="detail-2">
+                                <span class="sans">:</span>
+                            </div>
 
-                                                <div class="detail-2">
-                                                        <span class="sans">:</span>
-                                                </div>
+                            <div class="detail-3">
+                                <span class="sans" style="text-decoration: line-through"><?php echo Yii::app()->Currency->convert($products->price); ?></span><br />
 
-                                                <div class="detail-3">
-                                                        <span class="sans3"><?php echo Yii::app()->Discount->Discount($products); ?></span><br />
-                                                        <?php if ($products->tax != 0) { ?>
-                                                                <span class="extax">Ex Tax : <?php echo Yii::app()->Discount->extax($products); ?></span>
-                                                        <?php } ?>
-                                                </div>
+                            </div>
 
 
-                                        </div>
+                        </div>
+                        <div class="detail">
+                            <div class="detail-1">
+                                <span class="sans">Deal Price</span>
+                            </div>
+
+                            <div class="detail-2">
+                                <span class="sans">:</span>
+                            </div>
+
+                            <div class="detail-3">
+                                <span class="sans3"><?php echo Yii::app()->Discount->Discount($products); ?></span><br />
+
+                                <span class="extax">Shipping Charge : <?php echo Yii::app()->Currency->convert($products->shipping_rate); ?></span><br>
+                                <span class="extax">You save : <?php echo Yii::app()->Discount->DiscountGot($products); ?>
+                                    <br> <font size="2"><i>Inclusive of all taxes</i></font>
+                                </span>
+
+                            </div>
+
+
+                        </div>                                
+                        <?php
+                    } else {
+                        ?>
+                        <div class="detail">
+                            <div class="detail-1">
+                                <span class="sans">Price</span>
+                            </div>
+
+                            <div class="detail-2">
+                                <span class="sans">:</span>
+                            </div>
+
+                            <div class="detail-3">
+                                <span class="sans3"><?php echo Yii::app()->Discount->Discount($products); ?></span><br />
+                                <span class="extax">Shipping Charge : <?php echo Yii::app()->Currency->convert($products->shipping_rate); ?></span><br>
+                                <?php /* if ($products->tax != 0) { ?>
+                                  <span class="extax">Ex Tax : <?php echo Yii::app()->Discount->extax($products); ?></span>
+                                  <?php } */ ?>
+                            </div>
+
+
+                        </div>   
+                        <?php
+                    }
+                    if ($products->quantity != 0) {
+                        ?>
+
+                        <div class="detail">
+                            <div class="detail-1">
+                                <span class="sans">Total available</span>
+                            </div>
+
+                            <div class="detail-2">
+                                <span class="sans">:</span>
+                            </div>
+                            <div class="detail-3">
+                                <span class="sansz"><?php echo $products->quantity; ?></span>
+                            </div>
+
+                        </div>
+                        <?php
+                    }
+                    ?>
+
+
+
 
                                         <div class="detail">
                                                 <div class="detail-4">
@@ -280,7 +346,7 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
                                         <div class="clearfix"></div>
                                         <h4 class="option_errors"></h4>
                                         <div class="wishlist">
-                                                <ul>
+                                               <ul>
                                                         <?php $cart_exist = Cart::model()->findByAttributes(array('user_id' => Yii::app()->session['user']['id'], 'product_id' => $products->id)); ?>
                                                         <?php if ($products->product_type == 2) {
                                                                 ?>
@@ -293,7 +359,23 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
 
                                                                         <?php $bidd_exist = BargainDetails::model()->findByAttributes(array('product_id' => $products->id, 'user_id' => Yii::app()->session['user']['id'])); ?>
                                                                         <?php if (!empty($bidd_exist)) { ?>
-                                                                                <?php if ($bidd_exist->status == 1) {
+                                                                                <?php
+                                                                                $criteria = new CDbCriteria;
+                                                                                $criteria->select = '*,MAX(bidd_amount) ';
+                                                                                $criteria->addCondition('product_id =' . $products->id);
+                                                                                $criteria->addCondition('user_id = ' . Yii::app()->session['user']['id']);
+                                                                                $bargained_rate = BargainDetails::model()->find($criteria);
+                                                                                if (!empty($bargained_rate)) {
+                                                                                        ?>
+                                                                                        <?php if (empty($cart_exist)) { ?>
+                                                                                                <input type = "hidden" value = "<?= $products->canonical_name; ?>" id="cano_name_<?= $products->id; ?>" name="cano_name">
+                                                                                                <li class = "already_bid "><a class = "cart1 proceed_to_checkout " id = "<?= $products->id; ?>">Proceed to checkout</a></li>
+                                                                                        <?php } else { ?>
+                                                                                                <input type = "hidden" value = "<?= $products->canonical_name; ?>" id="cano_name_<?= $products->id; ?>" name="cano_name">
+                                                                                                <li class = "already_bid "><a class = "cart1 " href="<?php echo Yii::app()->request->baseUrl; ?>/index.php/Cart/Mycart" id = "<?= $products->id; ?>">Proceed to checkout</a></li>
+                                                                                        <?php } ?>
+                                                                                        <?php
+                                                                                } else if ($bidd_exist->status == 1) {
                                                                                         ?>
 
                                                                                         <li class = "already_bid"><a class = "cart1 " id = "">You Already Seal the Product</a></li>
@@ -325,10 +407,19 @@ $folder = Yii::app()->Upload->folderName(0, 1000, $products->id);
                                                                         <li><a class="cart1 " href="<?php echo Yii::app()->request->baseUrl; ?>/index.php/site/Userlogin"  id="<?= $products->id; ?>">Login to Bidding</a></li>
                                                                 <?php } ?>
 
-                                                        <?php } else { ?>
+                                                        <?php } else { 
+														 if ($products->quantity != 0) {
+														?>
                                                                 <input type = "hidden" value = "<?= $products->canonical_name; ?>" id="cano_name_<?= $products->id; ?>" name="cano_name">
                                                                 <li><a class="cart2" target="_blank" href="<?php echo $products->deal_link; ?>">Buy Now</a></li>
-                                                        <?php } ?>
+                                                        <?php }
+														 else {
+                                    ?>
+                                    <span class="sans3">Out of Stock</span>
+                                    <?php
+                                }
+														}
+														?>
                                                 </ul>
                                         </div>
 

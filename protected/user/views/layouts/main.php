@@ -1,4 +1,3 @@
-
 <html>
         <head>
                 <title>dealsonindia</title>
@@ -85,6 +84,21 @@
                                                 </div>
 
                                                 <div class="col-md-6 col-sm-8 col-xs-10 hidden-sm hidden-xs">
+												         <span>
+                                <center>
+                                    <?php
+                                     if(Yii::app()->session['user_type_usrid'] == 1)
+                                     {
+                                        echo 'Welcome '.Yii::app()->session['user']['first_name'] . ' ' . Yii::app()->session['user']['last_name'];
+                                    
+                                     }
+                                    if(Yii::app()->session['user_type_usrid'] == 2) {
+                                        echo 'Welcome '.Yii::app()->session['merchant']['first_name'] . ' ' . Yii::app()->session['merchant']['last_name'];
+                                    }
+                                    
+                                    ?>
+                                </center>
+                            </span>
                                                         <div class="fix">
                                                                 <form class="form-inline" role="form" action="<?php echo Yii::app()->request->baseUrl; ?>/index.php/searching/SearchList" method="post">
                                                                         <div class="form-group">

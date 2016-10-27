@@ -73,15 +73,14 @@ class MyaccountController extends Controller {
                                 $model = BuyerDetails::model()->findByPk(Yii::app()->session['user']['id']);
                                 if (isset($_POST['password1'])) {
                                         if ($_POST['password1'] != '' || $_POST['password1'] != NULL) {
-                                                echo 'hii';
                                                 $model->password = $_POST['password1'];
-                                                if ($model->save(FALSE)) {
+
+                                                if ($model->save(false)) {
                                                         Yii::app()->user->setFlash('success', "Your password changed successfully. ");
                                                 } else {
                                                         Yii::app()->user->setFlash('error', "Inavlid user,..");
                                                 }
                                         } else {
-                                                echo 'hlooo';
                                                 Yii::app()->user->setFlash('empty', "Internal Error Occured. ");
                                         }
                                 }
@@ -892,7 +891,7 @@ class MyaccountController extends Controller {
 
                                 if ($payoutModel->save()) {
                                         // to create history , we refer request id
-                                        MerchantPayoutHistory::model()->updateByPk($payoutModel->id, array('request_id' => $payoutModel->id));
+                                        //MerchantPayoutHistory::model()->updateByPk($payoutModel->id, array('request_id' => $payoutModel->id));
                                         // to avoid form submissions
                                         $model = new RequestPayment;
                                         $payoutModel1 = $payoutModel;

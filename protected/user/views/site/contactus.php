@@ -1,4 +1,3 @@
-
 <section class="banner">
         <div class="container">
                 <div class="row">
@@ -14,28 +13,31 @@
                         <div class="col-md-12">
                                 <h1>Contact us</h1>
                                 <span class="sen">Send A MESSAGE</span></p>
+                        
+                        
+                       
+<?php
+                        $form = $this->beginWidget('CActiveForm', array(
+                            'id' => 'contact-us-contact-form',
+                            'action' => Yii::app()->baseUrl . '/index.php/site/contactUs/',
+                            'htmlOptions' => array('class' => 'us'),
+                            'enableAjaxValidation' => false,
+                        ));
+                        ?>
 
-                                <?php
-                                $form = $this->beginWidget('CActiveForm', array(
-                                    'id' => 'contact-us-contact-form',
-                                    'action' => Yii::app()->baseUrl . '/index.php/site/contactUs/',
-                                    'htmlOptions' => array('class' => 'us'),
-                                    'enableAjaxValidation' => false,
-                                ));
-                                ?>
-                                <?php if (Yii::app()->user->hasFlash('success')): ?>
-                                        <div class="alert alert-success normal">
-                                                <strong>Success!</strong> <?php echo Yii::app()->user->getFlash('success'); ?>
-                                        </div>
-                                <?php endif; ?>
-                                <?php if (Yii::app()->user->hasFlash('error')): ?>
-                                        <div class="alert alert-danger">
-                                                <strong>Sorry! </strong> <?php echo Yii::app()->user->getFlash('error'); ?>
-                                        </div>
-                                <?php endif; ?>
-                        </div>
-                        <div class="col-md-4">
 
+                        <?php if (Yii::app()->user->hasFlash('success')): ?>
+                                <div class="alert alert-success normal">
+                                        <strong>Success!</strong> <?php echo Yii::app()->user->getFlash('success'); ?>
+                                </div>
+                        <?php endif; ?>
+                        <?php if (Yii::app()->user->hasFlash('error')): ?>
+                                <div class="alert alert-danger">
+                                        <strong>Sorry! </strong> <?php echo Yii::app()->user->getFlash('error'); ?>
+                                </div>
+                        <?php endif; ?>
+</div>
+ <div class="col-md-4">
                                 <div class="form-group">
                                         <?php echo $form->labelEx($model, 'name'); ?>
                                         <?php echo $form->textField($model, 'name', array('size' => 60, 'class' => 'form-review2', 'value' => $name)); ?>

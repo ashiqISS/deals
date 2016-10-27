@@ -1,4 +1,3 @@
-
 <script type="text/javascript" src="<?= Yii::app()->baseUrl ?>/js/jquery.appear.js"></script>
 <script type="text/javascript" src="<?= Yii::app()->baseUrl ?>/js/count-to.js"></script>
 <script src="<?= Yii::app()->baseUrl ?>/js/classie.js"></script>

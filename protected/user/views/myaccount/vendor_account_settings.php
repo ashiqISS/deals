@@ -119,7 +119,7 @@
                                                         </div>
                                                         <div class="settings3">
                                                                 <div class="form-group">
-                                                                        <?php echo $form1->textField($vendor, 'email', array('class' => 'form-set', 'readonly' => 'true')); ?>
+                                                                        <?php echo $form1->textField($vendor, 'email', array('class' => 'form-set')); ?>
                                                                 </div>
                                                                 <?php echo $form1->error($vendor, 'email', array('class' => 'red')); ?>
                                                         </div>
@@ -271,7 +271,7 @@
                                                 </div>
                                         </div>
                                         <div class="btn-place-1">
-                                                <?php echo CHtml::link('Back', array('Myaccount/index/type/vendor'), array('class' => 'reward hvr-shutter-in-horizontal left-btns')); ?>
+     <?php echo CHtml::link('Back', array('Myaccount/index/type/vendor'), array('class' => 'reward hvr-shutter-in-horizontal left-btns')); ?>
                                         </div>
                                         <div class="btn-place-2">
                                                 <button type="submit"  name="btn_submit" class="reward hvr-shutter-in-horizontal3 right-btn">Continue</button>
