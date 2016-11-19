@@ -363,6 +363,19 @@ class DiscountPrice extends CApplicationComponent {
                         echo '';
                 }
         }
+		    public function DiscountGot($data) {
+        //discount rate value not equal to null//
+        $discountRate = $disc = 0;
+        if ($data->is_discount_available == 1) {
+            $value = $this->DiscountType($data);
+            $discountRate = $value;
+        } else {
+            $value = $this->WithoutDiscountType($data);
+            $discountRate = $value;
+        }
+        $disc = $data->price - $discountRate;
+        return Yii::app()->Currency->convert($data->price - $discountRate);
+    }
 
 }
 

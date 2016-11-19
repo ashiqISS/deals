@@ -20,6 +20,13 @@
                 <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
                 <link href='https://fonts.googleapis.com/css?family=Lato:400,100,300,400italic,700,100italic,300italic,700italic,900' rel='stylesheet' type='text/css'>
                 <script>
+                // product category dropdown
+                $(document).ready(function () {
+                        $('.loadcat li:has(> ul)').addClass('dropdown-submenu');
+                        $('.loadcat li ul').addClass('dropdown-menu ss menu-2');
+                });
+        </script>
+                <script>
                         var baseurl = "<?php print Yii::app()->request->baseUrl . "/index.php/"; ?>";
                         var basepath = "<?php print Yii::app()->basePath; ?>";
                 </script>
@@ -40,7 +47,19 @@
                                         jQuery.browser.version = RegExp.$1;
                                 }
                         })();
+
+ $(window).scroll(function () {
+                                $(".img-wrapper").each(function () {
+                                        var imageUrl = $(this).find('img').attr("src");
+                                        $(this).find('img').css("visibility", "hidden");
+                                        $(this).css('background-image', 'url(' + imageUrl + ')').css("background-repeat", "no-repeat").css("background-size", "contain").css("background-position", "50% 50%");
+                                });
+                        });
+
+
+
                 </script>
+
                 <style>
                         .dropup {
                                 position: fixed !important;
@@ -52,6 +71,9 @@
                                 padding-bottom: 0px;
                                 box-shadow: 3px 3px 8px 1px RGBA(0, 0, 0, 0.54);
                         }
+.carousel {
+    height: 290px;
+}
                 </style>
         </head>
         <body>
@@ -568,13 +590,7 @@
                 }
 
         </script>
-        <script>
-                // product category dropdown
-                $(document).ready(function () {
-                        $('.loadcat li:has(> ul)').addClass('dropdown-submenu');
-                        $('.loadcat li ul').addClass('dropdown-menu ss menu-2');
-                });
-        </script>
+        
 
 </body>
 </html>

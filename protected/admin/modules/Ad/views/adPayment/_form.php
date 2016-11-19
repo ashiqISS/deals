@@ -45,6 +45,15 @@
     <div class="form-group">
         <div class="col-sm-2 control-label">
             <?php echo $form->labelEx($model, 'image'); ?>
+            <?php
+            if (!$model->isNewRecord) {
+                    $size = MasterAdLocation::model()->findByPk($model->position);
+                    $dimension = $size->size;
+            } else {
+                    $dimension = "";
+            }
+            ?>
+            <p>Image size should be (<span id="dimension"><?= $dimension ?></span>) </p>
         </div>
         <div class="col-sm-10">
             <?php echo $form->fileField($model, 'image', array('size' => 60, 'maxlength' => 100, 'class' => 'form-control')); ?>
@@ -154,3 +163,19 @@
     <?php $this->endWidget(); ?>
 
 </div><!-- form -->
+<script>
+        $('document').ready(function () {
+            $('#AdPayment_position').change(function () {
+                $('#dimension').html('')
+                var rlgn = $(this).val();
+                $.ajax({
+                    type: "POST",
+                    url: baseurl + "Ad/AdPayment/size",
+                    data: {position: rlgn}
+                }).done(function (data) {
+                    $('#dimension').prepend(data);
+
+                });
+            });
+        });
+</script>

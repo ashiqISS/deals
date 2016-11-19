@@ -36,6 +36,7 @@
         <div class="form-group">
                 <div class="col-sm-2 control-label">
                         <?php echo $form->labelEx($model, 'size'); ?>
+            <p>size should be in the format (widthXheight)</p>
                 </div>
                 <div class="col-sm-10">
                         <?php echo $form->textField($model, 'size', array('size' => 60, 'maxlength' => 250, 'class' => 'form-control')); ?>

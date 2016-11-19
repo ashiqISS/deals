@@ -122,7 +122,7 @@
                                                         </div>
                                                 </div>
                                                 <div class="pur-3">
-                                                        <a href="" canname="<?php echo $product->canonical_name; ?>" cartid="<?php echo $cart->id; ?>" class="remove_this"><i class="fa fa-trash"></i></a>
+                                                        <a href="<?= Yii::app()->request->baseUrl; ?>/index.php/cart/Delete?id=<?= $cart->id; ?>" canname="<?php echo $product->canonical_name; ?>" cartid="<?php echo $cart->id; ?>" class="remove_this"><i class="fa fa-trash"></i></a>
                                                         <h4><?php echo Yii::app()->Discount->DiscountCart($product, $cart->quantity); ?>  <span style="font-size: 10px;">(Inc.Tax)</span></h4>
                                                 </div>
 
@@ -348,8 +348,7 @@
 
                         var id = $(this).attr("id");
                         $("#qty_" + id).submit();
-                });
-        });
+                });               
         $(document).ready(function () {
                 var selectIds = $('#p1,#p2,#p3,#p4,#p5');
                 $(function ($) {

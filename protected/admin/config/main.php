@@ -76,10 +76,10 @@ return array(
         // database settings are configured in database.php
 //        'db' => require(dirname(__FILE__) . '/database.php'),
          'db' => array(
-            'connectionString' => 'mysql:host=localhost;dbname=dealsonindia',
+            'connectionString' => 'mysql:host=localhost;dbname=isshosti_dealsonindia',
             'emulatePrepare' => true,
-            'username' => 'root',
-            'password' => 'mysql',
+            'username' => 'isshosti_dealson',
+            'password' => 'M$&;HS?c]M[!',
             'charset' => 'utf8',
         ),
         'errorHandler' => array(

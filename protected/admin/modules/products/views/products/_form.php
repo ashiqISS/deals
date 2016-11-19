@@ -441,7 +441,7 @@ if (!$model->isNewRecord) {
                         <?php echo $form->labelEx($model, 'brand'); ?>
                 </div>
                 <div class="col-sm-10">
-                        <?php echo CHtml::activeDropDownList($model, 'brand', CHtml::listData(MastersBrand::model()->findAll(), 'id', 'brand'), array('empty' => '--Select--', 'class' => 'form-control')); ?>
+                        <?php echo CHtml::activeDropDownList($model, 'brand', CHtml::listData(MastersBrand::model()->findAll(), 'id', 'brand_name'), array('empty' => '--Select--', 'class' => 'form-control')); ?>
                         <?php echo $form->error($model, 'brand'); ?>
                 </div>
         </div>

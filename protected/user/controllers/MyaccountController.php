@@ -946,5 +946,19 @@ class MyaccountController extends Controller {
                 $message->from = Yii::app()->params['infoEmail'];
                 Yii::app()->mail->send($message);
         }
+        
+        public function actionMyBargains()
+        {
+                    if (isset(Yii::app()->session['user'])) {
+                        $bargains = BargainDetails::model()->findAllByAttributes(array('user_id' => Yii::app()->session['user']['id']));  
+                        
+                        
+                        $this->render('my_bargains', array(
+                            'bargains' => $bargains,
+                        ));
+                } else {
+                        $this->redirect(array('Site/logout'));
+                }
+        }
 
 }

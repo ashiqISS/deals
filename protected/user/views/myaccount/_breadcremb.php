@@ -99,6 +99,9 @@ if (Yii::app()->controller->action->id == 'index') {
 } else if (Yii::app()->controller->action->id == 'CustomerReport') {
         $name = 'Customer Report';
         $action = 'Myaccount/CustomerReport';
+}else if (Yii::app()->controller->action->id == 'MyBargains') {
+        $name = 'My Bargains';
+        $action = 'Myaccount/MyBargains';
 }
 ?>
 <section class="title">

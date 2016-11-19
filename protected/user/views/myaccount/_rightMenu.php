@@ -35,7 +35,9 @@
         } else if ($active_menu == 'myaccount/MostViewProducts') {
                 $active15 = 'active';
         } else if ($active_menu == 'myaccount/CustomerReport') {
-                $active15 = 'active';
+                $active15 = 'active';        
+        } else if ($active_menu == 'myaccount/MyBargains') {
+                $active16 = 'active';
         }
 //    else if ($active_menu == 'myaccount/message') {
 //            $active12 = 'active';
@@ -106,6 +108,10 @@
         <?php if (Yii::app()->session['merchant']) { ?>
                 <li class="<?= $active11; ?>"><?php echo CHtml::link('Advertisements', array('Myaccount/paidAd')); ?></li>
                 <li class="<?= $active11; ?>"><?php echo CHtml::link('Tax Classes', array('Myaccount/TaxClasses')); ?></li>
+        <?php } ?>
+                <?php if (Yii::app()->session['user']) { ?>
+                <!--<li><a href="#"> Reward points</a></li>-->
+                <li class="<?= $active16; ?>"><?php echo CHtml::link('My Bargains', array('Myaccount/MyBargains')); ?></li>
         <?php } ?>
         <!--<li><a href="#"> Bargain zone</a></li>-->
 </ul>

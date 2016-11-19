@@ -5,6 +5,12 @@
         .slick-slide img {
                 height: 279px;
         }
+    .fa-angle-left{
+        margin-top: 9px !important;
+    }
+    .fa-angle-right{
+        margin-top: 9px !important;
+    }
 </style>
 <section class="mob-header visible-sm visible-xs">
         <div class="container">

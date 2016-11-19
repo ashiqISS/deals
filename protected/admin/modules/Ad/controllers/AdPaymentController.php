@@ -26,7 +26,7 @@ class AdPaymentController extends Controller {
         public function accessRules() {
                 return array(
                     array('allow', // allow all users to perform 'index' and 'view' actions
-                        'actions' => array('index', 'view', 'create', 'update', 'admin', 'delete', 'Approve', 'NotApprove'),
+                        'actions' => array('index', 'view', 'create', 'update', 'admin', 'delete', 'Approve', 'NotApprove', 'size'),
                         'users' => array('*'),
                     ),
                     array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -41,6 +41,13 @@ class AdPaymentController extends Controller {
                         'users' => array('*'),
                     ),
                 );
+        }
+
+        public function actionSize() {
+                $size = MasterAdLocation::model()->findByPk($_POST['position']);
+                $dimension = $size->size;
+                echo $dimension;
+                exit;
         }
 
         /**

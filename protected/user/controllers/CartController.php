@@ -743,6 +743,12 @@ class CartController extends Controller {
                         $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('Mycart'));
                 }
         }
+            public function loadModel($id) {
+                $model = Cart::model()->findByPk($id);
+                if ($model === null)
+                        throw new CHttpException(404, 'The requested page does not exist.');
+                return $model;
+        }
 
         public function actionRemoveCoupon() {
                 if (isset(Yii::app()->session['couponid'])) {
@@ -761,5 +767,6 @@ class CartController extends Controller {
                 $domainName = $_SERVER['HTTP_HOST'];
                 return $protocol . $domainName;
         }
+        
 
 }
